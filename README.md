@@ -45,15 +45,14 @@ BeneBridgePOC/
 │       ├── CA_DL_*.png          # Driver's license
 │       └── Claim_Form_*.pdf     # Beneficiary claim form
 │
-├── mock_databases/               # Mock database generators
-│   ├── dmf_mock.db              # Death Master File mock
-│   ├── financial_accounts.db    # Account information
-│   └── fraud_indicators.db      # Fraud detection data
+├── mock_databases/               # Mock database generators and scripts
+│   ├── create_person_lists.py   # Generate mock person data
+│   ├── generate_ca_driver_licenses.py  # Generate test documents
+│   └── *.csv, *.json            # Reference data files
 │
-├── core_banking_platform/        # Core banking integration
-├── verification_platform/        # Verification services
 ├── requirements.txt              # Python dependencies
 ├── .gitignore                    # Git ignore rules
+├── .env.example                  # Environment configuration template
 ├── AWS_CREDENTIAL_SETUP.md       # AWS Textract setup guide
 └── IDP_SETUP_GUIDE.md           # IDP configuration options
 ```
@@ -223,20 +222,33 @@ For 93 test cases (279 documents total):
 
 ## Project Components
 
-### 1. Bank Operations Platform (`bank_operations_platform/`)
-The main application for processing beneficiary claims:
-- **app.py**: Flask backend with Textract integration
-- **textract_extraction.py**: Three extraction functions for each document type
-- **templates/index.html**: Professional banking UI
+### Bank Operations Platform (`bank_operations_platform/`)
+The single, focused application for automated beneficiary claim processing:
 
-### 2. Mock Databases (`mock_databases/`)
-Simulated external data sources:
-- **DMF Mock Database**: Death Master File simulation
-- **Financial Accounts DB**: Account balances and beneficiary relationships
-- **Fraud Indicators DB**: Fraud detection and risk scoring
+**Main Files:**
+- **app.py**: Flask backend with AWS Textract integration, cross-document verification, and database validation
+- **textract_extraction.py**: Document extraction functions for death certificates, driver's licenses, and claim forms
+- **templates/index.html**: Professional banking operations UI with real-time status updates
 
-### 3. Test Cases (`Cases/`)
-93 realistic test scenarios with synthetic documents for validation.
+**Key Features:**
+- Automated document upload and processing
+- Real-time extraction using AWS Textract
+- Cross-document verification
+- Database validation (DMF, financial accounts)
+- Automated approval document generation (PDF)
+- Professional banking operations interface
+
+### Mock Databases (`mock_databases/`)
+Scripts and data for simulating external verification sources:
+- Person reference data (deceased individuals and beneficiaries)
+- Document generation scripts
+- Test data in CSV/JSON format
+
+### Test Cases (`Cases/`)
+93 realistic test scenarios, each containing:
+- Death certificate (PDF)
+- Driver's license (PNG)
+- Beneficiary claim form (PDF)
 
 ## Key Technologies
 
