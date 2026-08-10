@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - BeneBridge CRM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
+        }
+
+        .navbar {
+            background: white;
+            border-bottom: 1px solid #e1e8ed;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .navbar-logo img {
+            height: 100px;
+            width: auto;
+            filter: brightness(0) saturate(100%) invert(13%) sepia(24%) saturate(2088%) hue-rotate(183deg) brightness(95%) contrast(97%);
+        }
+
+        .navbar h1 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a4d7a;
+        }
+
+        .navbar .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .navbar a {
+            color: #5a6c7d;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding-bottom: 4px;
+        }
+
+        .navbar a:hover {
+            color: #1a4d7a;
+        }
+
+        .navbar a.active {
+            color: #1a4d7a;
+            border-bottom: 2px solid #1a4d7a;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h2 {
+            color: #1a4d7a;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            color: #6c757d;
+        }
+
+        .settings-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        .settings-section h3 {
+            color: #1a4d7a;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f8f9fa;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #f8f9fa;
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-info {
+            flex: 1;
+        }
+
+        .setting-info h4 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .setting-info p {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .setting-control input[type="text"],
+        .setting-control input[type="email"],
+        .setting-control select {
+            padding: 8px 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            min-width: 200px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 26px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #14b8a6;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: white;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #14b8a6;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #bb2d3b;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/institution/dashboard" class="navbar-logo">
+            <img src="/static/benebridge-logo-fixed.svg" alt="BeneBridge">
+            <h1>BeneBridge CRM</h1>
+        </a>
+        <div class="nav-links">
+            <a href="/institution/dashboard">Cases</a>
+            <a href="/institution/workflows">Workflows</a>
+            <a href="/institution/reports">Reports</a>
+            <a href="/institution/settings" class="active">Settings</a>
+        </div>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <span>{{ user_name }}</span>
+            <a href="/institution/logout">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="page-header">
+            <h2>Settings</h2>
+            <p>Configure your BeneBridge CRM instance</p>
+        </div>
+
+        <!-- Institution Information -->
+        <div class="settings-section">
+            <h3>Institution Information</h3>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <h4>Institution Name</h4>
+                    <p>Your financial institution's legal name</p>
+                </div>
+                <div class="setting-control">
+                    <input type="text" value="Community National Bank" disabled>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <h4>Support Email</h4>
+                    <p>Email address for beneficiary support inquiries</p>
+                </div>
+                <div class="setting-control">
+                    <input type="email" value="support@communitynationalbank.com">
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <h4>Default Processing SLA</h4>
+                    <p>Standard processing time in business days</p>
+                </div>
+                <div class="setting-control">
+                    <select>
+                        <option>1-2 business days</option>
+                        <option selected>3-5 business days</option>
+                        <option>5-7 business days</option>
+                        <option>7-10 business days</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Verification Settings -->
+        <div class="settings-section">
+            <h3>Verification Settings</h3>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <h4>Blockchain Verification</h4>
+                    <p>Enable Titan Seal blockchain death certificate verification</p>
+                </div>
+                <div class="setting-control">
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <h4>Auto-Verify Low-Risk Cases</h4>
+                    <p>Automatically approve cases under $10,000 with blockchain verification</p>
+                </div>
+                <div class="setting-control">
+                    <label class="toggle-switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <h4>Require Manual Review Threshold</h4>
+                    <p>Account balance requiring manual compliance review</p>
+                </div>
+                <div class="setting-control">
+                    <select>
+                        <option>$50,000</option>
+                        <option>$100,000</option>
+                        <option selected>$250,000</option>
+                        <option>$500,000</option>
+                        <option>$1,000,000</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Settings -->
+        <div class="settings-section">
+            <h3>Notifications</h3>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <h4>Email Notifications</h4>
+                    <p>Send email alerts for new cases and status changes</p>
+                </div>
+                <div class="setting-control">
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <h4>High-Priority Case Alerts</h4>
+                    <p>Immediate notification for cases over $500K or 5+ days old</p>
+                </div>
+                <div class="setting-control">
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- API Integration -->
+        <div class="settings-section">
+            <h3>API Integration</h3>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <h4>Titan Seal API Key</h4>
+                    <p>Blockchain death certificate verification API</p>
+                </div>
+                <div class="setting-control">
+                    <input type="text" placeholder="ts_live_••••••••••••" style="min-width: 300px;">
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <h4>Core Banking System</h4>
+                    <p>Integration with your bank's core system for POD/TOD verification</p>
+                </div>
+                <div class="setting-control">
+                    <select>
+                        <option selected>Not Connected</option>
+                        <option>FIS</option>
+                        <option>Jack Henry</option>
+                        <option>Fiserv</option>
+                        <option>Custom API</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="settings-section" style="display: flex; justify-content: space-between; align-items: center;">
+            <button class="btn btn-primary">Save Changes</button>
+            <button class="btn btn-danger">Reset to Defaults</button>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+type,case_id,full_name,first_name,last_name,gender,ssn,dob,dod,height,weight,eye_color,address_street,address_city,address_state,address_zip,phone,email,drivers_license,dl_state,relationship
+deceased,1,Lisa Thompson,Lisa,Thompson,F,554-44-7728,1939-12-27,2025-09-14,"6'8""",152,Gray,7780 Valley Way,Los Angeles,CA,90017,,,,,
+beneficiary,1,Jessica Thompson,Jessica,Thompson,F,511-38-6776,1971-05-21,,"6'5""",149,Blue,6268 Lincoln Ave,Santa Monica,CA,90401,(653) 303-7286,jessica.thompson@email.com,XB741374,CA,daughter
+beneficiary,1,Paul Thompson,Paul,Thompson,M,667-45-9438,1989-01-14,,"5'7""",241,Brown,9296 Maple Dr,San Francisco,CA,94102,(389) 950-8991,paul.thompson@email.com,ZV776164,CA,brother
+deceased,2,William Young,William,Young,M,572-96-4993,1959-03-10,2025-03-18,"5'3""",140,Brown,8456 Oak Ave,Glendale,CA,91201,,,,,
+beneficiary,2,Emily Young,Emily,Young,F,234-49-2422,1942-12-02,,"6'0""",171,Green,3016 Harbor View,Anaheim,CA,92805,(459) 895-8720,emily.young@email.com,IV935252,CA,wife
+deceased,3,Elizabeth Anderson,Elizabeth,Anderson,F,350-98-3805,1963-08-10,2025-01-17,"6'7""",220,Green,6459 Mountain Rd,El Monte,CA,91731,,,,,
+beneficiary,3,Daniel Anderson,Daniel,Anderson,M,125-35-5710,1937-09-01,,"5'4""",196,Brown,433 Lake Dr,Pasadena,CA,91101,(580) 474-1743,daniel.anderson@email.com,GJ853862,CA,husband
+beneficiary,3,Linda Anderson,Linda,Anderson,F,775-63-1977,1991-07-24,,"6'4""",211,Hazel,1942 Lake Dr,Bakersfield,CA,93301,(493) 210-1359,linda.anderson@email.com,YU065426,CA,sister
+beneficiary,3,David Miller,David,Miller,M,318-31-1267,1953-01-26,,"5'3""",184,Green,553 Park Pl,Fremont,CA,94538,(382) 681-5014,david.miller@email.com,FX214243,CA,cousin
+deceased,4,Richard Wright,Richard,Wright,M,408-99-1629,1966-02-25,2026-02-11,"6'10""",249,Green,9843 Pine Rd,Los Angeles,CA,90001,,,,,
+beneficiary,4,Barbara Wright,Barbara,Wright,F,840-93-4963,1935-02-17,,"5'5""",212,Blue,1082 Elm St,Bakersfield,CA,93301,(644) 608-7051,barbara.wright@email.com,AO928241,CA,wife
+beneficiary,4,Mary Wright,Mary,Wright,F,342-88-3645,1982-11-11,,"5'2""",240,Gray,3598 Oak Ave,Riverside,CA,92501,(372) 212-1609,mary.wright@email.com,PS858012,CA,sister
+beneficiary,4,James Hernandez,James,Hernandez,M,332-22-7290,1967-08-21,,"5'2""",177,Hazel,9904 Valley Way,Bakersfield,CA,93301,(577) 246-3043,james.hernandez@email.com,FX212197,CA,friend
+deceased,5,Jessica Davis,Jessica,Davis,F,804-88-3833,1954-09-15,2025-10-14,"5'6""",147,Hazel,8728 Lake Dr,Los Angeles,CA,90001,,,,,
+beneficiary,5,Michael Davis,Michael,Davis,M,786-75-9966,1982-01-11,,"5'0""",238,Hazel,894 Lake Dr,Anaheim,CA,92805,(590) 541-8377,michael.davis@email.com,TG963410,CA,son
+beneficiary,5,Carol Davis,Carol,Davis,F,424-60-6681,1960-10-15,,"5'7""",144,Blue,4681 Valley Way,Anaheim,CA,92805,(471) 438-9296,carol.davis@email.com,HY723670,CA,daughter
+beneficiary,5,Dorothy Davis,Dorothy,Davis,F,127-12-4362,1987-06-04,,"5'6""",239,Brown,7426 Elm St,Bakersfield,CA,93301,(557) 419-2085,dorothy.davis@email.com,GJ800525,CA,sister
+deceased,6,Edward Martin,Edward,Martin,M,491-73-9819,1960-03-02,2026-07-11,"6'7""",228,Green,7076 Pine Rd,Torrance,CA,90501,,,,,
+beneficiary,6,Emily Martin,Emily,Martin,F,458-68-8561,1950-08-01,,"6'1""",177,Hazel,6119 Pine Rd,Chula Vista,CA,91910,(343) 203-4939,emily.martin@email.com,CE650135,CA,wife
+beneficiary,6,Lisa Martin,Lisa,Martin,F,704-92-4018,1975-09-05,,"5'11""",130,Brown,9145 Mountain Rd,Los Angeles,CA,90012,(771) 358-4363,lisa.martin@email.com,CF018309,CA,sister
+deceased,7,Thomas Young,Thomas,Young,M,103-10-1946,1976-04-24,2026-02-11,"6'1""",244,Blue,7740 Hill St,Los Angeles,CA,90001,,,,,
+beneficiary,7,Margaret Young,Margaret,Young,F,552-65-3824,1990-11-26,,"5'1""",243,Blue,9095 Cedar Ln,Irvine,CA,92614,(632) 738-1609,margaret.young@email.com,AT903969,CA,daughter
+deceased,8,Edward Allen,Edward,Allen,M,844-53-7179,1948-10-21,2026-04-12,"5'3""",149,Hazel,1946 Main St,Pomona,CA,91766,,,,,
+beneficiary,8,Barbara Allen,Barbara,Allen,F,502-43-3540,1932-12-28,,"6'0""",243,Gray,2914 Lincoln Ave,San Diego,CA,92101,(371) 881-4723,barbara.allen@email.com,CN893361,CA,wife
+beneficiary,8,Mary Allen,Mary,Allen,F,279-34-4141,2000-10-16,,"5'1""",193,Green,5643 River Rd,Sacramento,CA,95814,(799) 957-3686,mary.allen@email.com,YD843120,CA,daughter
+deceased,9,Jennifer White,Jennifer,White,F,561-73-5117,1984-02-08,2026-07-11,"6'1""",127,Hazel,9652 Mountain Rd,Los Angeles,CA,90012,,,,,
+beneficiary,9,John White,John,White,M,638-11-5067,1996-04-11,,"6'10""",238,Green,3232 Pine Rd,San Jose,CA,95101,(688) 402-7704,john.white@email.com,XG290987,CA,son
+beneficiary,9,Daniel White,Daniel,White,M,146-68-6845,1964-10-09,,"6'10""",170,Green,1305 Pine Rd,Santa Ana,CA,92701,(773) 735-3235,daniel.white@email.com,OB897302,CA,son
+beneficiary,9,Kenneth Allen,Kenneth,Allen,M,411-46-6415,1960-06-08,,"6'6""",221,Brown,5336 Maple Dr,Santa Monica,CA,90401,(507) 842-5292,kenneth.allen@email.com,ZS169496,CA,niece
+deceased,10,Edward Sanchez,Edward,Sanchez,M,646-79-2083,1971-02-02,2026-06-11,"5'6""",247,Hazel,4537 Mountain Rd,Pasadena,CA,91101,,,,,
+beneficiary,10,Donna Sanchez,Donna,Sanchez,F,509-70-9629,1966-04-27,,"6'3""",243,Brown,3836 Cedar Ln,Irvine,CA,92614,(983) 622-1479,donna.sanchez@email.com,IK301056,CA,wife
+beneficiary,10,Donald Sanchez,Donald,Sanchez,M,536-82-4114,1964-08-01,,"6'1""",138,Gray,9011 Park Pl,Los Angeles,CA,90001,(304) 962-6158,donald.sanchez@email.com,LT681826,CA,son
+beneficiary,10,Dorothy Sanchez,Dorothy,Sanchez,F,677-77-7222,1985-02-01,,"5'8""",191,Hazel,413 Mountain Rd,Fremont,CA,94538,(423) 529-7409,dorothy.sanchez@email.com,IQ318123,CA,sister
+deceased,11,Sarah Rodriguez,Sarah,Rodriguez,F,497-29-4593,1931-09-11,2026-05-12,"5'4""",164,Green,9610 Main St,El Monte,CA,91731,,,,,
+beneficiary,11,Lisa Rodriguez,Lisa,Rodriguez,F,777-40-4904,1959-02-26,,"5'10""",228,Blue,3437 Oak Ave,Beverly Hills,CA,90210,(911) 892-4330,lisa.rodriguez@email.com,UU733052,CA,daughter
+beneficiary,11,Donna Lopez,Donna,Lopez,F,110-65-5068,1975-10-20,,"6'4""",163,Blue,4881 River Rd,Fremont,CA,94538,(740) 911-4839,donna.lopez@email.com,LQ915504,CA,daughter
+beneficiary,11,Thomas Scott,Thomas,Scott,M,205-32-4185,1988-09-26,,"5'5""",174,Brown,3761 Main St,Los Angeles,CA,90012,(749) 836-9278,thomas.scott@email.com,QX994383,CA,brother
+deceased,12,Daniel Sanchez,Daniel,Sanchez,M,413-19-1974,1966-03-23,2025-12-13,"5'7""",129,Hazel,3000 Hill St,Los Angeles,CA,90013,,,,,
+beneficiary,12,Linda Sanchez,Linda,Sanchez,F,195-95-6709,1983-08-06,,"6'8""",147,Blue,706 Main St,Long Beach,CA,90802,(944) 458-9171,linda.sanchez@email.com,ES152978,CA,daughter
+beneficiary,12,George Sanchez,George,Sanchez,M,349-75-8290,1989-04-14,,"5'2""",229,Hazel,3854 River Rd,San Jose,CA,95101,(676) 517-5956,george.sanchez@email.com,ME468191,CA,brother
+deceased,13,Susan Jones,Susan,Jones,F,743-45-3627,1953-04-19,2026-02-11,"5'10""",207,Hazel,9269 Valley Way,Santa Monica,CA,90401,,,,,
+beneficiary,13,Paul Jones,Paul,Jones,M,309-51-8788,1939-08-08,,"5'3""",131,Brown,4556 Park Pl,Anaheim,CA,92805,(222) 478-4462,paul.jones@email.com,CS287942,CA,husband
+beneficiary,13,Donald Davis,Donald,Davis,M,280-90-2929,1987-12-07,,"6'5""",186,Blue,2057 Lake Dr,Pasadena,CA,91101,(471) 300-2807,donald.davis@email.com,PW014765,CA,brother
+beneficiary,13,Paul Jones,Paul,Jones,M,616-87-4437,1972-08-12,,"6'8""",120,Gray,1082 Elm St,San Diego,CA,92101,(748) 667-3360,paul.jones@email.com,UA121110,CA,brother
+deceased,14,Sarah Clark,Sarah,Clark,F,720-30-6557,1955-02-01,2024-10-19,"5'9""",239,Gray,4757 Cedar Ln,Downey,CA,90241,,,,,
+beneficiary,14,Michael Clark,Michael,Clark,M,412-57-6484,1980-09-01,,"6'7""",204,Blue,744 Mountain Rd,Fresno,CA,93721,(750) 383-2510,michael.clark@email.com,GR475462,CA,husband
+beneficiary,14,Mark Clark,Mark,Clark,M,292-54-4339,1993-06-02,,"5'6""",246,Green,3318 Cedar Ln,Stockton,CA,95202,(855) 744-4916,mark.clark@email.com,OZ988023,CA,brother
+beneficiary,14,Richard Thompson,Richard,Thompson,M,214-25-4370,1959-02-12,,"6'5""",180,Green,3243 Lake Dr,Fresno,CA,93721,(803) 722-4970,richard.thompson@email.com,QJ373755,CA,friend
+deceased,15,Lisa Jackson,Lisa,Jackson,F,431-48-8093,1965-08-27,2025-09-14,"6'2""",244,Brown,9787 Sunset Blvd,Beverly Hills,CA,90210,,,,,
+beneficiary,15,Mark Jackson,Mark,Jackson,M,899-58-2838,1956-09-28,,"6'6""",241,Brown,3210 Oak Ave,Los Angeles,CA,90012,(689) 263-5017,mark.jackson@email.com,YN037191,CA,son
+beneficiary,15,Michael Jackson,Michael,Jackson,M,833-32-9914,1988-12-16,,"5'11""",209,Brown,1690 Cedar Ln,Santa Monica,CA,90401,(446) 565-6480,michael.jackson@email.com,MN524763,CA,brother
+deceased,16,Matthew Taylor,Matthew,Taylor,M,180-93-4031,1969-08-15,2025-07-16,"6'7""",219,Green,7434 Lincoln Ave,Pasadena,CA,91101,,,,,
+beneficiary,16,Donna Taylor,Donna,Taylor,F,245-62-4979,1967-05-20,,"6'6""",225,Brown,6821 Hill St,Sacramento,CA,95814,(942) 766-7477,donna.taylor@email.com,XY670520,CA,wife
+beneficiary,16,Ashley Moore,Ashley,Moore,F,538-64-6683,1961-01-17,,"5'0""",174,Hazel,8900 Harbor View,Chula Vista,CA,91910,(818) 562-4112,ashley.moore@email.com,MZ650636,CA,sister
+deceased,17,Robert Anderson,Robert,Anderson,M,811-10-7626,1934-11-13,2026-07-11,"5'6""",218,Brown,6065 Main St,Pasadena,CA,91101,,,,,
+beneficiary,17,Carol Anderson,Carol,Anderson,F,571-22-4273,1939-12-01,,"5'10""",247,Green,3726 Elm St,Los Angeles,CA,90012,(229) 463-8002,carol.anderson@email.com,VM593611,CA,wife
+beneficiary,17,William Anderson,William,Anderson,M,254-24-8632,1967-02-24,,"6'3""",230,Gray,9775 Pine Rd,Chula Vista,CA,91910,(986) 498-2548,william.anderson@email.com,EH213159,CA,brother
+beneficiary,17,Ashley Wright,Ashley,Wright,F,223-15-7593,1986-01-02,,"6'10""",168,Brown,2742 Harbor View,Irvine,CA,92614,(680) 220-1965,ashley.wright@email.com,KC340861,CA,sister
+deceased,18,Paul Thomas,Paul,Thomas,M,764-69-7732,1954-08-17,2026-03-13,"6'3""",190,Brown,5987 Sunset Blvd,Los Angeles,CA,90015,,,,,
+beneficiary,18,Dorothy Thomas,Dorothy,Thomas,F,813-72-5573,1962-12-13,,"5'5""",213,Brown,5322 Park Pl,Fremont,CA,94538,(666) 694-1462,dorothy.thomas@email.com,RO020020,CA,wife
+beneficiary,18,Dorothy Thomas,Dorothy,Thomas,F,881-39-6248,1967-06-17,,"5'1""",120,Gray,2856 Lincoln Ave,Oakland,CA,94612,(314) 938-2609,dorothy.thomas@email.com,MN546240,CA,daughter
+deceased,19,Elizabeth Jones,Elizabeth,Jones,F,109-15-3488,1969-04-27,2025-12-13,"6'1""",220,Blue,5606 Pine Rd,Glendale,CA,91201,,,,,
+beneficiary,19,Margaret Jones,Margaret,Jones,F,741-70-8212,1996-02-23,,"6'10""",227,Blue,8027 Cedar Ln,Beverly Hills,CA,90210,(275) 594-6863,margaret.jones@email.com,VJ860054,CA,daughter
+beneficiary,19,George Hernandez,George,Hernandez,M,776-94-3313,1957-01-24,,"6'1""",195,Green,6909 Harbor View,Santa Ana,CA,92701,(489) 854-7500,george.hernandez@email.com,QO237903,CA,brother
+beneficiary,19,Dorothy Young,Dorothy,Young,F,199-43-5217,1994-05-05,,"6'8""",164,Blue,2590 Cedar Ln,Fremont,CA,94538,(588) 995-9083,dorothy.young@email.com,TU457188,CA,sister
+deceased,20,Christopher Lopez,Christopher,Lopez,M,837-13-2719,1973-06-09,2025-04-17,"6'8""",222,Green,5058 Main St,Burbank,CA,91502,,,,,
+beneficiary,20,Lisa Lopez,Lisa,Lopez,F,639-84-3847,1941-05-02,,"6'0""",150,Blue,6356 Hill St,San Diego,CA,92101,(729) 958-5783,lisa.lopez@email.com,RK380723,CA,wife

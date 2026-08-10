@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case {{ case['case_number'] }} - BeneBridge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f5f7fa; color: #2d3748; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1.5rem 2rem; }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+        .nav { display: flex; gap: 2rem; }
+        .nav-link { color: white; text-decoration: none; font-weight: 500; }
+        .container { max-width: 1400px; margin: 2rem auto; padding: 0 2rem; }
+        .breadcrumb { margin-bottom: 1rem; color: #64748b; }
+        .breadcrumb a { color: #667eea; text-decoration: none; }
+        .grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; }
+        .card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 1.5rem; }
+        .card-title { font-size: 1.25rem; font-weight: 600; color: #1e293b; margin-bottom: 1rem; }
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .info-item { margin-bottom: 1rem; }
+        .info-label { font-size: 0.875rem; color: #64748b; margin-bottom: 0.25rem; font-weight: 500; }
+        .info-value { font-weight: 600; color: #1e293b; }
+        .badge { padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.875rem; font-weight: 600; display: inline-block; }
+        .badge-pending { background: #fef3c7; color: #92400e; }
+        .badge-under-review { background: #dbeafe; color: #1e40af; }
+        .badge-approved { background: #d1fae5; color: #065f46; }
+        .amount { color: #059669; font-size: 1.5rem; font-weight: 700; }
+        .doc-list { list-style: none; }
+        .doc-item { padding: 0.75rem; background: #f8fafc; border-radius: 8px; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span class="material-icons">account_balance</span>
+                BeneBridge Core Banking Platform
+            </div>
+            <nav class="nav">
+                <a href="/" class="nav-link">Dashboard</a>
+                <a href="/cases" class="nav-link">Cases</a>
+                <a href="/analytics" class="nav-link">Analytics</a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/cases">← Back to Cases</a>
+        </div>
+
+        <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem;">{{ case['case_number'] }}</h1>
+
+        <div class="grid">
+            <div>
+                <div class="card">
+                    <h2 class="card-title">Case Information</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Deceased Name</div>
+                            <div class="info-value">{{ case['deceased_name'] }}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Date of Death</div>
+                            <div class="info-value">{{ case['date_of_death'] }}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Beneficiary</div>
+                            <div class="info-value">{{ case['beneficiary_name'] }}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Beneficiary Email</div>
+                            <div class="info-value">{{ case['beneficiary_email'] }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">Account Details</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Account Type</div>
+                            <div class="info-value">{{ case['account_type'] }}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Account Number</div>
+                            <div class="info-value">{{ case['account_number'] }}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Financial Institution</div>
+                            <div class="info-value">{{ case['financial_institution'] }}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Account Balance</div>
+                            <div class="amount">${{ "{:,.2f}".format(case['account_balance']) }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">Documents</h2>
+                    <ul class="doc-list">
+                        {% for doc in documents %}
+                        <li class="doc-item">
+                            <div>
+                                <strong>{{ doc['doc_type'].replace('_', ' ').title() }}</strong>
+                                <div style="font-size: 0.875rem; color: #64748b;">Uploaded: {{ doc['upload_date'][:10] }}</div>
+                            </div>
+                            <span class="material-icons" style="color: #10b981;">check_circle</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <div class="card">
+                    <h2 class="card-title">Status</h2>
+                    <div style="text-align: center; padding: 1rem;">
+                        <span class="badge badge-{{ case['status'] }}" style="font-size: 1rem; padding: 0.75rem 1.5rem;">
+                            {{ case['status'].replace('_', ' ').upper() }}
+                        </span>
+                        <div style="margin-top: 1rem; color: #64748b;">
+                            Workflow Stage {{ case['workflow_stage'] }}
+                        </div>
+                        <div style="margin-top: 0.5rem; color: #64748b; font-size: 0.875rem;">
+                            Submitted: {{ case['submission_date'][:10] }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">Verification Status</h2>
+                    <div class="info-item">
+                        <div class="info-label">Death Certificate</div>
+                        <div class="info-value">✓ Verified</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">ID Verification</div>
+                        <div class="info-value">{% if case['id_verified'] %}✓ Verified{% else %}Pending{% endif %}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Beneficiary Info</div>
+                        <div class="info-value">{% if case['beneficiary_info_verified'] %}✓ Verified{% else %}Pending{% endif %}</div>
+                    </div>
+                </div>
+
+                <div class="card" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none;">
+                    <h2 class="card-title" style="color: white;">🔍 Live Verification Demo</h2>
+                    <p style="margin-bottom: 1rem; opacity: 0.9; font-size: 0.9rem;">
+                        Watch the complete verification workflow in real-time
+                    </p>
+                    <a href="/case/{{ case['case_number'] }}/verification-demo"
+                       style="display: block; background: white; color: #059669; padding: 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; text-align: center; transition: all 0.3s;">
+                        🚀 View Verification Process
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,138 @@
+================================================================================
+BENEBRIDGE MOCK DATABASE - QUICK CASE REFERENCE
+================================================================================
+
+FRAUD CASES TO FOCUS ON:
+  Case 13: Mark White - Suspicious/Tampered Death Certificate
+  Case 19: Elizabeth White - Recent Beneficiary Change
+
+================================================================================
+SAMPLE CASES FOR TESTING
+================================================================================
+
+CASE 1: Jessica Gonzalez (Simple, 2 beneficiaries)
+  Deceased: Jessica Gonzalez, F, SSN: 400-36-9992
+    DOB: 1964-03-14, DOD: 2025-10-13
+    Address: 1864 Elm St, Portland, OR 97201
+  Accounts: 2 accounts, Total: $261,698.07
+    - ACC-1-1: TD Ameritrade 401k ($148,603.63)
+    - ACC-1-2: Fidelity money_market ($113,094.44)
+  Beneficiaries:
+    - Margaret Gonzalez (sister) - 70% of ACC-1-1, 100% of ACC-1-2
+      DL: SG286617 (MA), Phone: (297) 558-4752
+    - Dorothy Gonzalez (daughter) - 30% of ACC-1-1
+      DL: HE168575 (MA), Phone: (699) 863-2918
+
+CASE 2: Donald Harris (3 beneficiaries)
+  Deceased: Donald Harris, M, SSN: 154-27-6444
+    DOB: 1958-10-06, DOD: 2026-01-11
+    Address: 2558 Main St, Portland, OR 97201
+  Accounts: 2 accounts, Total: $269,043.78
+  Beneficiaries:
+    - Margaret Harris (wife) - Primary beneficiary
+    - Patricia Williams (daughter)
+    - Jennifer Taylor (cousin)
+
+CASE 13: Mark White ⚠️ FRAUD CASE
+  Deceased: Mark White, M, SSN: 813-90-7625
+    DOB: 1976-06-05, DOD: 2024-09-18
+    Address: 3250 Harbor View, San Francisco, CA 94102
+  Accounts: 3 accounts, Total: $1,356,730.37
+    - ACC-13-1: Vanguard brokerage ($37,662.63)
+    - ACC-13-2: TD Ameritrade money_market ($80,599.47)
+    - ACC-13-3: Fidelity money_market ($1,238,468.27)
+  Beneficiaries:
+    - Sarah White (wife) - 100% of ALL accounts
+      DL: MF025234 (OR), Phone: (849) 798-3575
+  FRAUD INDICATOR:
+    Type: suspicious_document (HIGH)
+    Description: Death certificate shows signs of alteration
+    Action: Create death certificate with subtle tampering/alterations
+
+CASE 19: Elizabeth White ⚠️ FRAUD CASE
+  Deceased: Elizabeth White, F, SSN: 466-35-1686
+    DOB: 1975-12-07, DOD: 2026-07-10
+    Address: 4603 River Rd, Austin, TX 78701
+  Accounts: 2 accounts, Total: $263,172.02
+  Beneficiaries:
+    - Matthew White (husband) - 60% of ACC-19-1
+      DL: NM846084 (TX), Phone: (730) 653-4862
+    - Michael Miller (cousin) - 40% of ACC-19-1, 100% of ACC-19-2
+      DL: XQ857311 (WA), Phone: (702) 933-1768
+  FRAUD INDICATOR:
+    Type: recent_beneficiary_change (MEDIUM)
+    Description: Beneficiary designation changed shortly before death
+    Action: Create normal death cert, fraud is in timing of beneficiary change
+
+CASE 20: Jennifer Lee (Final test case)
+  Deceased: Jennifer Lee, F, SSN: 632-14-3856
+    DOB: 1965-03-04, DOD: 2024-08-19
+    Address: 3912 Elm St, Boston, MA 02101
+  Accounts: 2 accounts, Total: $287,085.73
+  Beneficiaries:
+    - Joseph Lee (husband)
+    - Richard Lee (son)
+
+================================================================================
+DATABASE FILES
+================================================================================
+
+1. dmf_mock.db - Death Master File (20 deceased persons)
+2. beneficiary_registry.db - Beneficiaries and designations (41 beneficiaries)
+3. identity_verification.db - ID verification data (41 records)
+4. financial_accounts.db - Institutions and accounts (51 accounts)
+5. fraud_indicators.db - Fraud flags and patterns (2 flagged cases)
+
+================================================================================
+USAGE COMMANDS
+================================================================================
+
+View complete case details:
+  python3 query_helper.py case <1-20>
+
+Look up deceased by SSN:
+  python3 query_helper.py deceased <ssn>
+
+Look up beneficiary by SSN:
+  python3 query_helper.py beneficiary <ssn>
+
+Verify ID by driver's license:
+  python3 query_helper.py verify <dl_number> <state>
+
+Show all fraud cases:
+  python3 query_helper.py fraud
+
+List all cases:
+  python3 query_helper.py all
+
+================================================================================
+DOCUMENT CREATION PRIORITY
+================================================================================
+
+Phase 1 - Create these 5 cases first:
+  ✓ Case 1  - Simple baseline
+  ✓ Case 2  - More beneficiaries
+  ✓ Case 13 - Fraud (suspicious document)
+  ✓ Case 19 - Fraud (beneficiary timing)
+  ✓ Case 20 - Clean comparison case
+
+For each case create:
+  - Death certificate (use MASTER_REFERENCE_ALL_PERSONS.csv)
+  - Driver's licenses for each beneficiary (use identity_verification.db)
+  - Transfer application (optional, use query_helper.py case X)
+
+================================================================================
+REALISTIC DATA FEATURES
+================================================================================
+
+✓ Gender-appropriate names (Males have male names, females have female names)
+✓ Logical relationships (spouse=opposite gender, children=younger, etc.)
+✓ Realistic ages (40-95 for deceased, appropriate for beneficiaries)
+✓ Real US cities and addresses
+✓ Proper SSN format (XXX-XX-XXXX)
+✓ Recent deaths (within last 2 years)
+✓ Realistic account balances ($5K-$1.5M depending on account type)
+✓ Beneficiary percentages sum to 100% per account
+✓ All data interconnected and consistent across databases
+
+================================================================================

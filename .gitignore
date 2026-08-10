@@ -1,0 +1,116 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# AWS Credentials (IMPORTANT: Never commit credentials!)
+.aws/
+*.pem
+*.key
+
+# Environment Variables
+.env
+.env.local
+
+# Database files (will be regenerated)
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+logs/
+email_notifications.log
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# Backup files
+*.bak
+*.bak2
+*.bak3
+*.backup
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Large binary files (keep templates, not all generated documents)
+# We'll keep a few sample cases but not all 700+ synthetic cases
+synthetic_cases/
+
+# Generated files (users will regenerate these)
+Generated_Claim_Forms/
+Generated_Driver_Licenses/
+
+# Large PDFs (keep templates only)
+*.pdf
+!*template*.pdf
+!*Template*.pdf
+# But allow PDFs in Cases folder (test data)
+!Cases/**/*.pdf
+
+# Large images (keep templates only)
+*.png
+!*template*.png
+!*Template*.png
+!*Blank*.png
+# But allow images in Cases folder (test data)
+!Cases/**/*.png
+!Cases/**/*.jpg
+!Cases/**/*.jpeg
+
+# Test outputs
+test_case/
+test_template_case/
+
+# Compiled Python
+*.pyc
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# LaTeX (from your dissertation chapters)
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.synctex.gz

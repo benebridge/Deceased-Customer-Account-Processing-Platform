@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estate Checklist - Executour</title>
+</head>
+<body>
+    {% include '_header.html' %}
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Estate Settlement Checklist</h1>
+            <p>Step-by-step guide to settling the estate and completing all necessary tasks</p>
+        </div>
+
+        <div class="section">
+            <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 32px; border-radius: 12px; margin-bottom: 32px;">
+                <h3 style="margin-bottom: 16px;">Overall Progress</h3>
+                <div style="background: rgba(255,255,255,0.2); height: 24px; border-radius: 12px; overflow: hidden;">
+                    <div style="background: white; height: 100%; width: {{ progress }}%; transition: width 0.5s;"></div>
+                </div>
+                <div style="margin-top: 12px; font-size: 1.5rem; font-weight: 600;">
+                    {{ completed_tasks }} / {{ total_tasks }} tasks completed ({{ "%.0f"|format(progress) }}%)
+                </div>
+            </div>
+
+            {% for category, tasks in tasks_by_category.items() %}
+            <div style="margin-bottom: 32px;">
+                <h2 style="font-size: 1.5rem; margin-bottom: 20px; color: #334155;">{{ category }}</h2>
+
+                <div style="display: grid; gap: 16px;">
+                    {% for task in tasks %}
+                    <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; background: {% if task.status == 'completed' %}#f0fdf4{% else %}white{% endif %};">
+                        <div style="display: flex; gap: 16px; align-items: start;">
+                            <input type="checkbox"
+                                   {% if task.status == 'completed' %}checked{% endif %}
+                                   onchange="completeTask({{ task.id }})"
+                                   style="width: 24px; height: 24px; margin-top: 4px; cursor: pointer;">
+
+                            <div style="flex: 1;">
+                                <h3 style="font-size: 1.125rem; margin-bottom: 8px; {% if task.status == 'completed' %}text-decoration: line-through; color: #64748b;{% endif %}">
+                                    {{ task.title }}
+                                </h3>
+
+                                {% if task.description %}
+                                <p style="color: #64748b; font-size: 0.875rem; margin-bottom: 12px;">{{ task.description }}</p>
+                                {% endif %}
+
+                                <div style="display: flex; gap: 16px; align-items: center;">
+                                    <span style="padding: 4px 12px; background: {% if task.priority == 'high' %}#fee2e2{% elif task.priority == 'medium' %}#fef3c7{% else %}#e0e7ff{% endif %}; color: {% if task.priority == 'high' %}#dc2626{% elif task.priority == 'medium' %}#f59e0b{% else %}#3b82f6{% endif %}; border-radius: 12px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase;">
+                                        {{ task.priority }} Priority
+                                    </span>
+
+                                    {% if task.due_date %}
+                                    <span style="color: #64748b; font-size: 0.875rem;">
+                                        📅 Due: {{ task.due_date }}
+                                    </span>
+                                    {% endif %}
+
+                                    {% if task.status == 'completed' %}
+                                    <span style="color: #16a34a; font-size: 0.875rem;">
+                                        ✓ Completed {{ task.completed_at[:10] if task.completed_at else '' }}
+                                    </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        function completeTask(taskId) {
+            fetch(`/checklist/complete/${taskId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(() => {
+                location.reload();
+            });
+        }
+    </script>
+</body>
+</html>

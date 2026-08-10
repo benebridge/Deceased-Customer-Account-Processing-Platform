@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Planning - Executour</title>
+</head>
+<body>
+    {% include '_header.html' %}
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Tax Planning & Optimization</h1>
+            <p>Understand your tax obligations and minimize your burden through strategic planning</p>
+        </div>
+
+        <!-- Tax Impact Alert -->
+        <div style="background: #fef2f2; border: 1px solid #fecaca; border-left: 4px solid #dc2626; padding: 32px 40px; border-radius: 8px; margin-bottom: 32px;">
+            <div style="max-width: 900px;">
+                <div style="display: inline-block; background: #fee2e2; color: #991b1b; padding: 4px 12px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px;">Tax Obligation</div>
+                <h2 style="color: #0f172a; font-size: 1.5rem; margin-bottom: 12px; font-weight: 600; letter-spacing: -0.02em;">Estimated Tax Liability: ${{ "{:,.0f}".format(total_federal_tax + total_state_tax) }}</h2>
+                <p style="color: #475569; font-size: 1rem; line-height: 1.6; margin-bottom: 24px;">
+                    This represents approximately <strong>{{ "%.0f"|format((total_federal_tax + total_state_tax) / total_inheritance * 100) }}%</strong> of your total inheritance. Strategic planning with a qualified tax professional can help minimize your tax burden.
+                </p>
+                <div style="background: white; border: 1px solid #e2e8f0; padding: 24px; border-radius: 6px; margin-bottom: 24px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; text-align: center;">
+                        <div>
+                            <div style="color: #64748b; font-size: 0.8125rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">Total Inheritance</div>
+                            <div style="font-size: 1.5rem; font-weight: 600; color: #0f172a; letter-spacing: -0.02em;">${{ "{:,.0f}".format(total_inheritance) }}</div>
+                        </div>
+                        <div>
+                            <div style="color: #64748b; font-size: 0.8125rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">Estimated Taxes</div>
+                            <div style="font-size: 1.5rem; font-weight: 600; color: #dc2626; letter-spacing: -0.02em;">${{ "{:,.0f}".format(total_federal_tax + total_state_tax) }}</div>
+                        </div>
+                        <div>
+                            <div style="color: #64748b; font-size: 0.8125rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">Net After Taxes</div>
+                            <div style="font-size: 1.5rem; font-weight: 600; color: #0f172a; letter-spacing: -0.02em;">${{ "{:,.0f}".format(total_net) }}</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="/advisors" style="display: inline-block; background: #0f172a; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 0.9375rem;">
+                    Connect with Tax Planning Expert
+                </a>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 32px;">
+            <div style="background: white; padding: 24px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div style="color: #64748b; font-size: 0.875rem; margin-bottom: 8px;">Total Inheritance</div>
+                <div style="font-size: 2rem; font-weight: 700; color: #1e293b;">${{ "{:,.2f}".format(total_inheritance) }}</div>
+            </div>
+
+            <div style="background: white; padding: 24px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div style="color: #64748b; font-size: 0.875rem; margin-bottom: 8px;">Federal Withholding</div>
+                <div style="font-size: 2rem; font-weight: 700; color: #dc2626;">-${{ "{:,.2f}".format(total_federal_tax) }}</div>
+            </div>
+
+            <div style="background: white; padding: 24px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div style="color: #64748b; font-size: 0.875rem; margin-bottom: 8px;">State Withholding</div>
+                <div style="font-size: 2rem; font-weight: 700; color: #dc2626;">-${{ "{:,.2f}".format(total_state_tax) }}</div>
+            </div>
+
+            <div style="background: white; padding: 24px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div style="color: #64748b; font-size: 0.875rem; margin-bottom: 8px;">Net After Taxes</div>
+                <div style="font-size: 2rem; font-weight: 700; color: #16a34a;">${{ "{:,.2f}".format(total_net) }}</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h2>💡 Personalized Tax Planning Tips</h2>
+            </div>
+
+            <div style="display: grid; gap: 20px;">
+                {% for tip in tips %}
+                <div style="border-left: 4px solid {% if tip.priority == 'high' %}#dc2626{% elif tip.priority == 'medium' %}#f59e0b{% else %}#3b82f6{% endif %}; background: {% if tip.priority == 'high' %}#fef2f2{% elif tip.priority == 'medium' %}#fffbeb{% else %}#eff6ff{% endif %}; padding: 20px; border-radius: 8px;">
+                    <div style="display: flex; gap: 12px; align-items: start;">
+                        <div style="font-size: 2rem;">
+                            {% if tip.priority == 'high' %}⚠️{% elif tip.priority == 'medium' %}💡{% else %}ℹ️{% endif %}
+                        </div>
+                        <div style="flex: 1;">
+                            <h3 style="font-size: 1.125rem; margin-bottom: 8px; color: {% if tip.priority == 'high' %}#991b1b{% elif tip.priority == 'medium' %}#92400e{% else %}#1e40af{% endif %};">
+                                {{ tip.title }}
+                            </h3>
+                            <p style="color: {% if tip.priority == 'high' %}#7f1d1d{% elif tip.priority == 'medium' %}#78350f{% else %}#1e3a8a{% endif %};">
+                                {{ tip.description }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h2>Tax Breakdown by Account</h2>
+            </div>
+
+            {% if tax_data %}
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: #f8fafc; border-bottom: 2px solid #e2e8f0;">
+                            <th style="padding: 12px; text-align: left; font-size: 0.875rem; color: #64748b;">Institution</th>
+                            <th style="padding: 12px; text-align: left; font-size: 0.875rem; color: #64748b;">Account Type</th>
+                            <th style="padding: 12px; text-align: right; font-size: 0.875rem; color: #64748b;">Gross Amount</th>
+                            <th style="padding: 12px; text-align: right; font-size: 0.875rem; color: #64748b;">Federal Tax</th>
+                            <th style="padding: 12px; text-align: right; font-size: 0.875rem; color: #64748b;">State Tax</th>
+                            <th style="padding: 12px; text-align: right; font-size: 0.875rem; color: #64748b;">Net Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in tax_data %}
+                        <tr style="border-bottom: 1px solid #f1f5f9;">
+                            <td style="padding: 12px;">{{ item.institution_name }}</td>
+                            <td style="padding: 12px;">{{ item.account_type }}</td>
+                            <td style="padding: 12px; text-align: right; font-weight: 600;">${{ "{:,.2f}".format(item.distribution_amount) }}</td>
+                            <td style="padding: 12px; text-align: right; color: #dc2626;">-${{ "{:,.2f}".format(item.federal_withholding) }}</td>
+                            <td style="padding: 12px; text-align: right; color: #dc2626;">-${{ "{:,.2f}".format(item.state_withholding) }}</td>
+                            <td style="padding: 12px; text-align: right; font-weight: 600; color: #16a34a;">${{ "{:,.2f}".format(item.net_distribution) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <div class="empty-state-icon">📊</div>
+                <h3>No Tax Data Available</h3>
+                <p>Tax calculations will appear here once cases are processed</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="section" style="background: #f0f9ff; border: 2px solid #3b82f6;">
+            <h3 style="margin-bottom: 16px; color: #1e40af;">📚 Tax Resources</h3>
+            <ul style="color: #1e3a8a; line-height: 2; padding-left: 20px;">
+                <li><strong>IRS Publication 590-B:</strong> Distributions from IRAs</li>
+                <li><strong>Form 1099-R:</strong> You'll receive this for all retirement distributions</li>
+                <li><strong>10-Year Rule:</strong> Most non-spouse beneficiaries must withdraw inherited IRA within 10 years</li>
+                <li><strong>State Taxes:</strong> Vary by state - some have no income tax on distributions</li>
+                <li><strong>Professional Help:</strong> Consider consulting a CPA or tax attorney for amounts over $100k</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

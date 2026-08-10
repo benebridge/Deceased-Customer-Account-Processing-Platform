@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Process Case {{ case['case_number'] }} - BeneBridge CRM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f5f7fa; color: #2d3748; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1.5rem 2rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+        .nav { display: flex; gap: 2rem; }
+        .nav-link { color: white; text-decoration: none; font-weight: 500; transition: opacity 0.2s; }
+        .nav-link:hover { opacity: 0.8; }
+        .container { max-width: 1400px; margin: 2rem auto; padding: 0 2rem; }
+        .breadcrumb { margin-bottom: 1rem; color: #64748b; }
+        .breadcrumb a { color: #667eea; text-decoration: none; }
+        .page-title { font-size: 2rem; font-weight: 700; color: #1e293b; margin-bottom: 0.5rem; }
+        .case-info { background: #fff; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; }
+        .card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 1.5rem; }
+        .card-title { font-size: 1.25rem; font-weight: 600; color: #1e293b; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+
+        /* Task List */
+        .task-list { list-style: none; }
+        .task-item { padding: 1rem; border: 2px solid #e2e8f0; border-radius: 8px; margin-bottom: 0.75rem; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s; }
+        .task-item:hover { border-color: #667eea; }
+        .task-item.completed { background: #f0fdf4; border-color: #10b981; }
+        .task-item.in-progress { background: #dbeafe; border-color: #3b82f6; }
+        .task-item.pending { background: #fef3c7; border-color: #f59e0b; }
+        .task-info { flex: 1; }
+        .task-name { font-weight: 600; color: #1e293b; margin-bottom: 0.25rem; }
+        .task-type { font-size: 0.875rem; color: #64748b; }
+        .task-badge { padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+        .task-badge.pending { background: #fef3c7; color: #92400e; }
+        .task-badge.in-progress { background: #dbeafe; color: #1e40af; }
+        .task-badge.completed { background: #d1fae5; color: #065f46; }
+        .task-actions { display: flex; gap: 0.5rem; }
+        .btn { padding: 0.5rem 1rem; border-radius: 8px; border: none; font-weight: 500; cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; }
+        .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4); }
+        .btn-secondary { background: #f1f5f9; color: #1e293b; }
+        .btn-secondary:hover { background: #e2e8f0; }
+        .btn-success { background: #10b981; color: white; }
+        .btn-success:hover { background: #059669; }
+
+        /* Progress Bar */
+        .progress-container { margin-bottom: 1.5rem; }
+        .progress-bar { width: 100%; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); transition: width 0.3s ease; }
+        .progress-text { text-align: center; margin-top: 0.5rem; color: #64748b; font-size: 0.875rem; }
+
+        /* Updates Feed */
+        .updates-feed { max-height: 500px; overflow-y: auto; }
+        .update-item { padding: 1rem; border-left: 3px solid #e2e8f0; margin-bottom: 1rem; background: #f8fafc; border-radius: 0 8px 8px 0; }
+        .update-item.success { border-left-color: #10b981; }
+        .update-item.warning { border-left-color: #f59e0b; }
+        .update-item.error { border-left-color: #ef4444; }
+        .update-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+        .update-type { font-weight: 600; color: #1e293b; font-size: 0.875rem; }
+        .update-time { color: #64748b; font-size: 0.75rem; }
+        .update-message { color: #475569; font-size: 0.875rem; }
+
+        /* Stats Grid */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+        .stat { text-align: center; padding: 1rem; background: #f8fafc; border-radius: 8px; }
+        .stat-value { font-size: 1.5rem; font-weight: 700; color: #1e293b; }
+        .stat-label { font-size: 0.75rem; color: #64748b; margin-top: 0.25rem; }
+
+        /* Auto-refresh indicator */
+        .auto-refresh { position: fixed; bottom: 2rem; right: 2rem; background: #667eea; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4); display: flex; align-items: center; gap: 0.5rem; }
+        .pulse { width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span class="material-icons">account_balance</span>
+                BeneBridge CRM
+            </div>
+            <nav class="nav">
+                <a href="/workspace" class="nav-link">Workspace</a>
+                <a href="/cases" class="nav-link">Cases</a>
+                <a href="/analytics" class="nav-link">Analytics</a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/workspace">← Back to Workspace</a>
+        </div>
+
+        <h1 class="page-title">Process Case: {{ case['case_number'] }}</h1>
+
+        <div class="case-info">
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="stat-value">{{ case['deceased_name'] }}</div>
+                    <div class="stat-label">Deceased</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">{{ case['beneficiary_name'] }}</div>
+                    <div class="stat-label">Beneficiary</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">{{ case['account_type'] }}</div>
+                    <div class="stat-label">Account Type</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">${{ "{:,.0f}".format(case['account_balance']) }}</div>
+                    <div class="stat-label">Balance</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div>
+                <div class="card">
+                    <h2 class="card-title">
+                        <span class="material-icons">task_alt</span>
+                        Workflow Tasks
+                    </h2>
+
+                    <div class="progress-container">
+                        {% set completed_count = tasks|selectattr('status', 'equalto', 'completed')|list|length %}
+                        {% set total_count = tasks|length %}
+                        {% set progress = (completed_count / total_count * 100) if total_count > 0 else 0 %}
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: {{ progress }}%"></div>
+                        </div>
+                        <div class="progress-text">{{ completed_count }} of {{ total_count }} tasks completed ({{ "%.0f"|format(progress) }}%)</div>
+                    </div>
+
+                    <ul class="task-list">
+                        {% for task in tasks %}
+                        <li class="task-item {{ task['status'] }}">
+                            <div class="task-info">
+                                <div class="task-name">
+                                    {% if task['status'] == 'completed' %}
+                                        <span class="material-icons" style="color: #10b981; font-size: 20px; vertical-align: middle;">check_circle</span>
+                                    {% elif task['status'] == 'in_progress' %}
+                                        <span class="material-icons" style="color: #3b82f6; font-size: 20px; vertical-align: middle;">pending</span>
+                                    {% else %}
+                                        <span class="material-icons" style="color: #f59e0b; font-size: 20px; vertical-align: middle;">radio_button_unchecked</span>
+                                    {% endif %}
+                                    {{ task['task_name'] }}
+                                </div>
+                                <div class="task-type">{{ task['task_type'].replace('_', ' ').title() }}</div>
+                            </div>
+                            <div class="task-actions">
+                                <span class="task-badge {{ task['status'] }}">{{ task['status'].replace('_', ' ') }}</span>
+                                {% if task['status'] == 'pending' %}
+                                <a href="/task/{{ task['id'] }}" class="btn btn-primary">
+                                    <span class="material-icons" style="font-size: 16px;">play_arrow</span>
+                                    Start
+                                </a>
+                                {% elif task['status'] == 'in_progress' %}
+                                <a href="/task/{{ task['id'] }}" class="btn btn-secondary">
+                                    <span class="material-icons" style="font-size: 16px;">edit</span>
+                                    Continue
+                                </a>
+                                {% endif %}
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <div class="card">
+                    <h2 class="card-title">
+                        <span class="material-icons">update</span>
+                        Live Updates
+                    </h2>
+                    <div class="updates-feed" id="updates-feed">
+                        {% if verification_updates %}
+                            {% for update in verification_updates %}
+                            <div class="update-item {{ update['status'] }}">
+                                <div class="update-header">
+                                    <span class="update-type">{{ update['update_type'].replace('_', ' ').title() }}</span>
+                                    <span class="update-time">{{ update['timestamp'][-8:] if update['timestamp'] else 'Now' }}</span>
+                                </div>
+                                <div class="update-message">{{ update['message'] }}</div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="update-item">
+                                <div class="update-message">No updates yet. Start processing tasks to see real-time verification progress.</div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="auto-refresh">
+        <span class="pulse"></span>
+        Auto-refreshing updates...
+    </div>
+
+    <script>
+        // Auto-refresh updates every 3 seconds
+        setInterval(async () => {
+            try {
+                const response = await fetch('/api/v1/case/{{ case['case_number'] }}/updates');
+                const updates = await response.json();
+
+                const feedEl = document.getElementById('updates-feed');
+                if (updates.length > 0) {
+                    feedEl.innerHTML = '';
+                    updates.forEach(update => {
+                        const updateEl = document.createElement('div');
+                        updateEl.className = `update-item ${update.status}`;
+                        updateEl.innerHTML = `
+                            <div class="update-header">
+                                <span class="update-type">${update.update_type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</span>
+                                <span class="update-time">${update.timestamp ? update.timestamp.substring(11, 19) : 'Now'}</span>
+                            </div>
+                            <div class="update-message">${update.message}</div>
+                        `;
+                        feedEl.appendChild(updateEl);
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching updates:', error);
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

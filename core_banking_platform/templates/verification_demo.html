@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification Process - {{ case[1] }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2942 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: #1a2942;
+            border-bottom: 2px solid #2a3f5f;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title h1 {
+            font-size: 24px;
+            color: #60a5fa;
+            margin-bottom: 5px;
+        }
+
+        .header-title p {
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        .back-btn {
+            background: #2563eb;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .case-info {
+            background: #1f2937;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid #374151;
+        }
+
+        .case-info h2 {
+            color: #60a5fa;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .case-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .detail-item {
+            display: flex;
+            gap: 10px;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #9ca3af;
+            min-width: 120px;
+        }
+
+        .detail-value {
+            color: #e0e0e0;
+        }
+
+        .verification-container {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
+        }
+
+        .verification-log {
+            background: #1f2937;
+            border-radius: 12px;
+            border: 1px solid #374151;
+            padding: 25px;
+        }
+
+        .verification-log h3 {
+            color: #60a5fa;
+            margin-bottom: 20px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .log-output {
+            background: #0a0f1a;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.8;
+            max-height: 700px;
+            overflow-y: auto;
+            color: #d1d5db;
+        }
+
+        .log-line {
+            margin: 2px 0;
+            padding: 2px 0;
+        }
+
+        .log-timestamp {
+            color: #6b7280;
+            font-size: 11px;
+        }
+
+        .log-success {
+            color: #10b981;
+        }
+
+        .log-info {
+            color: #60a5fa;
+        }
+
+        .log-warning {
+            color: #f59e0b;
+        }
+
+        .log-error {
+            color: #ef4444;
+        }
+
+        .verification-summary {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .summary-card {
+            background: #1f2937;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #374151;
+        }
+
+        .summary-card h4 {
+            color: #9ca3af;
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .verification-step {
+            margin-bottom: 20px;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .step-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .step-icon.pending {
+            background: #374151;
+        }
+
+        .step-icon.running {
+            background: #2563eb;
+            animation: pulse 1.5s infinite;
+        }
+
+        .step-icon.completed {
+            background: #10b981;
+        }
+
+        .step-icon.failed {
+            background: #ef4444;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .step-name {
+            flex: 1;
+            font-weight: 600;
+            color: #e0e0e0;
+        }
+
+        .step-status {
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #374151;
+            color: #9ca3af;
+        }
+
+        .status-running {
+            background: #1e3a8a;
+            color: #60a5fa;
+        }
+
+        .status-completed {
+            background: #064e3b;
+            color: #10b981;
+        }
+
+        .status-failed {
+            background: #7f1d1d;
+            color: #ef4444;
+        }
+
+        .step-details {
+            margin-left: 42px;
+            font-size: 13px;
+            color: #9ca3af;
+        }
+
+        .confidence-bar {
+            width: 100%;
+            height: 8px;
+            background: #374151;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #34d399);
+            transition: width 0.5s ease;
+        }
+
+        .final-decision {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            border: 2px solid #2563eb;
+        }
+
+        .decision-label {
+            color: #9ca3af;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .decision-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #60a5fa;
+            margin-bottom: 15px;
+        }
+
+        .decision-confidence {
+            font-size: 16px;
+            color: #d1d5db;
+        }
+
+        .run-button {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .run-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .run-button:disabled {
+            background: #374151;
+            cursor: not-allowed;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .processing-time {
+            text-align: center;
+            color: #9ca3af;
+            font-size: 13px;
+            margin-top: 15px;
+        }
+
+        /* Custom scrollbar */
+        .log-output::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .log-output::-webkit-scrollbar-track {
+            background: #1f2937;
+            border-radius: 4px;
+        }
+
+        .log-output::-webkit-scrollbar-thumb {
+            background: #374151;
+            border-radius: 4px;
+        }
+
+        .log-output::-webkit-scrollbar-thumb:hover {
+            background: #4b5563;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="header-title">
+                <h1>🔍 Real-Time Verification Process</h1>
+                <p>Watch the complete verification workflow in action</p>
+            </div>
+            <a href="/case/{{ case[1] }}" class="back-btn">← Back to Case</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="case-info">
+            <h2>Case Information</h2>
+            <div class="case-details">
+                <div class="detail-item">
+                    <span class="detail-label">Case Number:</span>
+                    <span class="detail-value">{{ case[1] }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Deceased:</span>
+                    <span class="detail-value">{{ case[2] }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Beneficiary:</span>
+                    <span class="detail-value">{{ case[5] }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Account Type:</span>
+                    <span class="detail-value">{{ case[9] }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Account Balance:</span>
+                    <span class="detail-value">${{ "{:,.2f}".format(case[11]|float) }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="verification-container">
+            <div class="verification-log">
+                <h3>
+                    <span id="log-status-icon">📋</span>
+                    Verification Log
+                </h3>
+                <div class="log-output" id="verification-log">
+                    <div class="log-line log-info">
+                        Ready to start verification process...
+                    </div>
+                    <div class="log-line">
+                        Click "Run Verification" to begin.
+                    </div>
+                </div>
+            </div>
+
+            <div class="verification-summary">
+                <div class="summary-card">
+                    <button class="run-button" id="run-btn" onclick="runVerification()">
+                        🚀 Run Complete Verification
+                    </button>
+
+                    <h4>Verification Steps</h4>
+
+                    <div class="verification-step">
+                        <div class="step-header">
+                            <div class="step-icon pending" id="step-icon-1">📄</div>
+                            <div class="step-name">Death Certificate</div>
+                            <div class="step-status status-pending" id="step-status-1">Pending</div>
+                        </div>
+                        <div class="step-details" id="step-details-1"></div>
+                    </div>
+
+                    <div class="verification-step">
+                        <div class="step-header">
+                            <div class="step-icon pending" id="step-icon-2">🪪</div>
+                            <div class="step-name">ID Verification</div>
+                            <div class="step-status status-pending" id="step-status-2">Pending</div>
+                        </div>
+                        <div class="step-details" id="step-details-2"></div>
+                    </div>
+
+                    <div class="verification-step">
+                        <div class="step-header">
+                            <div class="step-icon pending" id="step-icon-3">👤</div>
+                            <div class="step-name">Facial Recognition</div>
+                            <div class="step-status status-pending" id="step-status-3">Pending</div>
+                        </div>
+                        <div class="step-details" id="step-details-3"></div>
+                    </div>
+
+                    <div class="verification-step">
+                        <div class="step-header">
+                            <div class="step-icon pending" id="step-icon-4">🚨</div>
+                            <div class="step-name">Fraud Detection</div>
+                            <div class="step-status status-pending" id="step-status-4">Pending</div>
+                        </div>
+                        <div class="step-details" id="step-details-4"></div>
+                    </div>
+                </div>
+
+                <div class="summary-card final-decision" id="final-decision" style="display: none;">
+                    <div class="decision-label">FINAL DECISION</div>
+                    <div class="decision-value" id="decision-text">--</div>
+                    <div class="decision-confidence" id="decision-confidence">--</div>
+                    <div class="processing-time" id="total-time"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let logElement = document.getElementById('verification-log');
+        let runButton = document.getElementById('run-btn');
+        let currentStep = 0;
+
+        function addLogLine(message, type = 'info') {
+            const line = document.createElement('div');
+            line.className = `log-line log-${type}`;
+
+            // Parse timestamp if present
+            if (message.startsWith('[')) {
+                const timestampEnd = message.indexOf(']');
+                const timestamp = message.substring(0, timestampEnd + 1);
+                const text = message.substring(timestampEnd + 1);
+                line.innerHTML = `<span class="log-timestamp">${timestamp}</span>${text}`;
+            } else {
+                line.textContent = message;
+            }
+
+            logElement.appendChild(line);
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+
+        function updateStepStatus(stepNum, status, icon, details = '') {
+            const statusEl = document.getElementById(`step-status-${stepNum}`);
+            const iconEl = document.getElementById(`step-icon-${stepNum}`);
+            const detailsEl = document.getElementById(`step-details-${stepNum}`);
+
+            statusEl.textContent = status;
+            statusEl.className = `step-status status-${status.toLowerCase().replace(' ', '-')}`;
+            iconEl.className = `step-icon ${status.toLowerCase()}`;
+            if (icon) iconEl.textContent = icon;
+            if (details) detailsEl.innerHTML = details;
+        }
+
+        function runVerification() {
+            runButton.disabled = true;
+            runButton.innerHTML = '<span class="spinner"></span> Running Verification...';
+            logElement.innerHTML = '';
+            document.getElementById('final-decision').style.display = 'none';
+            document.getElementById('log-status-icon').textContent = '⚙️';
+
+            // Reset all steps
+            for (let i = 1; i <= 4; i++) {
+                updateStepStatus(i, 'Pending', null, '');
+            }
+
+            fetch(`/api/case/{{ case[1] }}/run-verification`, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.success) {
+                    addLogLine('Error: ' + (data.error || 'Unknown error'), 'error');
+                    return;
+                }
+
+                const results = data.results;
+
+                // Display log lines
+                results.log.forEach(line => {
+                    let type = 'info';
+                    if (line.includes('✓') || line.includes('✅')) type = 'success';
+                    else if (line.includes('⚠') || line.includes('🚨')) type = 'warning';
+                    else if (line.includes('❌')) type = 'error';
+                    addLogLine(line, type);
+                });
+
+                // Update step 1: Death Certificate
+                updateStepStatus(1, 'Completed', '✅',
+                    `Confidence: ${results.death_cert.confidence.toFixed(1)}%<br>` +
+                    `Method: ${results.death_cert.method}<br>` +
+                    `<div class="confidence-bar"><div class="confidence-fill" style="width: ${results.death_cert.confidence}%"></div></div>`
+                );
+
+                // Update step 2: ID Verification
+                updateStepStatus(2, 'Completed', '✅',
+                    `Confidence: ${results.id_verification.confidence.toFixed(1)}%<br>` +
+                    `Status: ${results.id_verification.status}<br>` +
+                    `<div class="confidence-bar"><div class="confidence-fill" style="width: ${results.id_verification.confidence}%"></div></div>`
+                );
+
+                // Update step 3: Facial Recognition
+                updateStepStatus(3, 'Completed', '✅',
+                    `Confidence: ${results.facial_recognition.confidence.toFixed(1)}%<br>` +
+                    `Status: ${results.facial_recognition.status}<br>` +
+                    `<div class="confidence-bar"><div class="confidence-fill" style="width: ${results.facial_recognition.confidence}%"></div></div>`
+                );
+
+                // Update step 4: Fraud Detection
+                const fraudIcon = results.fraud_detection.risk_level === 'MINIMAL' ? '✅' :
+                                 results.fraud_detection.risk_level === 'LOW' ? '⚠️' : '🚨';
+                updateStepStatus(4, 'Completed', fraudIcon,
+                    `Risk Level: ${results.fraud_detection.risk_level}<br>` +
+                    `Fraud Score: ${results.fraud_detection.fraud_score.toFixed(1)}/100<br>` +
+                    `Recommendation: ${results.fraud_detection.recommendation}`
+                );
+
+                // Show final decision
+                const decision = document.getElementById('final-decision');
+                decision.style.display = 'block';
+                document.getElementById('decision-text').textContent = results.final_decision;
+                document.getElementById('decision-confidence').textContent =
+                    `Overall Confidence: ${results.overall_confidence.toFixed(1)}%`;
+                document.getElementById('total-time').textContent =
+                    `Total Processing Time: ${results.total_time.toFixed(1)}s`;
+
+                document.getElementById('log-status-icon').textContent = '✅';
+                runButton.innerHTML = '✅ Verification Complete';
+
+                setTimeout(() => {
+                    runButton.disabled = false;
+                    runButton.innerHTML = '🔄 Run Again';
+                }, 2000);
+            })
+            .catch(error => {
+                addLogLine('Network error: ' + error, 'error');
+                runButton.disabled = false;
+                runButton.innerHTML = '🚀 Run Complete Verification';
+            });
+        }
+    </script>
+</body>
+</html>

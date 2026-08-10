@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grief Resources - Executour</title>
+</head>
+<body>
+    {% include '_header.html' %}
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Grief Resources & Support</h1>
+            <p>You don't have to go through this alone. Access counseling, support groups, and helpful resources.</p>
+        </div>
+
+        <div style="background: linear-gradient(to right, #1e293b, #334155); color: white; padding: 40px; border-radius: 8px; margin-bottom: 32px; border-left: 4px solid #94a3b8;">
+            <div style="max-width: 800px; margin: 0 auto;">
+                <h2 style="font-size: 1.5rem; margin-bottom: 16px; font-weight: 600; letter-spacing: -0.02em;">We're Here to Support You</h2>
+                <p style="font-size: 1rem; opacity: 0.9; line-height: 1.6; color: #e2e8f0;">
+                    Losing a loved one is one of life's most difficult experiences. While we help you navigate the financial aspects,
+                    we also want to ensure you have access to emotional and mental health support.
+                </p>
+            </div>
+        </div>
+
+        {% for category, resources in resources_by_category.items() %}
+        <div class="section">
+            <div class="section-header">
+                <h2>{{ category }}</h2>
+                <span style="color: #64748b;">{{ resources|length }} resources</span>
+            </div>
+
+            <div style="display: grid; gap: 20px;">
+                {% for resource in resources %}
+                <div style="border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; transition: all 0.3s;"
+                     onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'"
+                     onmouseout="this.style.boxShadow='none'">
+                    <div>
+                        <div style="margin-bottom: 12px;">
+                            <h3 style="font-size: 1.125rem; margin-bottom: 8px; font-weight: 600; color: #0f172a;">{{ resource.title }}</h3>
+                            <div style="display: inline-block; padding: 4px 12px; background: #f1f5f9; color: #64748b; border-radius: 4px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
+                                {{ resource.resource_type }}
+                            </div>
+                        </div>
+
+                            {% if resource.description %}
+                            <p style="color: #64748b; margin-bottom: 16px; line-height: 1.6;">{{ resource.description }}</p>
+                            {% endif %}
+
+                            <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
+                                {% if resource.phone %}
+                                <a href="tel:{{ resource.phone }}" style="color: #667eea; text-decoration: none; font-weight: 500; font-size: 0.9375rem;">
+                                    Phone: {{ resource.phone }}
+                                </a>
+                                {% endif %}
+
+                                {% if resource.email %}
+                                <a href="mailto:{{ resource.email }}" style="color: #667eea; text-decoration: none; font-weight: 500; font-size: 0.9375rem;">
+                                    Email: {{ resource.email }}
+                                </a>
+                                {% endif %}
+
+                                {% if resource.url %}
+                                <a href="{{ resource.url }}" target="_blank" style="color: #667eea; text-decoration: none; font-weight: 500; font-size: 0.9375rem;">
+                                    Visit Website →
+                                </a>
+                                {% endif %}
+
+                                {% if resource.cost %}
+                                <span style="padding: 4px 12px; background: {% if resource.cost == 'Free' %}#dcfce7{% else %}#fef3c7{% endif %}; color: {% if resource.cost == 'Free' %}#166534{% else %}#92400e{% endif %}; border-radius: 12px; font-size: 0.875rem; font-weight: 600;">
+                                    {{ resource.cost }}
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="section" style="background: #fef2f2; border: 1px solid #fecaca; border-left: 4px solid #dc2626;">
+            <h3 style="color: #0f172a; margin-bottom: 16px; font-weight: 600;">Crisis Support</h3>
+            <p style="color: #475569; margin-bottom: 20px; font-size: 1rem; line-height: 1.6;">
+                If you're experiencing a mental health crisis, please reach out immediately:
+            </p>
+            <div style="display: grid; gap: 1px; background: #e2e8f0; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
+                <div style="background: white; padding: 24px;">
+                    <strong style="color: #0f172a; font-size: 1rem; display: block; margin-bottom: 8px;">National Suicide Prevention Lifeline</strong>
+                    <a href="tel:988" style="color: #dc2626; font-size: 1.75rem; font-weight: 600; text-decoration: none; display: block; margin-bottom: 8px; letter-spacing: -0.02em;">988</a>
+                    <p style="color: #64748b; font-size: 0.9375rem;">24/7 free and confidential support</p>
+                </div>
+
+                <div style="background: white; padding: 24px;">
+                    <strong style="color: #0f172a; font-size: 1rem; display: block; margin-bottom: 8px;">Crisis Text Line</strong>
+                    <span style="color: #dc2626; font-size: 1.25rem; font-weight: 600; display: block; margin-bottom: 8px;">Text HOME to 741741</span>
+                    <p style="color: #64748b; font-size: 0.9375rem;">Free 24/7 crisis counseling via text</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" style="background: #f8fafc; border: 1px solid #e2e8f0;">
+            <h3 style="color: #0f172a; margin-bottom: 16px; font-weight: 600;">Understanding Grief</h3>
+            <p style="color: #14532d; line-height: 1.8;">
+                Grief is a natural response to loss. There's no "right" way to grieve, and everyone's journey is unique.
+                Some common experiences include:
+            </p>
+            <ul style="color: #14532d; line-height: 2; padding-left: 20px; margin-top: 12px;">
+                <li>Denial, anger, bargaining, depression, and acceptance (not necessarily in order)</li>
+                <li>Physical symptoms like fatigue, changes in appetite, or difficulty sleeping</li>
+                <li>Difficulty concentrating or making decisions</li>
+                <li>Waves of intense emotion that come and go</li>
+                <li>Feeling numb or disconnected</li>
+            </ul>
+            <p style="color: #14532d; line-height: 1.8; margin-top: 16px;">
+                <strong>Remember:</strong> Seeking support is a sign of strength, not weakness. Professional counseling
+                can provide tools and strategies to help you navigate this difficult time.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,561 @@
+BENEFICIARY CLAIM FORMS MAPPING
+================================================================================
+
+1. Claim_Form_IRA-001-1_018_Thompson_Karen.pdf
+   Deceased: Jennifer Thompson (DOD: 4/11/2026)
+   Account: 7780950557
+   Beneficiary: Karen Thompson (nephew)
+   Percentage: 60%
+
+2. Claim_Form_IRA-001-1_019_Thompson_Joseph.pdf
+   Deceased: Jennifer Thompson (DOD: 4/11/2026)
+   Account: 7780950557
+   Beneficiary: Joseph Thompson (nephew)
+   Percentage: 40%
+
+3. Claim_Form_IRA-001-1_020_Thompson_Richard.pdf
+   Deceased: Jennifer Thompson (DOD: 4/11/2026)
+   Account: 7780950557
+   Beneficiary: Richard Thompson (parent)
+   Percentage: 0%
+
+4. Claim_Form_IRA-002-1_031_Harris_Charles.pdf
+   Deceased: Robert Anderson (DOD: 11/17/2024)
+   Account: 4676839190
+   Beneficiary: Charles Harris (parent)
+   Percentage: 50%
+
+5. Claim_Form_IRA-002-1_032_White_Thomas.pdf
+   Deceased: Robert Anderson (DOD: 11/17/2024)
+   Account: 4676839190
+   Beneficiary: Thomas White (nephew)
+   Percentage: 50%
+
+6. Claim_Form_IRA-002-2_031_Harris_Charles.pdf
+   Deceased: Robert Anderson (DOD: 11/17/2024)
+   Account: 9589681539
+   Beneficiary: Charles Harris (child)
+   Percentage: 60%
+
+7. Claim_Form_IRA-002-2_032_White_Thomas.pdf
+   Deceased: Robert Anderson (DOD: 11/17/2024)
+   Account: 9589681539
+   Beneficiary: Thomas White (spouse)
+   Percentage: 40%
+
+8. Claim_Form_IRA-002-3_031_Harris_Charles.pdf
+   Deceased: Robert Anderson (DOD: 11/17/2024)
+   Account: 9287158620
+   Beneficiary: Charles Harris (spouse)
+   Percentage: 70%
+
+9. Claim_Form_IRA-002-3_032_White_Thomas.pdf
+   Deceased: Robert Anderson (DOD: 11/17/2024)
+   Account: 9287158620
+   Beneficiary: Thomas White (niece)
+   Percentage: 30%
+
+10. Claim_Form_IRA-003-1_031_Harris_Charles.pdf
+   Deceased: Robert Anderson (DOD: 11/17/2024)
+   Account: 2262776021
+   Beneficiary: Charles Harris (child)
+   Percentage: 60%
+
+11. Claim_Form_IRA-003-1_032_White_Thomas.pdf
+   Deceased: Robert Anderson (DOD: 11/17/2024)
+   Account: 2262776021
+   Beneficiary: Thomas White (nephew)
+   Percentage: 40%
+
+12. Claim_Form_IRA-003-2_031_Harris_Charles.pdf
+   Deceased: Robert Anderson (DOD: 11/17/2024)
+   Account: 9835010394
+   Beneficiary: Charles Harris (sibling)
+   Percentage: 70%
+
+13. Claim_Form_IRA-003-2_032_White_Thomas.pdf
+   Deceased: Robert Anderson (DOD: 11/17/2024)
+   Account: 9835010394
+   Beneficiary: Thomas White (parent)
+   Percentage: 30%
+
+14. Claim_Form_IRA-004-1_031_Harris_Charles.pdf
+   Deceased: Robert Anderson (DOD: 11/17/2024)
+   Account: 9782768168
+   Beneficiary: Charles Harris (child)
+   Percentage: 50%
+
+15. Claim_Form_IRA-004-1_032_White_Thomas.pdf
+   Deceased: Robert Anderson (DOD: 11/17/2024)
+   Account: 9782768168
+   Beneficiary: Thomas White (child)
+   Percentage: 50%
+
+16. Claim_Form_IRA-004-2_012_Lee_Thomas.pdf
+   Deceased: Dorothy Lee (DOD: 1/11/2026)
+   Account: 1172244238
+   Beneficiary: Thomas Lee (child)
+   Percentage: 50%
+
+17. Claim_Form_IRA-004-2_013_Lee_Robert.pdf
+   Deceased: Dorothy Lee (DOD: 1/11/2026)
+   Account: 1172244238
+   Beneficiary: Robert Lee (spouse)
+   Percentage: 50%
+
+18. Claim_Form_IRA-004-3_012_Lee_Thomas.pdf
+   Deceased: Dorothy Lee (DOD: 1/11/2026)
+   Account: 8918382099
+   Beneficiary: Thomas Lee (parent)
+   Percentage: 60%
+
+19. Claim_Form_IRA-004-3_013_Lee_Robert.pdf
+   Deceased: Dorothy Lee (DOD: 1/11/2026)
+   Account: 8918382099
+   Beneficiary: Robert Lee (sibling)
+   Percentage: 40%
+
+20. Claim_Form_IRA-005-1_015_Scott_Barbara.pdf
+   Deceased: George Scott (DOD: 8/19/2024)
+   Account: 9017474595
+   Beneficiary: Barbara Scott (sibling)
+   Percentage: 50%
+
+21. Claim_Form_IRA-005-1_016_Scott_Barbara.pdf
+   Deceased: George Scott (DOD: 8/19/2024)
+   Account: 9017474595
+   Beneficiary: Barbara Scott (child)
+   Percentage: 50%
+
+22. Claim_Form_IRA-006-1_006_Anderson_Charles.pdf
+   Deceased: Daniel Martin (DOD: 9/18/2024)
+   Account: 9808436743
+   Beneficiary: Charles Anderson (spouse)
+   Percentage: 60%
+
+23. Claim_Form_IRA-006-1_007_Brown_Linda.pdf
+   Deceased: Daniel Martin (DOD: 9/18/2024)
+   Account: 9808436743
+   Beneficiary: Linda Brown (spouse)
+   Percentage: 40%
+
+24. Claim_Form_IRA-006-2_006_Anderson_Charles.pdf
+   Deceased: Daniel Martin (DOD: 9/18/2024)
+   Account: 6458589748
+   Beneficiary: Charles Anderson (parent)
+   Percentage: 70%
+
+25. Claim_Form_IRA-006-2_007_Brown_Linda.pdf
+   Deceased: Daniel Martin (DOD: 9/18/2024)
+   Account: 6458589748
+   Beneficiary: Linda Brown (parent)
+   Percentage: 30%
+
+26. Claim_Form_IRA-007-1_017_Allen_Jessica.pdf
+   Deceased: James Allen (DOD: 11/12/2025)
+   Account: 2903593866
+   Beneficiary: Jessica Allen (sibling)
+   Percentage: 100%
+
+27. Claim_Form_IRA-007-2_017_Allen_Jessica.pdf
+   Deceased: James Allen (DOD: 11/12/2025)
+   Account: 1410807560
+   Beneficiary: Jessica Allen (nephew)
+   Percentage: 100%
+
+28. Claim_Form_IRA-008-1_017_Allen_Jessica.pdf
+   Deceased: James Allen (DOD: 11/12/2025)
+   Account: 2973424883
+   Beneficiary: Jessica Allen (parent)
+   Percentage: 100%
+
+29. Claim_Form_IRA-009-1_017_Allen_Jessica.pdf
+   Deceased: James Allen (DOD: 11/12/2025)
+   Account: 3175829830
+   Beneficiary: Jessica Allen (child)
+   Percentage: 100%
+
+30. Claim_Form_IRA-009-2_023_Jones_Patricia.pdf
+   Deceased: Kenneth Jones (DOD: 2/15/2025)
+   Account: 7285425391
+   Beneficiary: Patricia Jones (nephew)
+   Percentage: 70%
+
+31. Claim_Form_IRA-009-2_024_Brown_Charles.pdf
+   Deceased: Kenneth Jones (DOD: 2/15/2025)
+   Account: 7285425391
+   Beneficiary: Charles Brown (parent)
+   Percentage: 30%
+
+32. Claim_Form_IRA-010-1_036_White_Susan.pdf
+   Deceased: Sarah Sanchez (DOD: 7/10/2026)
+   Account: 2287324701
+   Beneficiary: Susan White (sibling)
+   Percentage: 50%
+
+33. Claim_Form_IRA-010-1_037_Davis_Joseph.pdf
+   Deceased: Sarah Sanchez (DOD: 7/10/2026)
+   Account: 2287324701
+   Beneficiary: Joseph Davis (sibling)
+   Percentage: 50%
+
+34. Claim_Form_IRA-010-2_036_White_Susan.pdf
+   Deceased: Sarah Sanchez (DOD: 7/10/2026)
+   Account: 4363568750
+   Beneficiary: Susan White (child)
+   Percentage: 50%
+
+35. Claim_Form_IRA-010-2_037_Davis_Joseph.pdf
+   Deceased: Sarah Sanchez (DOD: 7/10/2026)
+   Account: 4363568750
+   Beneficiary: Joseph Davis (nephew)
+   Percentage: 50%
+
+36. Claim_Form_IRA-011-1_023_Jones_Patricia.pdf
+   Deceased: Kenneth Jones (DOD: 2/15/2025)
+   Account: 3511637349
+   Beneficiary: Patricia Jones (parent)
+   Percentage: 60%
+
+37. Claim_Form_IRA-011-1_024_Brown_Charles.pdf
+   Deceased: Kenneth Jones (DOD: 2/15/2025)
+   Account: 3511637349
+   Beneficiary: Charles Brown (niece)
+   Percentage: 40%
+
+38. Claim_Form_IRA-011-2_015_Scott_Barbara.pdf
+   Deceased: George Scott (DOD: 8/19/2024)
+   Account: 1180443963
+   Beneficiary: Barbara Scott (child)
+   Percentage: 60%
+
+39. Claim_Form_IRA-011-2_016_Scott_Barbara.pdf
+   Deceased: George Scott (DOD: 8/19/2024)
+   Account: 1180443963
+   Beneficiary: Barbara Scott (sibling)
+   Percentage: 40%
+
+40. Claim_Form_IRA-012-1_036_White_Susan.pdf
+   Deceased: Sarah Sanchez (DOD: 7/10/2026)
+   Account: 2618373592
+   Beneficiary: Susan White (nephew)
+   Percentage: 50%
+
+41. Claim_Form_IRA-012-1_037_Davis_Joseph.pdf
+   Deceased: Sarah Sanchez (DOD: 7/10/2026)
+   Account: 2618373592
+   Beneficiary: Joseph Davis (niece)
+   Percentage: 50%
+
+42. Claim_Form_IRA-013-1_023_Jones_Patricia.pdf
+   Deceased: Kenneth Jones (DOD: 2/15/2025)
+   Account: 7065756362
+   Beneficiary: Patricia Jones (spouse)
+   Percentage: 70%
+
+43. Claim_Form_IRA-013-1_024_Brown_Charles.pdf
+   Deceased: Kenneth Jones (DOD: 2/15/2025)
+   Account: 7065756362
+   Beneficiary: Charles Brown (parent)
+   Percentage: 30%
+
+44. Claim_Form_IRA-014-1_029_Jackson_Jennifer.pdf
+   Deceased: Patricia Martin (DOD: 12/12/2025)
+   Account: 8533476650
+   Beneficiary: Jennifer Jackson (nephew)
+   Percentage: 60%
+
+45. Claim_Form_IRA-014-1_030_Martin_Barbara.pdf
+   Deceased: Patricia Martin (DOD: 12/12/2025)
+   Account: 8533476650
+   Beneficiary: Barbara Martin (child)
+   Percentage: 40%
+
+46. Claim_Form_IRA-014-2_029_Jackson_Jennifer.pdf
+   Deceased: Patricia Martin (DOD: 12/12/2025)
+   Account: 0602193713
+   Beneficiary: Jennifer Jackson (parent)
+   Percentage: 70%
+
+47. Claim_Form_IRA-014-2_030_Martin_Barbara.pdf
+   Deceased: Patricia Martin (DOD: 12/12/2025)
+   Account: 0602193713
+   Beneficiary: Barbara Martin (niece)
+   Percentage: 30%
+
+48. Claim_Form_IRA-015-1_018_Thompson_Karen.pdf
+   Deceased: Jennifer Thompson (DOD: 4/11/2026)
+   Account: 1566134950
+   Beneficiary: Karen Thompson (child)
+   Percentage: 60%
+
+49. Claim_Form_IRA-015-1_019_Thompson_Joseph.pdf
+   Deceased: Jennifer Thompson (DOD: 4/11/2026)
+   Account: 1566134950
+   Beneficiary: Joseph Thompson (child)
+   Percentage: 40%
+
+50. Claim_Form_IRA-015-1_020_Thompson_Richard.pdf
+   Deceased: Jennifer Thompson (DOD: 4/11/2026)
+   Account: 1566134950
+   Beneficiary: Richard Thompson (spouse)
+   Percentage: 0%
+
+51. Claim_Form_IRA-015-2_018_Thompson_Karen.pdf
+   Deceased: Jennifer Thompson (DOD: 4/11/2026)
+   Account: 9626789517
+   Beneficiary: Karen Thompson (nephew)
+   Percentage: 50%
+
+52. Claim_Form_IRA-015-2_019_Thompson_Joseph.pdf
+   Deceased: Jennifer Thompson (DOD: 4/11/2026)
+   Account: 9626789517
+   Beneficiary: Joseph Thompson (sibling)
+   Percentage: 50%
+
+53. Claim_Form_IRA-015-2_020_Thompson_Richard.pdf
+   Deceased: Jennifer Thompson (DOD: 4/11/2026)
+   Account: 9626789517
+   Beneficiary: Richard Thompson (child)
+   Percentage: 0%
+
+54. Claim_Form_IRA-016-1_003_Wilson_William.pdf
+   Deceased: Anthony Moore (DOD: 2/10/2026)
+   Account: 8530409896
+   Beneficiary: William Wilson (parent)
+   Percentage: 70%
+
+55. Claim_Form_IRA-016-1_004_Moore_David.pdf
+   Deceased: Anthony Moore (DOD: 2/10/2026)
+   Account: 8530409896
+   Beneficiary: David Moore (niece)
+   Percentage: 30%
+
+56. Claim_Form_IRA-016-1_005_Thomas_Sarah.pdf
+   Deceased: Anthony Moore (DOD: 2/10/2026)
+   Account: 8530409896
+   Beneficiary: Sarah Thomas (parent)
+   Percentage: 0%
+
+57. Claim_Form_IRA-016-2_003_Wilson_William.pdf
+   Deceased: Anthony Moore (DOD: 2/10/2026)
+   Account: 7022530055
+   Beneficiary: William Wilson (parent)
+   Percentage: 50%
+
+58. Claim_Form_IRA-016-2_004_Moore_David.pdf
+   Deceased: Anthony Moore (DOD: 2/10/2026)
+   Account: 7022530055
+   Beneficiary: David Moore (child)
+   Percentage: 50%
+
+59. Claim_Form_IRA-016-2_005_Thomas_Sarah.pdf
+   Deceased: Anthony Moore (DOD: 2/10/2026)
+   Account: 7022530055
+   Beneficiary: Sarah Thomas (child)
+   Percentage: 0%
+
+60. Claim_Form_IRA-016-3_021_Taylor_Patricia.pdf
+   Deceased: Jessica Taylor (DOD: 5/11/2026)
+   Account: 8540382605
+   Beneficiary: Patricia Taylor (parent)
+   Percentage: 70%
+
+61. Claim_Form_IRA-016-3_022_Taylor_Linda.pdf
+   Deceased: Jessica Taylor (DOD: 5/11/2026)
+   Account: 8540382605
+   Beneficiary: Linda Taylor (nephew)
+   Percentage: 30%
+
+62. Claim_Form_IRA-017-1_038_Davis_Patricia.pdf
+   Deceased: William Williams (DOD: 3/12/2026)
+   Account: 5047597276
+   Beneficiary: Patricia Davis (sibling)
+   Percentage: 70%
+
+63. Claim_Form_IRA-017-1_039_Williams_Barbara.pdf
+   Deceased: William Williams (DOD: 3/12/2026)
+   Account: 5047597276
+   Beneficiary: Barbara Williams (nephew)
+   Percentage: 30%
+
+64. Claim_Form_IRA-017-1_040_Johnson_James.pdf
+   Deceased: William Williams (DOD: 3/12/2026)
+   Account: 5047597276
+   Beneficiary: James Johnson (sibling)
+   Percentage: 0%
+
+65. Claim_Form_IRA-017-2_038_Davis_Patricia.pdf
+   Deceased: William Williams (DOD: 3/12/2026)
+   Account: 8260989066
+   Beneficiary: Patricia Davis (spouse)
+   Percentage: 70%
+
+66. Claim_Form_IRA-017-2_039_Williams_Barbara.pdf
+   Deceased: William Williams (DOD: 3/12/2026)
+   Account: 8260989066
+   Beneficiary: Barbara Williams (sibling)
+   Percentage: 30%
+
+67. Claim_Form_IRA-017-2_040_Johnson_James.pdf
+   Deceased: William Williams (DOD: 3/12/2026)
+   Account: 8260989066
+   Beneficiary: James Johnson (nephew)
+   Percentage: 0%
+
+68. Claim_Form_IRA-018-1_028_Wilson_Susan.pdf
+   Deceased: Nancy Wilson (DOD: 9/13/2025)
+   Account: 7768094478
+   Beneficiary: Susan Wilson (sibling)
+   Percentage: 100%
+
+69. Claim_Form_IRA-018-2_012_Lee_Thomas.pdf
+   Deceased: Dorothy Lee (DOD: 1/11/2026)
+   Account: 5469231101
+   Beneficiary: Thomas Lee (spouse)
+   Percentage: 50%
+
+70. Claim_Form_IRA-018-2_013_Lee_Robert.pdf
+   Deceased: Dorothy Lee (DOD: 1/11/2026)
+   Account: 5469231101
+   Beneficiary: Robert Lee (nephew)
+   Percentage: 50%
+
+71. Claim_Form_IRA-019-1_036_White_Susan.pdf
+   Deceased: Sarah Sanchez (DOD: 7/10/2026)
+   Account: 4946025720
+   Beneficiary: Susan White (child)
+   Percentage: 50%
+
+72. Claim_Form_IRA-019-1_037_Davis_Joseph.pdf
+   Deceased: Sarah Sanchez (DOD: 7/10/2026)
+   Account: 4946025720
+   Beneficiary: Joseph Davis (parent)
+   Percentage: 50%
+
+73. Claim_Form_IRA-020-1_028_Wilson_Susan.pdf
+   Deceased: Nancy Wilson (DOD: 9/13/2025)
+   Account: 9855342202
+   Beneficiary: Susan Wilson (nephew)
+   Percentage: 100%
+
+74. Claim_Form_IRA-020-2_028_Wilson_Susan.pdf
+   Deceased: Nancy Wilson (DOD: 9/13/2025)
+   Account: 0902297880
+   Beneficiary: Susan Wilson (sibling)
+   Percentage: 100%
+
+75. Claim_Form_IRA-020-3_028_Wilson_Susan.pdf
+   Deceased: Nancy Wilson (DOD: 9/13/2025)
+   Account: 9499572690
+   Beneficiary: Susan Wilson (child)
+   Percentage: 100%
+
+76. Claim_Form_IRA-021-1_001_King_William.pdf
+   Deceased: Anthony King (DOD: 10/18/2024)
+   Account: 8781476064
+   Beneficiary: William King (nephew)
+   Percentage: 60%
+
+77. Claim_Form_IRA-021-1_002_Wilson_Charles.pdf
+   Deceased: Anthony King (DOD: 10/18/2024)
+   Account: 8781476064
+   Beneficiary: Charles Wilson (spouse)
+   Percentage: 40%
+
+78. Claim_Form_IRA-022-1_008_Lee_Barbara.pdf
+   Deceased: David Lee (DOD: 6/10/2026)
+   Account: 2303932758
+   Beneficiary: Barbara Lee (spouse)
+   Percentage: 70%
+
+79. Claim_Form_IRA-022-1_009_Brown_Thomas.pdf
+   Deceased: David Lee (DOD: 6/10/2026)
+   Account: 2303932758
+   Beneficiary: Thomas Brown (nephew)
+   Percentage: 30%
+
+80. Claim_Form_IRA-022-2_008_Lee_Barbara.pdf
+   Deceased: David Lee (DOD: 6/10/2026)
+   Account: 6518087850
+   Beneficiary: Barbara Lee (parent)
+   Percentage: 60%
+
+81. Claim_Form_IRA-022-2_009_Brown_Thomas.pdf
+   Deceased: David Lee (DOD: 6/10/2026)
+   Account: 6518087850
+   Beneficiary: Thomas Brown (nephew)
+   Percentage: 40%
+
+82. Claim_Form_IRA-023-1_010_Rodriguez_Thomas.pdf
+   Deceased: Donna Rodriguez (DOD: 11/12/2025)
+   Account: 0465802156
+   Beneficiary: Thomas Rodriguez (child)
+   Percentage: 70%
+
+83. Claim_Form_IRA-023-1_011_Rodriguez_Susan.pdf
+   Deceased: Donna Rodriguez (DOD: 11/12/2025)
+   Account: 0465802156
+   Beneficiary: Susan Rodriguez (nephew)
+   Percentage: 30%
+
+84. Claim_Form_IRA-023-2_010_Rodriguez_Thomas.pdf
+   Deceased: Donna Rodriguez (DOD: 11/12/2025)
+   Account: 5098522836
+   Beneficiary: Thomas Rodriguez (spouse)
+   Percentage: 70%
+
+85. Claim_Form_IRA-023-2_011_Rodriguez_Susan.pdf
+   Deceased: Donna Rodriguez (DOD: 11/12/2025)
+   Account: 5098522836
+   Beneficiary: Susan Rodriguez (nephew)
+   Percentage: 30%
+
+86. Claim_Form_IRA-024-1_014_Moore_David.pdf
+   Deceased: Elizabeth Walker (DOD: 5/11/2026)
+   Account: 4367338348
+   Beneficiary: David Moore (niece)
+   Percentage: 50%
+
+87. Claim_Form_IRA-024-1_025_Wilson_Thomas.pdf
+   Deceased: Elizabeth Walker (DOD: 5/11/2026)
+   Account: 4367338348
+   Beneficiary: Thomas Wilson (nephew)
+   Percentage: 50%
+
+88. Claim_Form_IRA-025-1_026_Moore_Michael.pdf
+   Deceased: Margaret Wilson (DOD: 8/19/2024)
+   Account: 9492510247
+   Beneficiary: Michael Moore (sibling)
+   Percentage: 100%
+
+89. Claim_Form_IRA-025-2_026_Moore_Michael.pdf
+   Deceased: Margaret Wilson (DOD: 8/19/2024)
+   Account: 7776712797
+   Beneficiary: Michael Moore (niece)
+   Percentage: 100%
+
+90. Claim_Form_IRA-026-1_027_Lewis_David.pdf
+   Deceased: Matthew Lewis (DOD: 2/10/2026)
+   Account: 8944841516
+   Beneficiary: David Lewis (parent)
+   Percentage: 70%
+
+91. Claim_Form_IRA-026-1_033_Wilson_David.pdf
+   Deceased: Matthew Lewis (DOD: 2/10/2026)
+   Account: 8944841516
+   Beneficiary: David Wilson (parent)
+   Percentage: 30%
+
+92. Claim_Form_IRA-027-1_034_Wilson_Mary.pdf
+   Deceased: Sandra Wilson (DOD: 5/16/2025)
+   Account: 2191311313
+   Beneficiary: Mary Wilson (spouse)
+   Percentage: 50%
+
+93. Claim_Form_IRA-027-1_035_Miller_Sarah.pdf
+   Deceased: Sandra Wilson (DOD: 5/16/2025)
+   Account: 2191311313
+   Beneficiary: Sarah Miller (sibling)
+   Percentage: 50%
+

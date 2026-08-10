@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cases - BeneBridge Core Banking</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f5f7fa; color: #2d3748; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1.5rem 2rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+        .nav { display: flex; gap: 2rem; }
+        .nav-link { color: white; text-decoration: none; font-weight: 500; transition: opacity 0.2s; }
+        .nav-link:hover { opacity: 0.8; }
+        .container { max-width: 1400px; margin: 2rem auto; padding: 0 2rem; }
+        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .page-title { font-size: 2rem; font-weight: 700; color: #1e293b; }
+        .filters { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+        .filter-btn { padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #e2e8f0; background: white; cursor: pointer; font-weight: 500; transition: all 0.2s; }
+        .filter-btn.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-color: transparent; }
+        .filter-btn:hover { border-color: #667eea; }
+        .card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        table { width: 100%; border-collapse: collapse; }
+        thead { background: #f8fafc; border-bottom: 2px solid #e2e8f0; }
+        th { padding: 1rem; text-align: left; font-weight: 600; font-size: 0.875rem; color: #64748b; text-transform: uppercase; }
+        td { padding: 1rem; border-bottom: 1px solid #f1f5f9; }
+        tr:hover { background: #f8fafc; }
+        .badge { padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+        .badge-pending { background: #fef3c7; color: #92400e; }
+        .badge-under-review { background: #dbeafe; color: #1e40af; }
+        .badge-approved { background: #d1fae5; color: #065f46; }
+        .amount { font-weight: 600; color: #059669; }
+        .case-link { color: #667eea; text-decoration: none; font-weight: 600; }
+        .case-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span class="material-icons">account_balance</span>
+                BeneBridge Core Banking Platform
+            </div>
+            <nav class="nav">
+                <a href="/" class="nav-link">Dashboard</a>
+                <a href="/cases" class="nav-link">Cases</a>
+                <a href="/analytics" class="nav-link">Analytics</a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">Case Management</h1>
+        </div>
+
+        <div class="filters">
+            <a href="/cases" class="filter-btn {% if not status_filter %}active{% endif %}">All Cases</a>
+            <a href="/cases?status=pending" class="filter-btn {% if status_filter == 'pending' %}active{% endif %}">Pending</a>
+            <a href="/cases?status=under_review" class="filter-btn {% if status_filter == 'under_review' %}active{% endif %}">Under Review</a>
+            <a href="/cases?status=approved" class="filter-btn {% if status_filter == 'approved' %}active{% endif %}">Approved</a>
+        </div>
+
+        <div class="card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Case Number</th>
+                        <th>Deceased</th>
+                        <th>Beneficiary</th>
+                        <th>Account Type</th>
+                        <th>Balance</th>
+                        <th>Status</th>
+                        <th>Stage</th>
+                        <th>Priority</th>
+                        <th>Submitted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for case in cases %}
+                    <tr>
+                        <td><a href="/case/{{ case['case_number'] }}" class="case-link">{{ case['case_number'] }}</a></td>
+                        <td>{{ case['deceased_name'] }}</td>
+                        <td>{{ case['beneficiary_name'] }}</td>
+                        <td>{{ case['account_type'] }}</td>
+                        <td class="amount">${{ "{:,.2f}".format(case['account_balance']) }}</td>
+                        <td><span class="badge badge-{{ case['status'] }}">{{ case['status'].replace('_', ' ') }}</span></td>
+                        <td>Stage {{ case['workflow_stage'] }}</td>
+                        <td>{{ case['priority'].capitalize() }}</td>
+                        <td>{{ case['submission_date'][:10] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

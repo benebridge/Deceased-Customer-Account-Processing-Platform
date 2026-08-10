@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Payment System - Authorization Required</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+        }
+
+        .bank-logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .bank-logo h1 {
+            color: #1e3a8a;
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .bank-logo p {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        .alert {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+        }
+
+        .alert-title {
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .alert-message {
+            color: #78350f;
+            font-size: 0.875rem;
+        }
+
+        .payment-details {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 30px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .amount {
+            font-size: 1.5rem;
+            color: #16a34a;
+        }
+
+        .instructions {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 24px;
+        }
+
+        .instructions h3 {
+            color: #1e40af;
+            font-size: 1rem;
+            margin-bottom: 12px;
+        }
+
+        .instructions ol {
+            margin-left: 20px;
+            color: #1e40af;
+            font-size: 0.875rem;
+            line-height: 1.8;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: #1e3a8a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #1e40af;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1e3a8a;
+            border: 2px solid #1e3a8a;
+            margin-top: 12px;
+        }
+
+        .btn-secondary:hover {
+            background: #f1f5f9;
+        }
+
+        .security-note {
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #e2e8f0;
+            color: #64748b;
+            font-size: 0.8125rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="bank-logo">
+            <h1>🏦 Bank Payment System</h1>
+            <p>Secure Payment Processing Portal</p>
+        </div>
+
+        <div class="alert">
+            <div class="alert-title">
+                ⚠️ Authorization Required
+            </div>
+            <div class="alert-message">
+                This payment requires authorization in your bank's internal payment system.
+            </div>
+        </div>
+
+        <div class="payment-details">
+            <h3 style="color: #1e293b; margin-bottom: 16px;">Payment Details</h3>
+            <div class="detail-row">
+                <span class="detail-label">Reference Number</span>
+                <span class="detail-value">{{ payment['payment_reference'] }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Payment Method</span>
+                <span class="detail-value">{{ payment['payment_method'] }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Gross Amount</span>
+                <span class="detail-value">${{ "{:,.2f}".format(payment['gross_amount']) }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Federal Withholding</span>
+                <span class="detail-value" style="color: #dc2626;">-${{ "{:,.2f}".format(payment['federal_withholding']) }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">State Withholding</span>
+                <span class="detail-value" style="color: #dc2626;">-${{ "{:,.2f}".format(payment['state_withholding']) }}</span>
+            </div>
+            <div class="detail-row" style="background: #f0fdf4; margin: 12px -12px -12px; padding: 16px 12px; border-radius: 0 0 8px 8px;">
+                <span class="detail-label" style="font-weight: 600; color: #166534;">Net Payment Amount</span>
+                <span class="detail-value amount">${{ "{:,.2f}".format(payment['net_amount']) }}</span>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>📋 Next Steps in Production</h3>
+            <ol>
+                <li>This would redirect to your bank's core payment processing system</li>
+                <li>You would authenticate with your banking credentials</li>
+                <li>Review and authorize the payment transaction</li>
+                <li>Payment would be queued for same-day or next-day processing</li>
+                <li>Confirmation would be sent back to BeneBridge automatically</li>
+            </ol>
+        </div>
+
+        <div style="text-align: center; margin-bottom: 16px; padding: 16px; background: #fffbeb; border-radius: 8px; border: 1px dashed #f59e0b;">
+            <strong style="color: #92400e;">🔧 POC Mode</strong><br>
+            <span style="color: #78350f; font-size: 0.875rem;">
+                In production, this page would be your bank's actual payment authorization interface.
+                For this proof of concept, this is a simulated redirect.
+            </span>
+        </div>
+
+        <button onclick="simulateAuthorization()" class="btn">
+            Simulate Authorization (POC)
+        </button>
+
+        <a href="/institution/dashboard" class="btn btn-secondary">
+            Return to Dashboard
+        </a>
+
+        <div class="security-note">
+            🔒 Secure Connection • Bank Internal System Only<br>
+            Reference: {{ payment['payment_reference'] }} • {{ payment['initiated_at'][:10] }}
+        </div>
+    </div>
+
+    <script>
+        function simulateAuthorization() {
+            alert('✅ Payment Authorization Simulated\n\nIn production, this would:\n1. Authenticate your banking credentials\n2. Verify dual authorization if required\n3. Submit to bank\'s payment queue\n4. Return confirmation to BeneBridge\n\nReference: {{ payment["payment_reference"] }}');
+
+            // In production, would POST to bank system and wait for callback
+            window.location.href = '/institution/dashboard';
+        }
+    </script>
+</body>
+</html>

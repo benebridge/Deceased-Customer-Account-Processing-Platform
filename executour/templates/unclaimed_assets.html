@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unclaimed Asset Discovery - Executour</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .search-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 48px;
+            border-radius: 12px;
+            margin-bottom: 32px;
+        }
+
+        .search-section h2 {
+            font-size: 1.75rem;
+            margin-bottom: 12px;
+        }
+
+        .search-section p {
+            margin-bottom: 32px;
+            opacity: 0.9;
+        }
+
+        .search-form {
+            display: grid;
+            gap: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+        }
+
+        .state-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .state-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .submit-btn {
+            background: white;
+            color: #667eea;
+            padding: 14px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .assets-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .asset-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s;
+        }
+
+        .asset-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .asset-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 16px;
+        }
+
+        .asset-type {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .asset-holder {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        .asset-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #16a34a;
+        }
+
+        .asset-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            padding-top: 16px;
+            margin-top: 16px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .claim-btn {
+            background: #16a34a;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .claim-btn:hover {
+            background: #15803d;
+        }
+
+        .total-banner {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 20px 24px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+
+        .total-banner h3 {
+            color: #92400e;
+            margin-bottom: 8px;
+        }
+
+        .total-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #92400e;
+        }
+    </style>
+</head>
+<body>
+    {% include '_header.html' %}
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Unclaimed Asset Discovery</h1>
+            <p>Search for forgotten accounts, uncashed checks, and unclaimed property across all 50 states</p>
+        </div>
+
+        <div style="background: white; padding: 40px; border-radius: 8px; margin-bottom: 32px; border: 1px solid #e2e8f0;">
+            <div style="text-align: center; margin-bottom: 40px; max-width: 800px; margin-left: auto; margin-right: auto;">
+                <h2 style="font-size: 1.75rem; margin-bottom: 16px; font-weight: 600; color: #0f172a; letter-spacing: -0.02em;">Over $70 Billion in Unclaimed Assets</h2>
+                <p style="font-size: 1.125rem; color: #475569; line-height: 1.6;">
+                    <strong>1 in 7 Americans</strong> have unclaimed property. Search all 50 states to find forgotten bank accounts, insurance payouts, tax refunds, and more.
+                </p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px; background: #e2e8f0; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; margin-bottom: 32px;">
+                <div style="text-align: center; padding: 24px; background: white;">
+                    <div style="font-weight: 600; color: #0f172a; font-size: 1rem; margin-bottom: 6px;">Bank Accounts</div>
+                    <div style="color: #64748b; font-size: 0.875rem;">Dormant savings & checking</div>
+                </div>
+
+                <div style="text-align: center; padding: 24px; background: white;">
+                    <div style="font-weight: 600; color: #0f172a; font-size: 1rem; margin-bottom: 6px;">Uncashed Checks</div>
+                    <div style="color: #64748b; font-size: 0.875rem;">Payroll, refunds, rebates</div>
+                </div>
+
+                <div style="text-align: center; padding: 24px; background: white;">
+                    <div style="font-weight: 600; color: #0f172a; font-size: 1rem; margin-bottom: 6px;">Stocks & Bonds</div>
+                    <div style="color: #64748b; font-size: 0.875rem;">Forgotten investments</div>
+                </div>
+
+                <div style="text-align: center; padding: 24px; background: white;">
+                    <div style="font-weight: 600; color: #0f172a; font-size: 1rem; margin-bottom: 6px;">Insurance Payouts</div>
+                    <div style="color: #64748b; font-size: 0.875rem;">Life & property claims</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="search-section">
+            <h2>Start Your Free Search</h2>
+            <p>Enter the deceased's information below and we'll scan official databases in minutes</p>
+
+            <form method="POST" action="/unclaimed-assets/search" class="search-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Deceased's Full Name</label>
+                        <input type="text" name="deceased_name" required placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label>Last 4 of SSN (Optional)</label>
+                        <input type="text" name="deceased_ssn" maxlength="4" placeholder="1234">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>States to Search (Select all that apply)</label>
+                    <div class="state-selector">
+                        <label class="state-checkbox"><input type="checkbox" name="states" value="CA"> California</label>
+                        <label class="state-checkbox"><input type="checkbox" name="states" value="NY"> New York</label>
+                        <label class="state-checkbox"><input type="checkbox" name="states" value="TX"> Texas</label>
+                        <label class="state-checkbox"><input type="checkbox" name="states" value="FL"> Florida</label>
+                        <label class="state-checkbox"><input type="checkbox" name="states" value="IL"> Illinois</label>
+                        <label class="state-checkbox"><input type="checkbox" name="states" value="PA"> Pennsylvania</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">🔍 Search for Unclaimed Assets</button>
+            </form>
+        </div>
+
+        {% if total_unclaimed > 0 %}
+        <div class="total-banner">
+            <h3>⚠️ Potential Unclaimed Assets Found</h3>
+            <div class="total-amount">${{ "{:,.2f}".format(total_unclaimed) }}</div>
+            <p style="margin-top: 8px; color: #78350f;">These assets may belong to the estate. Click "Claim" to start the recovery process.</p>
+        </div>
+        {% endif %}
+
+        <div class="section">
+            <div class="section-header">
+                <h2>Found Assets</h2>
+                <span style="color: #64748b;">{{ assets|length }} potential matches</span>
+            </div>
+
+            {% if assets %}
+            <div class="assets-grid">
+                {% for asset in assets %}
+                <div class="asset-card">
+                    <div class="asset-header">
+                        <div>
+                            <div class="asset-type">{{ asset.asset_type }}</div>
+                            <div class="asset-holder">Held by: {{ asset.holder_name }}</div>
+                        </div>
+                        <div class="asset-value">${{ "{:,.2f}".format(asset.estimated_value) }}</div>
+                    </div>
+
+                    <div class="asset-details">
+                        <div class="detail-item">
+                            <div class="detail-label">State</div>
+                            <div class="detail-value">{{ asset.state }}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Status</div>
+                            <div class="detail-value">{{ asset.status.title() }}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Source</div>
+                            <div class="detail-value"><a href="{{ asset.source_url }}" target="_blank" style="color: #667eea;">View Record</a></div>
+                        </div>
+                    </div>
+
+                    {% if asset.status == 'potential' %}
+                    <div style="margin-top: 16px;">
+                        <button class="claim-btn">Start Claim Process</button>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <div class="empty-state-icon">🔍</div>
+                <h3>No Assets Found Yet</h3>
+                <p>Use the search form above to scan state databases for unclaimed property</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="section" style="background: #f8fafc;">
+            <h3 style="margin-bottom: 16px;">💡 How Unclaimed Asset Discovery Works</h3>
+            <ul style="color: #64748b; line-height: 1.8; padding-left: 20px;">
+                <li>We search official state unclaimed property databases</li>
+                <li>Scan financial institution dormant account records</li>
+                <li>Check for uncashed payroll, insurance, and refund checks</li>
+                <li>Identify forgotten bank accounts, stocks, and bonds</li>
+                <li>Find utility deposits and escrow accounts</li>
+                <li>Typical recovery ranges from $100 - $50,000+</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
