@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customers - Jack Henry Integration</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f8f9fa;
+            color: #212529;
+        }
+        .header {
+            background: #0066cc;
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .header h1 { font-size: 1.5rem; font-weight: 600; }
+        nav {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 0 2rem;
+        }
+        nav ul {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        nav a {
+            display: block;
+            padding: 1rem 0;
+            color: #374151;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+        }
+        nav a:hover, nav a.active {
+            color: #0066cc;
+            border-bottom-color: #0066cc;
+        }
+        .main-content {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        .table-container {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            text-align: left;
+            padding: 0.75rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #6b7280;
+            background: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 0.875rem;
+        }
+        tbody tr {
+            transition: background 0.15s;
+            cursor: pointer;
+        }
+        tbody tr:hover {
+            background: #f9fafb;
+        }
+        .customer-name {
+            font-weight: 600;
+            color: #0066cc;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>Jack Henry Integration Platform</h1>
+        </div>
+    </div>
+
+    <nav>
+        <ul>
+            <li><a href="/">Dashboard</a></li>
+            <li><a href="/customers" class="active">Customers</a></li>
+            <li><a href="/accounts">Accounts</a></li>
+            <li><a href="/beneficiaries">Beneficiaries</a></li>
+            <li><a href="/config">Configuration</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <h2 style="margin-bottom: 1.5rem; font-size: 1.5rem;">Customers</h2>
+
+        <div class="table-container">
+            {% if customers %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Customer ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Date of Birth</th>
+                        <th>Last Synced</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for customer in customers %}
+                    <tr onclick="window.location.href='/customer/{{ customer.customer_id }}'">
+                        <td>{{ customer.customer_id[:16] }}...</td>
+                        <td class="customer-name">{{ customer.full_name or (customer.given_name + ' ' + customer.family_name) }}</td>
+                        <td>{{ customer.email or 'N/A' }}</td>
+                        <td>{{ customer.phone_number or 'N/A' }}</td>
+                        <td>{{ customer.birthdate or 'N/A' }}</td>
+                        <td>{{ customer.last_synced[:19].replace('T', ' ') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="empty-state">
+                <h3>No Customers Found</h3>
+                <p>Authenticate with Jack Henry to sync customer data</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

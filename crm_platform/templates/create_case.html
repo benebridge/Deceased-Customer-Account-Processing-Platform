@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Case - BeneBridge CRM</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f8f9fa;
+            color: #212529;
+        }
+
+        /* Header */
+        .header {
+            background: #1e40af;
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .header-subtitle {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9375rem;
+        }
+
+        .back-link:hover {
+            opacity: 0.9;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 2rem;
+        }
+
+        .form-header {
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .form-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .form-grid.full {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .form-group label .required {
+            color: #dc2626;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.625rem 0.875rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 0.9375rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .help-text {
+            font-size: 0.8125rem;
+            color: #6b7280;
+        }
+
+        /* Form Actions */
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            padding-top: 2rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .btn {
+            padding: 0.625rem 1.5rem;
+            border-radius: 6px;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: #d1fae5;
+            border: 1px solid #10b981;
+            color: #065f46;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        /* Error Message */
+        .error-message {
+            display: none;
+            background: #fee2e2;
+            border: 1px solid #ef4444;
+            color: #991b1b;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div>
+                <h1>Create New Death Claim Case</h1>
+                <div class="header-subtitle">BeneBridge Claim Management System</div>
+            </div>
+            <a href="/" class="back-link">
+                ← Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div id="successMessage" class="success-message"></div>
+        <div id="errorMessage" class="error-message"></div>
+
+        <div class="form-container">
+            <div class="form-header">
+                <h2>New Death Claim Case</h2>
+            </div>
+
+            <form id="createCaseForm">
+                <!-- Deceased Information -->
+                <div class="form-section">
+                    <h3 class="section-title">Deceased Information</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="deceased_name">Full Name <span class="required">*</span></label>
+                            <input type="text" id="deceased_name" name="deceased_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="deceased_ssn">Social Security Number</label>
+                            <input type="text" id="deceased_ssn" name="deceased_ssn" placeholder="XXX-XX-XXXX">
+                            <span class="help-text">Optional - for verification purposes</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="date_of_death">Date of Death <span class="required">*</span></label>
+                            <input type="date" id="date_of_death" name="date_of_death" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="notification_source">Notification Source <span class="required">*</span></label>
+                            <select id="notification_source" name="notification_source" required>
+                                <option value="">Select source...</option>
+                                <option value="FAMILY_MEMBER">Family Member</option>
+                                <option value="ATTORNEY">Attorney</option>
+                                <option value="FUNERAL_HOME">Funeral Home</option>
+                                <option value="SOCIAL_SECURITY">Social Security Death Master File</option>
+                                <option value="HOSPITAL">Hospital/Healthcare</option>
+                                <option value="OTHER">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Primary Beneficiary Information -->
+                <div class="form-section">
+                    <h3 class="section-title">Primary Beneficiary / Contact</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="beneficiary_name">Beneficiary Name <span class="required">*</span></label>
+                            <input type="text" id="beneficiary_name" name="beneficiary_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="beneficiary_email">Email Address</label>
+                            <input type="email" id="beneficiary_email" name="beneficiary_email">
+                        </div>
+                        <div class="form-group">
+                            <label for="beneficiary_phone">Phone Number</label>
+                            <input type="tel" id="beneficiary_phone" name="beneficiary_phone" placeholder="(555) 555-5555">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Assignment -->
+                <div class="form-section">
+                    <h3 class="section-title">Case Assignment & Priority</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="assigned_to">Assign To <span class="required">*</span></label>
+                            <select id="assigned_to" name="assigned_to" required>
+                                <option value="">Select processor...</option>
+                                <option value="Current User">Current User</option>
+                                <option value="Sarah Johnson">Sarah Johnson - Senior Processor</option>
+                                <option value="Michael Chen">Michael Chen - Claims Specialist</option>
+                                <option value="Emily Rodriguez">Emily Rodriguez - Estate Services</option>
+                                <option value="David Kim">David Kim - Team Lead</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="priority">Priority Level <span class="required">*</span></label>
+                            <select id="priority" name="priority" required>
+                                <option value="low">Low - Standard Processing</option>
+                                <option value="medium" selected>Medium - Normal Priority</option>
+                                <option value="high">High - Expedited</option>
+                                <option value="critical">Critical - Immediate Attention</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account Information (Optional) -->
+                <div class="form-section">
+                    <h3 class="section-title">Known Account Information (Optional)</h3>
+                    <div class="form-grid full">
+                        <div class="form-group">
+                            <label for="account_numbers">Account Numbers</label>
+                            <textarea id="account_numbers" name="account_numbers" placeholder="Enter account numbers (one per line) if known..."></textarea>
+                            <span class="help-text">Will be populated from core banking system during triage</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <a href="/" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Create Case</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('createCaseForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const data = {};
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+
+            // Handle account numbers
+            if (data.account_numbers) {
+                const accountLines = data.account_numbers.split('\n').filter(line => line.trim());
+                data.accounts = accountLines.map(acc => ({
+                    account_number: acc.trim(),
+                    type: 'UNKNOWN',
+                    balance: 0
+                }));
+                delete data.account_numbers;
+            } else {
+                data.accounts = [];
+            }
+
+            try {
+                const response = await fetch('/case/new', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById('successMessage').textContent =
+                        'Case created successfully! Case ID: ' + result.case_id + '. Redirecting...';
+                    document.getElementById('successMessage').classList.add('show');
+
+                    setTimeout(() => {
+                        window.location.href = '/case/' + result.case_id;
+                    }, 2000);
+                } else {
+                    document.getElementById('errorMessage').textContent =
+                        'Error creating case: ' + (result.error || 'Unknown error');
+                    document.getElementById('errorMessage').classList.add('show');
+                }
+            } catch (error) {
+                document.getElementById('errorMessage').textContent =
+                    'Error creating case: ' + error.message;
+                document.getElementById('errorMessage').classList.add('show');
+            }
+        });
+    </script>
+</body>
+</html>

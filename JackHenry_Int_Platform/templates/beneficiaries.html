@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Beneficiaries - Jack Henry Integration</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8f9fa; }
+        .header { background: #0066cc; color: white; padding: 1rem 2rem; }
+        .header h1 { font-size: 1.5rem; }
+        nav { background: white; border-bottom: 1px solid #e5e7eb; padding: 0 2rem; }
+        nav ul { max-width: 1400px; margin: 0 auto; display: flex; list-style: none; gap: 2rem; }
+        nav a { display: block; padding: 1rem 0; color: #374151; text-decoration: none; font-weight: 500; border-bottom: 2px solid transparent; }
+        nav a:hover, nav a.active { color: #0066cc; border-bottom-color: #0066cc; }
+        .main-content { max-width: 1400px; margin: 2rem auto; padding: 0 2rem; }
+        .table-container { background: white; border-radius: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 0.75rem 1rem; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: #6b7280; background: #f9fafb; border-bottom: 1px solid #e5e7eb; }
+        td { padding: 1rem; border-bottom: 1px solid #f3f4f6; font-size: 0.875rem; }
+    </style>
+</head>
+<body>
+    <div class="header"><h1>Jack Henry Integration Platform</h1></div>
+    <nav>
+        <ul>
+            <li><a href="/">Dashboard</a></li>
+            <li><a href="/customers">Customers</a></li>
+            <li><a href="/accounts">Accounts</a></li>
+            <li><a href="/beneficiaries" class="active">Beneficiaries</a></li>
+            <li><a href="/config">Configuration</a></li>
+        </ul>
+    </nav>
+    <div class="main-content">
+        <h2 style="margin-bottom: 1.5rem;">Beneficiaries</h2>
+        <div class="table-container">
+            {% if beneficiaries %}
+            <table>
+                <thead><tr><th>Account Holder</th><th>Account Type</th><th>Beneficiary Name</th><th>Type</th><th>Relationship</th><th>Percentage</th><th>Last Synced</th></tr></thead>
+                <tbody>
+                    {% for ben in beneficiaries %}
+                    <tr><td>{{ ben.account_holder or 'Unknown' }}</td><td>{{ ben.account_type }}</td><td>{{ ben.full_name }}</td><td>{{ 'Primary' if ben.is_primary else 'Contingent' }}</td><td>{{ ben.relationship or 'N/A' }}</td><td>{{ ben.percentage }}%</td><td>{{ ben.last_synced[:19].replace('T', ' ') }}</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div style="text-align: center; padding: 4rem; color: #6b7280;"><h3>No Beneficiaries Found</h3><p>Beneficiary data will appear here when synced from jXchange API</p></div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

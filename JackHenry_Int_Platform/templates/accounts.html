@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Accounts - Jack Henry Integration</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8f9fa; }
+        .header { background: #0066cc; color: white; padding: 1rem 2rem; }
+        .header h1 { font-size: 1.5rem; }
+        nav { background: white; border-bottom: 1px solid #e5e7eb; padding: 0 2rem; }
+        nav ul { max-width: 1400px; margin: 0 auto; display: flex; list-style: none; gap: 2rem; }
+        nav a { display: block; padding: 1rem 0; color: #374151; text-decoration: none; font-weight: 500; border-bottom: 2px solid transparent; }
+        nav a:hover, nav a.active { color: #0066cc; border-bottom-color: #0066cc; }
+        .main-content { max-width: 1400px; margin: 2rem auto; padding: 0 2rem; }
+        .table-container { background: white; border-radius: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 0.75rem 1rem; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: #6b7280; background: #f9fafb; border-bottom: 1px solid #e5e7eb; }
+        td { padding: 1rem; border-bottom: 1px solid #f3f4f6; font-size: 0.875rem; }
+    </style>
+</head>
+<body>
+    <div class="header"><h1>Jack Henry Integration Platform</h1></div>
+    <nav>
+        <ul>
+            <li><a href="/">Dashboard</a></li>
+            <li><a href="/customers">Customers</a></li>
+            <li><a href="/accounts" class="active">Accounts</a></li>
+            <li><a href="/beneficiaries">Beneficiaries</a></li>
+            <li><a href="/config">Configuration</a></li>
+        </ul>
+    </nav>
+    <div class="main-content">
+        <h2 style="margin-bottom: 1.5rem;">Accounts</h2>
+        <div class="table-container">
+            {% if accounts %}
+            <table>
+                <thead><tr><th>Account ID</th><th>Customer</th><th>Type</th><th>Status</th><th>Last Synced</th></tr></thead>
+                <tbody>
+                    {% for account in accounts %}
+                    <tr><td>{{ account.account_id[:20] }}...</td><td>{{ account.customer_name or 'Unknown' }}</td><td>{{ account.account_type }}</td><td>{{ account.status }}</td><td>{{ account.last_synced[:19].replace('T', ' ') }}</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div style="text-align: center; padding: 4rem; color: #6b7280;"><h3>No Accounts Found</h3></div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

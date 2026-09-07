@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community National Bank - Beneficiary Claim Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
+        }
+
+        .navbar {
+            background: #1a4d7a;
+            color: white;
+            padding: 15px 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar h1 {
+            font-size: 1.5rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .progress-bar {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #e9ecef;
+            z-index: 1;
+        }
+
+        .progress-line-fill {
+            height: 100%;
+            background: #14b8a6;
+            transition: width 0.3s ease;
+        }
+
+        .step {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            flex: 1;
+        }
+
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e9ecef;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #6c757d;
+            transition: all 0.3s ease;
+        }
+
+        .step.active .step-circle {
+            background: #14b8a6;
+            color: white;
+        }
+
+        .step.completed .step-circle {
+            background: #198754;
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+
+        .step.active .step-label {
+            color: #1a4d7a;
+            font-weight: 600;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            color: #1a4d7a;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            color: #6c757d;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .upload-zone {
+            border: 3px dashed #dee2e6;
+            border-radius: 12px;
+            padding: 60px 40px;
+            text-align: center;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .upload-zone:hover {
+            border-color: #14b8a6;
+            background: #e7f9f7;
+        }
+
+        .upload-zone.dragging {
+            border-color: #14b8a6;
+            background: #d1f4ef;
+        }
+
+        .upload-zone.uploaded {
+            border-color: #198754;
+            border-style: solid;
+            background: #d1e7dd;
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .upload-text {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .upload-hint {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .requirements {
+            background: #f8f9fa;
+            border-left: 4px solid #14b8a6;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .requirements h4 {
+            color: #1a4d7a;
+            margin-bottom: 10px;
+        }
+
+        .requirements ul {
+            margin-left: 20px;
+            color: #2c3e50;
+        }
+
+        .requirements li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .file-preview {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .file-icon {
+            font-size: 2rem;
+        }
+
+        .file-details h5 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .file-details p {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin: 0;
+        }
+
+        .btn {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #1a4d7a;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #14b8a6;
+        }
+
+        .btn-primary:disabled {
+            background: #adb5bd;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        .btn-danger:hover {
+            background: #bb2d3b;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .form-link {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-link h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .form-link p {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+
+        .btn-download {
+            background: #ffc107;
+            color: #000;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-download:hover {
+            background: #ffcd39;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>Community National Bank - Beneficiary Claim Portal</h1>
+    </div>
+
+    <div class="container">
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-steps">
+                <div class="progress-line">
+                    <div class="progress-line-fill" id="progress-fill" style="width: 0%"></div>
+                </div>
+                <div class="step completed" id="step-1">
+                    <div class="step-circle">✓</div>
+                    <div class="step-label">Death Cert</div>
+                </div>
+                <div class="step active" id="step-2">
+                    <div class="step-circle">2</div>
+                    <div class="step-label">ID Front</div>
+                </div>
+                <div class="step" id="step-3">
+                    <div class="step-circle">3</div>
+                    <div class="step-label">ID Back</div>
+                </div>
+                <div class="step" id="step-4">
+                    <div class="step-circle">4</div>
+                    <div class="step-label">Claim Form</div>
+                </div>
+                <div class="step" id="step-5">
+                    <div class="step-circle">5</div>
+                    <div class="step-label">Review</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 1: Death Certificate -->
+        <div class="card step-content" id="content-1" style="display: none;">
+            <h2>Step 1: Upload Death Certificate</h2>
+            <p>Upload the official death certificate for Michael Motamed. This can be a blockchain-verified certificate or a certified copy from the vital records office.</p>
+
+            <div class="requirements">
+                <h4>Requirements:</h4>
+                <ul>
+                    <li>Must be state-issued and show official seal</li>
+                    <li>Document must be legible (all text clearly readable)</li>
+                    <li>File format: PDF only</li>
+                    <li>Maximum file size: 10MB</li>
+                </ul>
+            </div>
+
+            <div class="upload-zone" id="upload-zone-1" onclick="document.getElementById('file-1').click()">
+                <div class="upload-icon">📄</div>
+                <div class="upload-text">Click to upload or drag and drop</div>
+                <div class="upload-hint">PDF up to 10MB</div>
+            </div>
+            <input type="file" id="file-1" accept=".pdf" onchange="handleFileSelect(1, this)">
+
+            <div id="preview-1" class="hidden"></div>
+
+            <div class="form-actions">
+                <button class="btn btn-secondary" disabled>← Back</button>
+                <button class="btn btn-primary" id="next-1" disabled onclick="nextStep(1)">Continue →</button>
+            </div>
+        </div>
+
+        <!-- Step 2: ID Front -->
+        <div class="card step-content" id="content-2">
+            <h2>Step 2: Upload Government-Issued ID (Front)</h2>
+            <p>Upload a clear photo or scan of the FRONT side of your driver's license, state ID, or passport.</p>
+
+            <div class="requirements">
+                <h4>Requirements:</h4>
+                <ul>
+                    <li>All four corners of the ID must be visible</li>
+                    <li>No glare or shadows covering text</li>
+                    <li>All text must be clearly readable</li>
+                    <li>File format: JPG, PNG, or PDF</li>
+                    <li>Maximum file size: 10MB</li>
+                </ul>
+            </div>
+
+            <div class="upload-zone" id="upload-zone-2" onclick="document.getElementById('file-2').click()">
+                <div class="upload-icon">🪪</div>
+                <div class="upload-text">Click to upload or drag and drop</div>
+                <div class="upload-hint">JPG, PNG, or PDF up to 10MB</div>
+            </div>
+            <input type="file" id="file-2" accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileSelect(2, this)">
+
+            <div id="preview-2" class="hidden"></div>
+
+            <div class="form-actions">
+                <button class="btn btn-secondary" onclick="previousStep(2)">← Back</button>
+                <button class="btn btn-primary" id="next-2" disabled onclick="nextStep(2)">Continue →</button>
+            </div>
+        </div>
+
+        <!-- Step 3: ID Back -->
+        <div class="card step-content" id="content-3" style="display: none;">
+            <h2>Step 3: Upload Government-Issued ID (Back)</h2>
+            <p>Upload a clear photo or scan of the BACK side of your driver's license or state ID.</p>
+
+            <div class="requirements">
+                <h4>Requirements:</h4>
+                <ul>
+                    <li>All four corners of the ID must be visible</li>
+                    <li>Barcode must be clearly readable</li>
+                    <li>No glare or shadows</li>
+                    <li>File format: JPG, PNG, or PDF</li>
+                    <li>Maximum file size: 10MB</li>
+                </ul>
+            </div>
+
+            <div class="upload-zone" id="upload-zone-3" onclick="document.getElementById('file-3').click()">
+                <div class="upload-icon">🪪</div>
+                <div class="upload-text">Click to upload or drag and drop</div>
+                <div class="upload-hint">JPG, PNG, or PDF up to 10MB</div>
+            </div>
+            <input type="file" id="file-3" accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileSelect(3, this)">
+
+            <div id="preview-3" class="hidden"></div>
+
+            <div class="form-actions">
+                <button class="btn btn-secondary" onclick="previousStep(3)">← Back</button>
+                <button class="btn btn-primary" id="next-3" disabled onclick="nextStep(3)">Continue →</button>
+            </div>
+        </div>
+
+        <!-- Step 4: Claim Form -->
+        <div class="card step-content" id="content-4" style="display: none;">
+            <h2>Step 4: Complete & Upload Beneficiary Claim Form</h2>
+            <p>Download the appropriate claim form for your account type, complete it, sign it, and upload it here.</p>
+
+            <div class="form-link">
+                <h4>Get Your Claim Form</h4>
+                <p>Based on your account type (IRA), we've selected the correct form for you:</p>
+                <button class="btn-download" onclick="downloadForm()">📥 Download: Beneficiary Claim Form - IRA (Post-2019)</button>
+            </div>
+
+            <div class="requirements">
+                <h4>How to complete the form:</h4>
+                <ul>
+                    <li>Fill out all required fields (marked with *)</li>
+                    <li>Sign the form (electronic or wet signature)</li>
+                    <li>Save as PDF if you filled it digitally</li>
+                    <li>If you printed and signed by hand, scan it back to PDF</li>
+                    <li>Upload the completed and signed form below</li>
+                </ul>
+            </div>
+
+            <div class="upload-zone" id="upload-zone-4" onclick="document.getElementById('file-4').click()">
+                <div class="upload-icon">📝</div>
+                <div class="upload-text">Click to upload completed claim form</div>
+                <div class="upload-hint">PDF only, up to 10MB</div>
+            </div>
+            <input type="file" id="file-4" accept=".pdf" onchange="handleFileSelect(4, this)">
+
+            <div id="preview-4" class="hidden"></div>
+
+            <div class="form-actions">
+                <button class="btn btn-secondary" onclick="previousStep(4)">← Back</button>
+                <button class="btn btn-primary" id="next-4" disabled onclick="showReviewStep()">Continue →</button>
+            </div>
+        </div>
+
+        <!-- Step 5: Review & Submit -->
+        <div class="card step-content" id="content-5" style="display: none;">
+            <h2>Step 5: Review & Submit Your Claim</h2>
+            <p>Please review all uploaded documents before submitting your claim. You can replace any document if needed.</p>
+
+            <div id="review-list"></div>
+
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <label style="display: flex; align-items: center; cursor: pointer;">
+                    <input type="checkbox" id="estate-resources" style="margin-right: 10px; width: 18px; height: 18px;">
+                    <span style="color: #2c3e50; font-size: 0.95rem;">
+                        I would like to receive helpful resources about managing estate settlement tasks
+                    </span>
+                </label>
+            </div>
+
+            <div class="form-actions">
+                <button class="btn btn-secondary" onclick="previousStep(5)">← Back</button>
+                <button class="btn btn-primary" onclick="submitClaim()">Submit Claim ✓</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 2;
+        let uploadedFiles = {
+            1: null,
+            2: null,
+            3: null,
+            4: null
+        };
+
+        // Initialize: show current step
+        showStep(currentStep);
+
+        function showStep(step) {
+            // Hide all steps
+            document.querySelectorAll('.step-content').forEach(el => el.style.display = 'none');
+
+            // Show current step
+            document.getElementById(`content-${step}`).style.display = 'block';
+
+            // Update progress bar
+            document.querySelectorAll('.step').forEach((el, index) => {
+                el.classList.remove('active', 'completed');
+                if (index + 1 < step) {
+                    el.classList.add('completed');
+                    el.querySelector('.step-circle').textContent = '✓';
+                } else if (index + 1 === step) {
+                    el.classList.add('active');
+                } else {
+                    el.querySelector('.step-circle').textContent = index + 1;
+                }
+            });
+
+            // Update progress line
+            const progress = ((step - 1) / 4) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        function handleFileSelect(step, input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                uploadedFiles[step] = file;
+
+                // Update upload zone
+                const zone = document.getElementById(`upload-zone-${step}`);
+                zone.classList.add('uploaded');
+                zone.innerHTML = `
+                    <div class="upload-icon">✓</div>
+                    <div class="upload-text">${file.name}</div>
+                    <div class="upload-hint">${formatFileSize(file.size)}</div>
+                `;
+
+                // Show preview
+                const preview = document.getElementById(`preview-${step}`);
+                preview.classList.remove('hidden');
+                preview.innerHTML = `
+                    <div class="file-preview">
+                        <div class="file-info">
+                            <div class="file-icon">📄</div>
+                            <div class="file-details">
+                                <h5>${file.name}</h5>
+                                <p>${formatFileSize(file.size)} • ${file.type || 'Unknown type'}</p>
+                            </div>
+                        </div>
+                        <button class="btn btn-danger" onclick="removeFile(${step})">Remove</button>
+                    </div>
+                `;
+
+                // Enable next button
+                document.getElementById(`next-${step}`).disabled = false;
+            }
+        }
+
+        function removeFile(step) {
+            uploadedFiles[step] = null;
+            document.getElementById(`file-${step}`).value = '';
+            document.getElementById(`upload-zone-${step}`).classList.remove('uploaded');
+            document.getElementById(`preview-${step}`).classList.add('hidden');
+            document.getElementById(`next-${step}`).disabled = true;
+
+            // Reset upload zone
+            const icons = ['📄', '🪪', '🪪', '📝'];
+            const hints = ['PDF up to 10MB', 'JPG, PNG, or PDF up to 10MB', 'JPG, PNG, or PDF up to 10MB', 'PDF only, up to 10MB'];
+            document.getElementById(`upload-zone-${step}`).innerHTML = `
+                <div class="upload-icon">${icons[step-1]}</div>
+                <div class="upload-text">Click to upload or drag and drop</div>
+                <div class="upload-hint">${hints[step-1]}</div>
+            `;
+        }
+
+        function nextStep(step) {
+            currentStep = step + 1;
+            showStep(currentStep);
+        }
+
+        function previousStep(step) {
+            currentStep = step - 1;
+            showStep(currentStep);
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+        }
+
+        function downloadForm() {
+            // TODO: In production, generate/download the actual form
+            alert('In production, this would download:\n\nBeneficiary-Claim-Form-IRA-After-2019.pdf\n\nPre-filled with:\n• Account Number: IRA-2019-8821\n• Deceased: Michael Motamed\n• Beneficiary: Rosa Harms');
+        }
+
+        function showReviewStep() {
+            // Build review list
+            const reviewList = document.getElementById('review-list');
+            const fileNames = ['Death Certificate', 'ID Front', 'ID Back', 'Claim Form'];
+            let html = '';
+
+            for (let i = 1; i <= 4; i++) {
+                if (uploadedFiles[i]) {
+                    html += `
+                        <div class="file-preview">
+                            <div class="file-info">
+                                <div class="file-icon">📄</div>
+                                <div class="file-details">
+                                    <h5>${fileNames[i-1]}</h5>
+                                    <p>${uploadedFiles[i].name} • ${formatFileSize(uploadedFiles[i].size)}</p>
+                                </div>
+                            </div>
+                            <button class="btn btn-secondary" onclick="goToStep(${i})">Edit</button>
+                        </div>
+                    `;
+                }
+            }
+            reviewList.innerHTML = html;
+
+            // Show step 5
+            currentStep = 5;
+            showStep(5);
+        }
+
+        function submitClaim() {
+            // TODO: In production, upload files via FormData
+            // For demo, just call the API to create the case
+
+            fetch('/beneficiary/submit-case', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    estate_resources_optin: document.getElementById('estate-resources').checked
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(`Success! Your claim has been submitted.\n\nCase Number: ${data.case_number}\n\nYou will be notified when verification is complete.`);
+                    // Redirect to status page
+                    window.location.href = '/beneficiary/status';
+                } else {
+                    alert('Error submitting claim. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error submitting claim. Please try again.');
+            });
+        }
+
+        function goToStep(step) {
+            currentStep = step;
+            showStep(step);
+        }
+
+        // Drag and drop support
+        document.addEventListener('DOMContentLoaded', function() {
+            for (let i = 1; i <= 4; i++) {
+                const zone = document.getElementById(`upload-zone-${i}`);
+
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    zone.classList.add('dragging');
+                });
+
+                zone.addEventListener('dragleave', () => {
+                    zone.classList.remove('dragging');
+                });
+
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    zone.classList.remove('dragging');
+                    const file = e.dataTransfer.files[0];
+                    const input = document.getElementById(`file-${i}`);
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+                    input.files = dataTransfer.files;
+                    handleFileSelect(i, input);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

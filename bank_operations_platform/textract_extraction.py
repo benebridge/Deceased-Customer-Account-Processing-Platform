@@ -4,7 +4,46 @@ AWS Textract-based extraction for IDP
 """
 
 import boto3
+import re
 from pathlib import Path
+
+def extract_blockchain_identifiers(response_blocks):
+    """
+    Extract blockchain ID and verification URLs from Titan Seal death certificates.
+    Looks for:
+    - Blockchain ID pattern: 0x[40 hex characters]
+    - Verification URLs: https://titanseal.com/verify, https://etherscan.io, etc.
+    - QR code data (if Textract can detect it)
+
+    Per dissertation: Blockchain-sealed certificates receive Security Score = 95
+    """
+    blockchain_data = {
+        'has_blockchain_seal': False,
+        'blockchain_id': None,
+        'verification_urls': [],
+        'seal_issuer': None
+    }
+
+    # Search all text blocks for blockchain ID pattern
+    for block in response_blocks:
+        if block['BlockType'] == 'LINE':
+            text = block.get('Text', '')
+
+            # Look for Ethereum address pattern (0x + 40 hex chars)
+            eth_pattern = r'0x[0-9a-fA-F]{40}'
+            if re.search(eth_pattern, text):
+                blockchain_id = re.findall(eth_pattern, text)[0]
+                blockchain_data['blockchain_id'] = blockchain_id
+                blockchain_data['has_blockchain_seal'] = True
+                blockchain_data['seal_issuer'] = 'Titan Seal'
+
+            # Look for verification URLs
+            if 'titanseal.com' in text.lower():
+                blockchain_data['verification_urls'].append(text)
+            if 'etherscan.io' in text.lower() or 'etherchain.org' in text.lower():
+                blockchain_data['verification_urls'].append(text)
+
+    return blockchain_data
 
 def extract_death_certificate_textract(file_path):
     """Extract data from death certificate using AWS Textract"""
@@ -106,13 +145,18 @@ def extract_death_certificate_textract(file_path):
         if 'first_name' in extracted_data and 'last_name' in extracted_data:
             extracted_data['deceased_name'] = f"{extracted_data['first_name']} {extracted_data['last_name']}"
 
+        # Extract blockchain identifiers (Titan Seal verification)
+        blockchain_verification = extract_blockchain_identifiers(response['Blocks'])
+
         print(f"Textract extracted data: {extracted_data}")
         print(f"All key-value pairs found: {kvs}")
+        print(f"Blockchain verification: {blockchain_verification}")
 
         return {
             'verified': bool(extracted_data.get('deceased_name')),
             'methods_used': ['aws_textract'],
             'extracted_data': extracted_data,
+            'blockchain_verification': blockchain_verification,
             'all_kvs': kvs  # For debugging
         }
 

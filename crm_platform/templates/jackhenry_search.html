@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jack Henry Death Claim Lookup - BeneBridge CRM</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f8f9fa;
+            color: #212529;
+        }
+
+        /* Header */
+        .header {
+            background: #1e40af;
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .header-subtitle {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9375rem;
+        }
+
+        .back-link:hover {
+            opacity: 0.9;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .search-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-header {
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .search-header p {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: 0.5rem;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-end;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 0.625rem 0.875rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 0.9375rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .btn {
+            padding: 0.625rem 1.5rem;
+            border-radius: 6px;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+
+        .btn-primary:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        /* Messages */
+        .message {
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+
+        .message.show {
+            display: block;
+        }
+
+        .message.success {
+            background: #d1fae5;
+            border: 1px solid #10b981;
+            color: #065f46;
+        }
+
+        .message.error {
+            background: #fee2e2;
+            border: 1px solid #ef4444;
+            color: #991b1b;
+        }
+
+        .message.info {
+            background: #dbeafe;
+            border: 1px solid #3b82f6;
+            color: #1e40af;
+        }
+
+        /* Search Results */
+        .results-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 2rem;
+            display: none;
+        }
+
+        .results-container.show {
+            display: block;
+        }
+
+        .results-header {
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .results-header h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .customer-info {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .customer-info h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .info-value {
+            font-size: 0.9375rem;
+            color: #111827;
+            font-weight: 500;
+        }
+
+        .accounts-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .accounts-section h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1rem;
+        }
+
+        .account-card {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .account-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .account-type {
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .account-balance {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #10b981;
+        }
+
+        .account-number {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.75rem;
+        }
+
+        .beneficiaries-list {
+            border-top: 1px solid #e5e7eb;
+            padding-top: 0.75rem;
+        }
+
+        .beneficiary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            font-size: 0.875rem;
+        }
+
+        .beneficiary-name {
+            color: #374151;
+        }
+
+        .beneficiary-percentage {
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.6s linear infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div>
+                <h1>Jack Henry Death Claim Lookup</h1>
+                <div class="header-subtitle">Search deceased account holders in Jack Henry core banking system</div>
+            </div>
+            <a href="/" class="back-link">
+                ← Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Search Form -->
+        <div class="search-container">
+            <div class="search-header">
+                <h2>Search for Deceased Customer</h2>
+                <p>Enter the Social Security Number of the deceased account holder to retrieve account and beneficiary information.</p>
+            </div>
+
+            <div id="searchMessage" class="message"></div>
+
+            <form id="searchForm" class="search-form">
+                <div class="form-group" style="flex: 2;">
+                    <label for="ssn">Deceased Person's SSN <span style="color: #dc2626;">*</span></label>
+                    <input type="text" id="ssn" name="ssn" placeholder="XXX-XX-XXXX" required pattern="[0-9]{3}-[0-9]{2}-[0-9]{4}">
+                </div>
+                <div class="form-group">
+                    <label for="assigned_to">Assign To</label>
+                    <select id="assigned_to" name="assigned_to">
+                        <option value="Current User" selected>Current User</option>
+                        <option value="Sarah Johnson">Sarah Johnson - Senior Processor</option>
+                        <option value="Michael Chen">Michael Chen - Claims Specialist</option>
+                        <option value="Emily Rodriguez">Emily Rodriguez - Estate Services</option>
+                        <option value="David Kim">David Kim - Team Lead</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="priority">Priority</label>
+                    <select id="priority" name="priority">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                        <option value="critical">Critical</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" id="searchBtn">Search</button>
+            </form>
+        </div>
+
+        <!-- Search Results -->
+        <div id="resultsContainer" class="results-container">
+            <div class="results-header">
+                <h3>Customer Found - Review Details</h3>
+            </div>
+
+            <!-- Customer Information -->
+            <div class="customer-info">
+                <h4>Deceased Customer Information</h4>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Full Name</span>
+                        <span class="info-value" id="customerName"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Social Security Number</span>
+                        <span class="info-value" id="customerSSN"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Date of Birth</span>
+                        <span class="info-value" id="customerDOB"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Date of Death</span>
+                        <span class="info-value" id="customerDOD"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Statistics -->
+            <div class="summary-stats">
+                <div class="stat-card">
+                    <div class="stat-label">Total Accounts</div>
+                    <div class="stat-value" id="statAccounts">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Beneficiaries</div>
+                    <div class="stat-value" id="statBeneficiaries">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Balance</div>
+                    <div class="stat-value" id="statBalance">$0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Account Types</div>
+                    <div class="stat-value" id="statTypes" style="font-size: 1rem;">-</div>
+                </div>
+            </div>
+
+            <!-- Accounts -->
+            <div class="accounts-section">
+                <h4>Accounts & Beneficiaries</h4>
+                <div id="accountsList"></div>
+            </div>
+
+            <!-- Actions -->
+            <div class="actions">
+                <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                <button type="button" class="btn btn-primary" id="createCaseBtn">Create Death Claim Case</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentCustomerData = null;
+
+        // Format SSN input
+        document.getElementById('ssn').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 9) value = value.slice(0, 9);
+
+            if (value.length >= 6) {
+                value = value.slice(0,3) + '-' + value.slice(3,5) + '-' + value.slice(5);
+            } else if (value.length >= 4) {
+                value = value.slice(0,3) + '-' + value.slice(3);
+            }
+
+            e.target.value = value;
+        });
+
+        // Search form submission
+        document.getElementById('searchForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const ssn = document.getElementById('ssn').value;
+            const searchBtn = document.getElementById('searchBtn');
+            const message = document.getElementById('searchMessage');
+
+            // Disable button and show loading
+            searchBtn.disabled = true;
+            searchBtn.innerHTML = '<span class="loading"></span>Searching...';
+
+            message.classList.remove('show', 'success', 'error');
+
+            try {
+                const response = await fetch('/api/jackhenry/search', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ssn: ssn })
+                });
+
+                const result = await response.json();
+
+                if (result.success && result.found) {
+                    currentCustomerData = result.data;
+                    displayResults(result.data);
+                    message.textContent = 'Customer found! Review the details below and click "Create Death Claim Case" to proceed.';
+                    message.classList.add('show', 'success');
+                } else {
+                    message.textContent = result.error || 'No customer found with that SSN.';
+                    message.classList.add('show', 'error');
+                    document.getElementById('resultsContainer').classList.remove('show');
+                }
+            } catch (error) {
+                message.textContent = 'Error searching Jack Henry database: ' + error.message;
+                message.classList.add('show', 'error');
+                document.getElementById('resultsContainer').classList.remove('show');
+            } finally {
+                searchBtn.disabled = false;
+                searchBtn.innerHTML = 'Search';
+            }
+        });
+
+        function displayResults(data) {
+            // Customer info
+            document.getElementById('customerName').textContent = data.customer.full_name;
+            document.getElementById('customerSSN').textContent = data.customer.ssn;
+            document.getElementById('customerDOB').textContent = data.customer.birthdate || 'N/A';
+            document.getElementById('customerDOD').textContent = data.death_notification?.date_of_death || 'N/A';
+
+            // Summary stats
+            document.getElementById('statAccounts').textContent = data.summary.total_accounts;
+            document.getElementById('statBeneficiaries').textContent = data.summary.total_beneficiaries;
+            document.getElementById('statBalance').textContent = '$' + data.summary.total_balance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('statTypes').textContent = data.summary.account_types.join(', ');
+
+            // Accounts list
+            const accountsList = document.getElementById('accountsList');
+            accountsList.innerHTML = '';
+
+            data.accounts.forEach(account => {
+                const accountCard = document.createElement('div');
+                accountCard.className = 'account-card';
+
+                let beneficiariesHTML = '';
+                if (account.beneficiaries && account.beneficiaries.length > 0) {
+                    beneficiariesHTML = `
+                        <div class="beneficiaries-list">
+                            <div style="font-size: 0.75rem; font-weight: 500; color: #6b7280; text-transform: uppercase; margin-bottom: 0.5rem;">Beneficiaries</div>
+                            ${account.beneficiaries.map(ben => `
+                                <div class="beneficiary-item">
+                                    <span class="beneficiary-name">${ben.full_name}</span>
+                                    <span class="beneficiary-percentage">${ben.percentage}% (${ben.designation_type})</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+
+                accountCard.innerHTML = `
+                    <div class="account-header">
+                        <span class="account-type">${account.account_type} Account</span>
+                        <span class="account-balance">$${(account.balance_current || 0).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
+                    </div>
+                    <div class="account-number">Account #: ${account.account_number}</div>
+                    ${beneficiariesHTML}
+                `;
+
+                accountsList.appendChild(accountCard);
+            });
+
+            document.getElementById('resultsContainer').classList.add('show');
+        }
+
+        // Create case button
+        document.getElementById('createCaseBtn').addEventListener('click', async function() {
+            if (!currentCustomerData) return;
+
+            const createBtn = this;
+            const message = document.getElementById('searchMessage');
+            const assigned_to = document.getElementById('assigned_to').value;
+            const priority = document.getElementById('priority').value;
+
+            createBtn.disabled = true;
+            createBtn.innerHTML = '<span class="loading"></span>Creating Case...';
+
+            try {
+                const response = await fetch('/api/jackhenry/create_case_from_data', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        ssn: currentCustomerData.customer.ssn,
+                        assigned_to: assigned_to,
+                        priority: priority
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    message.textContent = 'Case created successfully! Case ID: ' + result.case_id + '. Redirecting...';
+                    message.classList.remove('error');
+                    message.classList.add('show', 'success');
+
+                    setTimeout(() => {
+                        window.location.href = '/case/' + result.case_id;
+                    }, 2000);
+                } else {
+                    message.textContent = 'Error creating case: ' + (result.error || 'Unknown error');
+                    message.classList.remove('success');
+                    message.classList.add('show', 'error');
+                    createBtn.disabled = false;
+                    createBtn.innerHTML = 'Create Death Claim Case';
+                }
+            } catch (error) {
+                message.textContent = 'Error creating case: ' + error.message;
+                message.classList.remove('success');
+                message.classList.add('show', 'error');
+                createBtn.disabled = false;
+                createBtn.innerHTML = 'Create Death Claim Case';
+            }
+        });
+
+        // Cancel button
+        document.getElementById('cancelBtn').addEventListener('click', function() {
+            document.getElementById('resultsContainer').classList.remove('show');
+            document.getElementById('searchForm').reset();
+            document.getElementById('searchMessage').classList.remove('show');
+            currentCustomerData = null;
+        });
+    </script>
+</body>
+</html>

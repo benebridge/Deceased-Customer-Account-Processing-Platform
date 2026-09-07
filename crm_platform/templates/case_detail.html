@@ -1,0 +1,2206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case {{ case.case_id }} - BeneBridge CRM</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f8f9fa;
+            color: #212529;
+        }
+
+        /* Header */
+        .header {
+            background: #1e40af;
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Case Header */
+        .case-header {
+            background: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .case-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1.5rem;
+        }
+
+        .case-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+
+        .case-meta {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .case-details-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .detail-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #6b7280;
+            letter-spacing: 0.05em;
+        }
+
+        .detail-value {
+            font-size: 0.875rem;
+            color: #111827;
+        }
+
+        /* Workflow Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #e5e7eb;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -1.625rem;
+            top: 0.25rem;
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 50%;
+            border: 2px solid;
+        }
+
+        .timeline-dot.completed {
+            background: #10b981;
+            border-color: #10b981;
+        }
+
+        .timeline-dot.pending {
+            background: white;
+            border-color: #d1d5db;
+        }
+
+        .timeline-content {
+            font-size: 0.875rem;
+        }
+
+        .timeline-action {
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-meta {
+            color: #6b7280;
+            font-size: 0.75rem;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border: none;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+
+        .btn-ai {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            border: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-ai:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-ai:active {
+            transform: translateY(0);
+        }
+
+        .btn-ai:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .ai-icon {
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+            animation: sparkle 2s infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .ai-generator-section {
+            background: linear-gradient(to right, #f0f4ff, #fef3f8);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e0e7ff;
+        }
+
+        .template-info {
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn-docusign {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+            font-weight: 600;
+            border: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn-docusign:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(5, 150, 105, 0.4);
+        }
+
+        .btn-docusign:active {
+            transform: translateY(0);
+        }
+
+        .btn-docusign:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .docusign-info {
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-danger {
+            background: #dc2626;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #b91c1c;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 0.875rem;
+            font-size: 0.75rem;
+        }
+
+        /* Action Panel */
+        .action-panel {
+            background: #f9fafb;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border: 2px dashed #d1d5db;
+        }
+
+        .action-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #111827;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        /* Documents */
+        .document-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .document-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 0.375rem;
+            border: 1px solid #e5e7eb;
+        }
+
+        .document-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .document-name {
+            font-weight: 600;
+            color: #111827;
+            font-size: 0.875rem;
+        }
+
+        .document-meta {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        .document-status {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.625rem;
+            border-radius: 0.25rem;
+        }
+
+        .document-status.verified {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .document-status.pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .document-status.failed {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Tasks */
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .task-item {
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 0.375rem;
+            border-left: 4px solid #d1d5db;
+        }
+
+        .task-item.pending {
+            border-left-color: #f59e0b;
+        }
+
+        .task-item.in_progress {
+            border-left-color: #3b82f6;
+        }
+
+        .task-item.completed {
+            border-left-color: #10b981;
+            opacity: 0.7;
+        }
+
+        .task-description {
+            font-size: 0.875rem;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+
+        .task-meta {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        /* Communications */
+        .comm-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .comm-item {
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 0.375rem;
+            border: 1px solid #e5e7eb;
+        }
+
+        .comm-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 0.75rem;
+        }
+
+        .comm-subject {
+            font-weight: 600;
+            color: #111827;
+            font-size: 0.875rem;
+        }
+
+        .comm-meta {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        .comm-body {
+            font-size: 0.875rem;
+            color: #374151;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        /* Upload Area */
+        .upload-area {
+            border: 2px dashed #d1d5db;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            text-align: center;
+            background: #f9fafb;
+        }
+
+        .upload-area.dragover {
+            border-color: #2563eb;
+            background: #eff6ff;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            max-width: 700px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 0.625rem 0.875rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            font-family: inherit;
+            resize: vertical;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Verification Results */
+        .verification-summary {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 0.5rem;
+        }
+
+        .verification-stat {
+            flex: 1;
+            text-align: center;
+        }
+
+        .verification-stat-label {
+            font-size: 0.75rem;
+            color: #6b7280;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .verification-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .verification-stat-value.approved {
+            color: #059669;
+        }
+
+        .verification-stat-value.warning {
+            color: #f59e0b;
+        }
+
+        .verification-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .verification-step {
+            padding: 1rem;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.375rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .step-name {
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .step-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .step-status.success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .step-status.warning {
+            background: #fed7aa;
+            color: #9a3412;
+        }
+
+        .step-status.pending {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .extracted-data {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .extracted-data h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1rem;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .data-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .data-field-label {
+            font-size: 0.75rem;
+            color: #6b7280;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .data-field-value {
+            font-size: 0.875rem;
+            color: #111827;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <a href="/" class="back-link">
+                <span>←</span>
+                <span>Back to Dashboard</span>
+            </a>
+            <div>Case {{ case.case_id }}</div>
+        </div>
+    </div>
+
+    <!-- Case Header Summary -->
+    <div style="max-width: 1400px; margin: 2rem auto; padding: 0 2rem;">
+        <div class="case-header">
+            <div class="case-header-top">
+                <div>
+                    <h1 class="case-title">{{ case.deceased_name }}</h1>
+                    <div class="case-meta">Case ID: {{ case.case_id }} | Created: {{ case.created_date[:10] }}</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <a href="/case/{{ case.case_id }}/compliance_report" target="_blank" class="btn btn-primary" style="background: #059669; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.625rem 1rem;">
+                        <span style="font-size: 1rem;">📄</span> Compliance Report
+                    </a>
+                    <span class="status-badge" style="background: {{ workflow_states[case.workflow_status].color }}20; color: {{ workflow_states[case.workflow_status].color }}">
+                        {{ workflow_states[case.workflow_status].label }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="case-details-grid">
+                <div class="detail-item">
+                    <div class="detail-label">Date of Death</div>
+                    <div class="detail-value">{{ case.date_of_death or 'N/A' }}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">SSN</div>
+                    <div class="detail-value">{{ case.deceased_ssn or 'N/A' }}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Notification Source</div>
+                    <div class="detail-value">{{ case.notification_source or 'N/A' }}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Primary Beneficiary</div>
+                    <div class="detail-value">{{ case.primary_beneficiary_name or 'N/A' }}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Beneficiary Contact</div>
+                    <div class="detail-value">{{ case.primary_beneficiary_email or case.primary_beneficiary_phone or 'N/A' }}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Total Claim Amount</div>
+                    <div class="detail-value" style="color: #059669; font-weight: 600;">${{ "{:,.2f}".format(case.total_claim_amount or 0) }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="main-content">
+        <!-- Left Column -->
+        <div class="left-column">
+            <!-- Workflow History -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Workflow History</h2>
+                </div>
+                <div class="card-body">
+                    <div class="timeline">
+                        {% for item in history %}
+                        <div class="timeline-item">
+                            <div class="timeline-dot completed"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-action">{{ item.action }}</div>
+                                <div class="timeline-meta">
+                                    {{ item.timestamp[:16] }} | {{ item.performed_by or 'System' }}
+                                    {% if item.notes %}
+                                    <br>{{ item.notes }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documents -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Documents</h2>
+                    <button class="btn btn-primary btn-sm" onclick="openUploadModal()">Upload Documents</button>
+                </div>
+                <div class="card-body">
+                    {% if documents %}
+                    <div class="document-list">
+                        {% for doc in documents %}
+                        <div class="document-item">
+                            <div class="document-info">
+                                <div class="document-name">{{ doc.document_type.replace('_', ' ').title() }}</div>
+                                <div class="document-meta">Uploaded: {{ doc.uploaded_date[:16] }}</div>
+                            </div>
+                            <span class="document-status {{ doc.verification_status }}">
+                                {{ doc.verification_status.upper() }}
+                            </span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div style="text-align: center; padding: 2rem; color: #6b7280;">
+                        No documents uploaded yet
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Account Discovery -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Account Discovery</h2>
+                    <button class="btn btn-primary btn-sm" onclick="openAccountDiscoveryModal()">Discover Accounts</button>
+                </div>
+                <div class="card-body">
+                    <div id="accountsContent">
+                        {% if case.accounts_json %}
+                        <div class="accounts-summary" style="margin-bottom: 1.5rem;">
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
+                                <div>
+                                    <div style="font-size: 0.875rem; color: #6b7280; margin-bottom: 0.25rem;">Total Accounts</div>
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: #111827;" id="accountCount">-</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.875rem; color: #6b7280; margin-bottom: 0.25rem;">Total Claim Amount</div>
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: #059669;" id="totalClaimAmount">-</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.875rem; color: #6b7280; margin-bottom: 0.25rem;">Beneficiaries</div>
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: #111827;" id="beneficiaryCount">-</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="accountsList"></div>
+                        {% else %}
+                        <div style="text-align: center; padding: 2rem; color: #6b7280;">
+                            <div style="font-size: 2rem; margin-bottom: 1rem;">🏦</div>
+                            <h3 style="margin-bottom: 0.5rem;">No Accounts Discovered</h3>
+                            <p style="margin-bottom: 1.5rem;">Click "Discover Accounts" to search Jack Henry for deceased customer accounts</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Verification Results -->
+            <div class="card" id="verificationCard" style="display: none;">
+                <div class="card-header">
+                    <h2 class="card-title">Verification Results</h2>
+                    <button class="btn btn-secondary btn-sm" onclick="refreshVerificationResults()">Refresh</button>
+                </div>
+                <div class="card-body">
+                    <div id="verificationContent">
+                        <div style="text-align: center; padding: 2rem; color: #6b7280;">
+                            Loading verification results...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Approval -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Payment Approval</h2>
+                    {% if case.total_claim_amount and case.workflow_status in ['VERIFIED', 'PAYMENT_APPROVED'] %}
+                    <button class="btn btn-primary btn-sm" onclick="requestApproval()" id="requestApprovalBtn">Request Approval</button>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <div id="approvalContent">
+                        {% if case.total_claim_amount %}
+                        <div class="approval-summary" style="margin-bottom: 1.5rem; padding: 1.5rem; background: #f9fafb; border-radius: 0.5rem; border: 1px solid #e5e7eb;">
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
+                                <div>
+                                    <div style="font-size: 0.875rem; color: #6b7280; margin-bottom: 0.25rem;">Total Claim Amount</div>
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: #059669;">
+                                        ${{ "{:,.2f}".format(case.total_claim_amount) }}
+                                    </div>
+                                </div>
+                                <div id="approvalTierInfo">
+                                    <div style="font-size: 0.875rem; color: #6b7280; margin-bottom: 0.25rem;">Required Approver</div>
+                                    <div style="font-size: 1.125rem; font-weight: 600; color: #111827;" id="requiredApprover">
+                                        Calculating...
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="approvalsList"></div>
+                        {% else %}
+                        <div style="text-align: center; padding: 2rem; color: #6b7280;">
+                            <div style="font-size: 2rem; margin-bottom: 1rem;">💰</div>
+                            <h3 style="margin-bottom: 0.5rem;">No Claim Amount Set</h3>
+                            <p>Complete account discovery to determine claim amount and approval tier</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manual Overrides -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Manual Overrides</h2>
+                    <button class="btn btn-primary btn-sm" onclick="openOverrideModal()">Create Override</button>
+                </div>
+                <div class="card-body">
+                    <div id="overridesContent">
+                        <div style="text-align: center; padding: 2rem; color: #6b7280;">
+                            <div style="font-size: 2rem; margin-bottom: 1rem;">⚠️</div>
+                            <h3 style="margin-bottom: 0.5rem;">No Overrides</h3>
+                            <p>Supervisors can create manual overrides when needed for exceptional circumstances</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Communications -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Communications</h2>
+                    <button class="btn btn-primary btn-sm" onclick="openCommModal()">Send Communication</button>
+                </div>
+                <div class="card-body">
+                    {% if communications %}
+                    <div class="comm-list">
+                        {% for comm in communications %}
+                        <div class="comm-item">
+                            <div class="comm-header">
+                                <div>
+                                    <div class="comm-subject">{{ comm.subject }}</div>
+                                    <div class="comm-meta">
+                                        To: {{ comm.recipient }} | {{ comm.comm_channel }} | {{ comm.sent_date[:16] }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comm-body">{{ comm.message_body[:200] }}{% if comm.message_body|length > 200 %}...{% endif %}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div style="text-align: center; padding: 2rem; color: #6b7280;">
+                        No communications sent yet
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="right-column">
+            <!-- Current Action Panel -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Next Actions</h2>
+                </div>
+                <div class="card-body">
+                    <div class="action-panel">
+                        <div class="action-title">Current Status: {{ workflow_states[case.workflow_status].label }}</div>
+                        <div class="action-buttons">
+                            {% if case.workflow_status == 'NOTIFIED' %}
+                            <button class="btn btn-primary" onclick="updateStatus('TRIAGED')">Begin Triage</button>
+
+                            {% elif case.workflow_status == 'TRIAGED' %}
+                            <button class="btn btn-primary" onclick="openCommModal()">Contact Beneficiary</button>
+                            <button class="btn btn-secondary" onclick="updateStatus('AWAITING_DOCUMENTS')">Mark Awaiting Documents</button>
+
+                            {% elif case.workflow_status == 'AWAITING_DOCUMENTS' %}
+                            <button class="btn btn-primary" onclick="openUploadModal()">Upload Documents</button>
+                            <button class="btn btn-secondary" onclick="openCommModal()">Send Reminder</button>
+
+                            {% elif case.workflow_status == 'IN_VERIFICATION' %}
+                            <div style="color: #6b7280; font-size: 0.875rem;">
+                                Verification in progress...
+                            </div>
+
+                            {% elif case.workflow_status == 'NEEDS_REVIEW' %}
+                            <button class="btn btn-success" onclick="updateStatus('VERIFIED')">Approve Verification</button>
+                            <button class="btn btn-danger" onclick="updateStatus('AWAITING_DOCUMENTS')">Request Re-submission</button>
+                            <button class="btn btn-secondary" onclick="openOverrideModal()">Manual Override</button>
+
+                            {% elif case.workflow_status == 'VERIFIED' %}
+                            <button class="btn btn-success" onclick="requestApproval()">Request Payment Approval</button>
+
+                            {% elif case.workflow_status == 'PAYMENT_APPROVED' %}
+                            <div style="background: #dbeafe; padding: 1rem; border-radius: 0.375rem; margin-bottom: 1rem;">
+                                <strong>Next Step:</strong><br>
+                                Process payment in core banking system, then mark as completed
+                            </div>
+                            <button class="btn btn-primary" onclick="updateStatus('PAYMENT_PROCESSING')">Mark Payment Processing</button>
+
+                            {% elif case.workflow_status == 'PAYMENT_PROCESSING' %}
+                            <button class="btn btn-success" onclick="updateStatus('PAYMENT_COMPLETED')">Mark Payment Completed</button>
+                            <button class="btn btn-danger" onclick="updateStatus('VERIFIED')">Payment Failed</button>
+
+                            {% elif case.workflow_status == 'PAYMENT_COMPLETED' %}
+                            <button class="btn btn-primary" onclick="updateStatus('CLOSED')">Close Case</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tasks -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Tasks</h2>
+                </div>
+                <div class="card-body">
+                    {% if tasks %}
+                    <div class="task-list">
+                        {% for task in tasks %}
+                        <div class="task-item {{ task.status }}">
+                            <div class="task-description">{{ task.task_description }}</div>
+                            <div class="task-meta">
+                                Status: {{ task.status.upper() }}
+                                {% if task.due_date %}
+                                | Due: {{ task.due_date[:10] }}
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div style="text-align: center; padding: 2rem; color: #6b7280;">
+                        No tasks
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Accounts -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Associated Accounts</h2>
+                </div>
+                <div class="card-body">
+                    {% if case.accounts %}
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        {% for account in case.accounts %}
+                        <div style="padding: 0.75rem; background: #f9fafb; border-radius: 0.375rem;">
+                            <div style="font-weight: 600; margin-bottom: 0.25rem;">{{ account.type }}</div>
+                            <div style="font-size: 0.875rem; color: #6b7280;">
+                                Balance: ${{ "{:,.2f}".format(account.balance) }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div style="text-align: center; padding: 2rem; color: #6b7280;">
+                        No accounts linked
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Documents Modal -->
+    <div class="modal" id="uploadModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Upload Documents for Verification</h3>
+                <button class="close-btn" onclick="closeUploadModal()">&times;</button>
+            </div>
+            <form id="uploadForm" onsubmit="uploadDocuments(event)">
+                <div class="form-group">
+                    <label class="form-label">Death Certificate *</label>
+                    <input type="file" class="form-input" name="death_cert" accept=".pdf,.png,.jpg,.jpeg" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Government ID *</label>
+                    <input type="file" class="form-input" name="government_id" accept=".pdf,.png,.jpg,.jpeg" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Claim Form *</label>
+                    <input type="file" class="form-input" name="claim_form" accept=".pdf,.png,.jpg,.jpeg" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%">Upload & Verify</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Communication Modal -->
+    <div class="modal" id="commModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Send Communication</h3>
+                <button class="close-btn" onclick="closeCommModal()">&times;</button>
+            </div>
+            <!-- AI Communication Generator Section -->
+            <div class="ai-generator-section">
+                <button class="btn btn-ai" id="generateAIBtn" onclick="generateAIComm()" style="margin-bottom: 0.5rem; width: 100%">
+                    <span class="ai-icon">✨</span> Generate AI Communication
+                </button>
+                <div id="aiTemplateInfo" class="template-info" style="display: none; margin-bottom: 1rem; padding: 0.75rem; background: #e0f2fe; border-left: 4px solid #0284c7; border-radius: 0.375rem;">
+                    <div style="font-size: 0.75rem; color: #075985; font-weight: 600;">AI TEMPLATE USED</div>
+                    <div id="templateName" style="font-size: 0.875rem; color: #0c4a6e; margin-top: 0.25rem;"></div>
+                </div>
+            </div>
+            <form id="commForm" onsubmit="sendCommunication(event)">
+                <div class="form-group">
+                    <label class="form-label">Recipient</label>
+                    <input type="text" class="form-input" name="recipient" value="{{ case.primary_beneficiary_email }}" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Channel</label>
+                    <select class="form-input" name="channel">
+                        <option value="email">Email</option>
+                        <option value="mail">Physical Mail</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Subject</label>
+                    <input type="text" class="form-input" name="subject" id="commSubject" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Message</label>
+                    <textarea class="form-textarea" name="body" id="commBody" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%">Send Communication</button>
+            </form>
+
+            <!-- DocuSign Section -->
+            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #e5e7eb;">
+                <h4 style="font-size: 0.875rem; font-weight: 600; color: #374151; margin-bottom: 0.75rem;">OR SEND DOCUSIGN FORM</h4>
+                <button class="btn btn-docusign" id="sendDocuSignBtn" onclick="sendDocuSign()" style="width: 100%">
+                    <span style="font-size: 1.1rem; margin-right: 0.5rem;">📝</span> Send DocuSign Claim Form
+                </button>
+                <div id="docusignInfo" class="docusign-info" style="display: none; margin-top: 0.75rem; padding: 0.75rem; background: #f0fdf4; border-left: 4px solid #10b981; border-radius: 0.375rem;">
+                    <div style="font-size: 0.75rem; color: #065f46; font-weight: 600;">DOCUSIGN ENVELOPE SENT</div>
+                    <div id="docusignDetails" style="font-size: 0.75rem; color: #047857; margin-top: 0.5rem;"></div>
+                </div>
+            </div>
+
+            <!-- Manual Distribution Override -->
+            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #e5e7eb;">
+                <h4 style="font-size: 0.875rem; font-weight: 600; color: #dc2626; margin-bottom: 0.75rem;">⚠️ MANUAL DISTRIBUTION OVERRIDE</h4>
+                <button class="btn btn-primary" onclick="openDistributionOverrideModal()" style="width: 100%; background: #dc2626;">
+                    <span style="font-size: 1.1rem; margin-right: 0.5rem;">✏️</span> Set Distribution Manually
+                </button>
+                <p style="font-size: 0.75rem; color: #6b7280; margin-top: 0.5rem;">Bypass DocuSign and manually configure claim distribution</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Account Discovery Modal -->
+    <div class="modal" id="accountDiscoveryModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+        <div class="modal-content" style="background: white; border-radius: 0.5rem; padding: 2rem; max-width: 500px; width: 90%;">
+            <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h3 style="font-size: 1.25rem; font-weight: 600;">Discover Accounts</h3>
+                <button class="close-btn" onclick="closeAccountDiscoveryModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #6b7280;">&times;</button>
+            </div>
+
+            <form id="accountDiscoveryForm" onsubmit="discoverAccounts(event)">
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label class="form-label" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: #374151;">
+                        Deceased Full Name *
+                    </label>
+                    <input type="text" class="form-input" name="deceased_name" value="{{ case.deceased_name }}" required style="width: 100%; padding: 0.625rem 0.875rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.875rem;">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label class="form-label" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: #374151;">
+                        Date of Birth (Optional if SSN is provided)
+                    </label>
+                    <input type="date" class="form-input" name="deceased_dob" style="width: 100%; padding: 0.625rem 0.875rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.875rem;">
+                    <div style="font-size: 0.75rem; color: #6b7280; margin-top: 0.25rem;">
+                        Format: YYYY-MM-DD | SSN on file: {{ case.deceased_ssn or 'None' }}
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.625rem 1.25rem; border: none; border-radius: 0.375rem; font-weight: 500; font-size: 0.875rem; cursor: pointer; background: #2563eb; color: white;">
+                    Discover Accounts
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Distribution Override Modal -->
+    <div class="modal" id="distributionOverrideModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+        <div class="modal-content" style="background: white; border-radius: 0.5rem; padding: 2rem; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto;">
+            <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h3 style="font-size: 1.25rem; font-weight: 600;">Manual Distribution Override</h3>
+                <button class="close-btn" onclick="closeDistributionOverrideModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #6b7280;">&times;</button>
+            </div>
+
+            <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 0.375rem; padding: 1rem; margin-bottom: 1.5rem;">
+                <div style="color: #991b1b; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.25rem;">⚠️ Bypass DocuSign</div>
+                <div style="color: #7f1d1d; font-size: 0.75rem;">Manually configure distribution without beneficiary signature. This action will be logged.</div>
+            </div>
+
+            <form id="distributionOverrideForm" onsubmit="submitDistributionOverride(event)">
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label class="form-label" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: #374151;">
+                        Total Claim Amount *
+                    </label>
+                    <input type="number" class="form-input" name="claim_amount" step="0.01" required style="width: 100%; padding: 0.625rem 0.875rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.875rem;" placeholder="0.00">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label class="form-label" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: #374151;">
+                        Distribution Type *
+                    </label>
+                    <select class="form-input" name="distribution_type" required style="width: 100%; padding: 0.625rem 0.875rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.875rem; cursor: pointer;">
+                        <option value="">Select distribution type...</option>
+                        <option value="direct_deposit">Direct Deposit</option>
+                        <option value="check">Check Mailed</option>
+                        <option value="wire_transfer">Wire Transfer</option>
+                        <option value="estate_account">To Estate Account</option>
+                        <option value="probate">Probate Court</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label class="form-label" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: #374151;">
+                        Beneficiary Name *
+                    </label>
+                    <input type="text" class="form-input" name="beneficiary_name" required style="width: 100%; padding: 0.625rem 0.875rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.875rem;">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label class="form-label" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: #374151;">
+                        Beneficiary Percentage *
+                    </label>
+                    <input type="number" class="form-input" name="beneficiary_percentage" min="0" max="100" step="0.01" required style="width: 100%; padding: 0.625rem 0.875rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.875rem;" placeholder="100.00">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label class="form-label" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: #374151;">
+                        Override Justification *
+                    </label>
+                    <textarea class="form-input" name="justification" required rows="3" style="width: 100%; padding: 0.625rem 0.875rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.875rem;" placeholder="Explain why manual override is necessary..."></textarea>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                        <input type="checkbox" name="supervisor_approval" value="1" style="width: 1rem; height: 1rem;">
+                        <span style="font-size: 0.875rem; color: #374151;">Requires additional supervisor approval</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; background: #dc2626;">Submit Distribution Override</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Manual Override Modal -->
+    <div class="modal" id="overrideModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+        <div class="modal-content" style="background: white; border-radius: 0.5rem; padding: 2rem; max-width: 600px; width: 90%;">
+            <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h3 style="font-size: 1.25rem; font-weight: 600;">Create Manual Override</h3>
+                <button class="close-btn" onclick="closeOverrideModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #6b7280;">&times;</button>
+            </div>
+
+            <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 0.375rem; padding: 1rem; margin-bottom: 1.5rem;">
+                <div style="color: #991b1b; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.25rem;">⚠️ Supervisor Action Required</div>
+                <div style="color: #7f1d1d; font-size: 0.75rem;">Manual overrides require detailed justification and are logged in the audit trail</div>
+            </div>
+
+            <form id="overrideForm" onsubmit="createOverride(event)">
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label class="form-label" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: #374151;">
+                        Override Type *
+                    </label>
+                    <select class="form-input" name="override_type" required style="width: 100%; padding: 0.625rem 0.875rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.875rem; cursor: pointer;">
+                        <option value="">Select override type...</option>
+                        <option value="verification_bypass">Verification Bypass</option>
+                        <option value="approval_override">Approval Override</option>
+                        <option value="amount_adjustment">Amount Adjustment</option>
+                        <option value="status_change">Status Change</option>
+                        <option value="deadline_extension">Deadline Extension</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label class="form-label" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: #374151;">
+                        Original Value
+                    </label>
+                    <input type="text" class="form-input" name="original_value" style="width: 100%; padding: 0.625rem 0.875rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.875rem;">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label class="form-label" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: #374151;">
+                        New Value *
+                    </label>
+                    <input type="text" class="form-input" name="new_value" required style="width: 100%; padding: 0.625rem 0.875rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.875rem;">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label class="form-label" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: #374151;">
+                        Justification *
+                    </label>
+                    <textarea class="form-input" name="justification" required rows="4" style="width: 100%; padding: 0.625rem 0.875rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.875rem; resize: vertical;" placeholder="Provide detailed justification for this override..."></textarea>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label style="display: flex; align-items: center; font-size: 0.875rem; color: #374151;">
+                        <input type="checkbox" name="requires_approval" style="margin-right: 0.5rem;">
+                        Requires additional approval
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.625rem 1.25rem; border: none; border-radius: 0.375rem; font-weight: 500; font-size: 0.875rem; cursor: pointer; background: #2563eb; color: white;">
+                    Create Override
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const caseId = '{{ case.case_id }}';
+
+        // Modal functions
+        function openUploadModal() {
+            document.getElementById('uploadModal').classList.add('active');
+        }
+
+        function closeUploadModal() {
+            document.getElementById('uploadModal').classList.remove('active');
+        }
+
+        function openCommModal() {
+            document.getElementById('commModal').classList.add('active');
+        }
+
+        function closeCommModal() {
+            document.getElementById('commModal').classList.remove('active');
+        }
+
+        // Update status
+        async function updateStatus(newStatus) {
+            const notes = prompt('Add notes (optional):');
+
+            try {
+                const response = await fetch(`/api/case/${caseId}/update_status`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        new_status: newStatus,
+                        notes: notes,
+                        performed_by: 'Current User'
+                    })
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    location.reload();
+                } else {
+                    alert('Error: ' + result.error);
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+
+        // Upload documents
+        async function uploadDocuments(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const btn = event.target.querySelector('button[type="submit"]');
+            btn.textContent = 'Uploading & Verifying...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch(`/api/case/${caseId}/upload_documents`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert('Documents uploaded and verification started!');
+                    location.reload();
+                } else {
+                    alert('Error: ' + (result.error || 'Upload failed'));
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                btn.textContent = 'Upload & Verify';
+                btn.disabled = false;
+            }
+        }
+
+        // Generate AI communication
+        async function generateAIComm() {
+            const btn = document.getElementById('generateAIBtn');
+            const templateInfo = document.getElementById('aiTemplateInfo');
+            const templateName = document.getElementById('templateName');
+
+            // Show loading state
+            btn.disabled = true;
+            btn.innerHTML = '<span class="ai-icon">⚡</span> Generating...';
+            templateInfo.style.display = 'none';
+
+            try {
+                const response = await fetch(`/api/case/${caseId}/generate_communication`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Populate form fields
+                    document.getElementById('commSubject').value = result.subject;
+                    document.getElementById('commBody').value = result.body;
+
+                    // Show template info
+                    templateName.textContent = result.template_name + ' (Template ID: ' + result.template_id + ')';
+                    templateInfo.style.display = 'block';
+
+                    // Success feedback
+                    btn.innerHTML = '<span class="ai-icon">✓</span> Generated! Edit below if needed';
+                    btn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+
+                    // Reset button after 3 seconds
+                    setTimeout(() => {
+                        btn.innerHTML = '<span class="ai-icon">✨</span> Regenerate AI Communication';
+                        btn.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                        btn.disabled = false;
+                    }, 3000);
+                } else {
+                    alert('Error generating communication');
+                    btn.innerHTML = '<span class="ai-icon">✨</span> Generate AI Communication';
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+                btn.innerHTML = '<span class="ai-icon">✨</span> Generate AI Communication';
+                btn.disabled = false;
+            }
+        }
+
+        // Send communication
+        async function sendCommunication(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData);
+            data.performed_by = 'Current User';
+
+            try {
+                const response = await fetch(`/api/case/${caseId}/send_communication`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert('Communication sent!');
+                    location.reload();
+                } else {
+                    alert('Error: ' + (result.error || 'Failed to send'));
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+
+        // Send DocuSign envelope
+        async function sendDocuSign() {
+            const btn = document.getElementById('sendDocuSignBtn');
+            const docusignInfo = document.getElementById('docusignInfo');
+            const docusignDetails = document.getElementById('docusignDetails');
+
+            // Show loading state
+            btn.disabled = true;
+            btn.innerHTML = '<span style="font-size: 1.1rem; margin-right: 0.5rem;">⏳</span> Sending DocuSign...';
+            docusignInfo.style.display = 'none';
+
+            try {
+                const response = await fetch(`/api/case/${caseId}/send_docusign`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Show success info
+                    docusignDetails.innerHTML = `
+                        <strong>Envelope ID:</strong> ${result.envelope_id}<br>
+                        <strong>Status:</strong> ${result.status}<br>
+                        <strong>Expires:</strong> ${new Date(result.expires_datetime).toLocaleDateString()}<br>
+                        <small style="margin-top: 0.5rem; display: block;">Claim form sent to beneficiary for electronic signature</small>
+                    `;
+                    docusignInfo.style.display = 'block';
+
+                    // Update button
+                    btn.innerHTML = '<span style="font-size: 1.1rem; margin-right: 0.5rem;">✓</span> DocuSign Sent!';
+                    btn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+
+                    // Reload after delay to show updated communications
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                } else {
+                    alert('Error sending DocuSign: ' + result.error);
+                    btn.innerHTML = '<span style="font-size: 1.1rem; margin-right: 0.5rem;">📝</span> Send DocuSign Claim Form';
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+                btn.innerHTML = '<span style="font-size: 1.1rem; margin-right: 0.5rem;">📝</span> Send DocuSign Claim Form';
+                btn.disabled = false;
+            }
+        }
+
+        // Request approval
+        async function requestApproval() {
+            const amount = parseFloat('{{ case.total_claim_amount }}');
+
+            if (!amount || amount === 0) {
+                alert('Cannot request approval: No claim amount set');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/case/${caseId}/request_approval`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        amount: amount,
+                        requested_by: 'Current User'
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert(`Approval request sent to ${result.approver_required}`);
+                    location.reload();
+                } else {
+                    alert('Error: ' + result.error);
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+
+        // Verification Results Functions
+        async function loadVerificationResults() {
+            try {
+                const response = await fetch(`/api/case/${caseId}/verification_results`);
+                const data = await response.json();
+
+                if (data.success) {
+                    document.getElementById('verificationCard').style.display = 'block';
+                    displayVerificationResults(data.results);
+                } else {
+                    // No verification results yet - hide the card
+                    document.getElementById('verificationCard').style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Error loading verification results:', error);
+                document.getElementById('verificationCard').style.display = 'none';
+            }
+        }
+
+        function displayVerificationResults(results) {
+            const container = document.getElementById('verificationContent');
+
+            // Build summary section
+            let html = '<div class="verification-summary">';
+            html += '<div class="verification-stat">';
+            html += '<div class="verification-stat-label">Final Status</div>';
+            html += `<div class="verification-stat-value ${results.final_approval ? 'approved' : 'warning'}">${results.status.toUpperCase()}</div>`;
+            html += '</div>';
+
+            html += '<div class="verification-stat">';
+            html += '<div class="verification-stat-label">Steps Completed</div>';
+            html += `<div class="verification-stat-value">${results.steps ? results.steps.length : 0}</div>`;
+            html += '</div>';
+
+            html += '<div class="verification-stat">';
+            html += '<div class="verification-stat-label">Issues Found</div>';
+            html += `<div class="verification-stat-value ${results.issues && results.issues.length > 0 ? 'warning' : 'approved'}">${results.issues ? results.issues.length : 0}</div>`;
+            html += '</div>';
+            html += '</div>';
+
+            // Build steps section
+            if (results.steps && results.steps.length > 0) {
+                html += '<div class="verification-steps">';
+                results.steps.forEach(step => {
+                    html += '<div class="verification-step">';
+                    html += `<div class="step-name">Step ${step.step}: ${step.name}</div>`;
+                    html += `<span class="step-status ${step.status}">${step.status.toUpperCase()}</span>`;
+                    html += '</div>';
+                });
+                html += '</div>';
+            }
+
+            // Build extracted data section
+            if (results.death_cert_data || results.id_data || results.claim_data) {
+                html += '<div class="extracted-data">';
+                html += '<h3>Extracted Data</h3>';
+                html += '<div class="data-grid">';
+
+                if (results.death_cert_data) {
+                    if (results.death_cert_data.deceased_name) {
+                        html += '<div class="data-field">';
+                        html += '<div class="data-field-label">Deceased Name</div>';
+                        html += `<div class="data-field-value">${results.death_cert_data.deceased_name}</div>`;
+                        html += '</div>';
+                    }
+                    if (results.death_cert_data.date_of_death) {
+                        html += '<div class="data-field">';
+                        html += '<div class="data-field-label">Date of Death</div>';
+                        html += `<div class="data-field-value">${results.death_cert_data.date_of_death}</div>`;
+                        html += '</div>';
+                    }
+                    if (results.death_cert_data.ssn) {
+                        html += '<div class="data-field">';
+                        html += '<div class="data-field-label">SSN (from Death Cert)</div>';
+                        html += `<div class="data-field-value">${results.death_cert_data.ssn}</div>`;
+                        html += '</div>';
+                    }
+                }
+
+                if (results.id_data) {
+                    if (results.id_data.name) {
+                        html += '<div class="data-field">';
+                        html += '<div class="data-field-label">Beneficiary Name</div>';
+                        html += `<div class="data-field-value">${results.id_data.name}</div>`;
+                        html += '</div>';
+                    }
+                    if (results.id_data.id_number) {
+                        html += '<div class="data-field">';
+                        html += '<div class="data-field-label">ID Number</div>';
+                        html += `<div class="data-field-value">${results.id_data.id_number}</div>`;
+                        html += '</div>';
+                    }
+                }
+
+                if (results.claim_data) {
+                    if (results.claim_data.account_number) {
+                        html += '<div class="data-field">';
+                        html += '<div class="data-field-label">Account Number</div>';
+                        html += `<div class="data-field-value">${results.claim_data.account_number}</div>`;
+                        html += '</div>';
+                    }
+                    if (results.claim_data.beneficiary_name) {
+                        html += '<div class="data-field">';
+                        html += '<div class="data-field-label">Beneficiary (from Claim)</div>';
+                        html += `<div class="data-field-value">${results.claim_data.beneficiary_name}</div>`;
+                        html += '</div>';
+                    }
+                }
+
+                html += '</div>';
+                html += '</div>';
+            }
+
+            container.innerHTML = html;
+        }
+
+        function refreshVerificationResults() {
+            loadVerificationResults();
+        }
+
+        // Load verification results on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadVerificationResults();
+            loadAccountsData();
+        });
+
+        // =====================================================================
+        // ACCOUNT DISCOVERY
+        // =====================================================================
+
+        function loadAccountsData() {
+            // If accounts already exist, display them
+            const accountsJson = '{{ case.accounts_json|safe }}';
+            if (accountsJson && accountsJson !== 'None') {
+                try {
+                    const accounts = JSON.parse(accountsJson);
+                    displayAccounts(accounts);
+                } catch (e) {
+                    console.error('Failed to parse accounts JSON:', e);
+                }
+            }
+        }
+
+        function openAccountDiscoveryModal() {
+            const modal = document.getElementById('accountDiscoveryModal');
+            modal.style.display = 'flex';
+        }
+
+        function closeAccountDiscoveryModal() {
+            const modal = document.getElementById('accountDiscoveryModal');
+            modal.style.display = 'none';
+            document.getElementById('accountDiscoveryForm').reset();
+        }
+
+        async function discoverAccounts(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const data = {
+                deceased_name: formData.get('deceased_name'),
+                deceased_dob: formData.get('deceased_dob'),
+                performed_by: 'Current User'
+            };
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Discovering Accounts...';
+
+            try {
+                const response = await fetch(`/api/case/${caseId}/discover_accounts`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert(`Success! Discovered ${result.account_count} accounts totaling $${result.total_claim_amount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`);
+                    closeAccountDiscoveryModal();
+                    displayAccounts(result.accounts);
+
+                    // Update case total claim amount in header
+                    const totalElement = document.querySelector('.info-item:has(.info-label:contains("Total Claim Amount"))');
+                    if (totalElement) {
+                        location.reload(); // Reload to update all info
+                    }
+                } else {
+                    alert('Error: ' + result.error);
+                }
+            } catch (error) {
+                alert('Error discovering accounts: ' + error.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Discover Accounts';
+            }
+        }
+
+        function displayAccounts(accounts) {
+            if (!accounts || accounts.length === 0) {
+                return;
+            }
+
+            // Update summary stats
+            document.getElementById('accountCount').textContent = accounts.length;
+
+            const totalAmount = accounts.reduce((sum, acc) => sum + (acc.balance || 0), 0);
+            document.getElementById('totalClaimAmount').textContent = '$' + totalAmount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            const uniqueBeneficiaries = new Set();
+            accounts.forEach(acc => {
+                (acc.beneficiaries || []).forEach(bene => uniqueBeneficiaries.add(bene.name));
+            });
+            document.getElementById('beneficiaryCount').textContent = uniqueBeneficiaries.size;
+
+            // Build accounts list HTML
+            let html = '<div style="display: flex; flex-direction: column; gap: 1rem;">';
+
+            accounts.forEach((account, index) => {
+                html += `
+                    <div style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.5rem; background: #ffffff;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                            <div>
+                                <div style="font-weight: 600; font-size: 1.125rem; color: #111827; margin-bottom: 0.25rem;">
+                                    ${account.account_type} Account
+                                </div>
+                                <div style="font-size: 0.875rem; color: #6b7280;">
+                                    Account #${account.account_number || account.account_id}
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 0.875rem; color: #6b7280; margin-bottom: 0.25rem;">Balance</div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: #059669;">
+                                    $${account.balance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="border-top: 1px solid #e5e7eb; padding-top: 1rem; margin-top: 1rem;">
+                            <div style="font-weight: 600; font-size: 0.875rem; color: #111827; margin-bottom: 0.75rem;">
+                                Beneficiaries (${account.beneficiaries.length})
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                `;
+
+                account.beneficiaries.forEach(bene => {
+                    html += `
+                        <div style="display: flex; justify-content: space-between; padding: 0.75rem; background: #f9fafb; border-radius: 0.375rem;">
+                            <div>
+                                <div style="font-weight: 600; font-size: 0.875rem; color: #111827;">${bene.name}</div>
+                                <div style="font-size: 0.75rem; color: #6b7280;">${bene.designation_type} - ${bene.percentage}%</div>
+                            </div>
+                            <div style="text-align: right; font-size: 0.75rem; color: #6b7280;">
+                                ${bene.email || ''}<br/>
+                                ${bene.phone || ''}
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+
+            document.getElementById('accountsList').innerHTML = html;
+            document.getElementById('accountsContent').innerHTML = html;
+        }
+
+        // =====================================================================
+        // APPROVAL WORKFLOW FUNCTIONS
+        // =====================================================================
+
+        const APPROVAL_TIERS = [
+            { name: 'AUTO_APPROVED', label: 'Auto-Approved', min_amount: 0, max_amount: 5000, approver_role: 'System' },
+            { name: 'MANAGER_APPROVAL', label: 'Manager Approval', min_amount: 5000, max_amount: 25000, approver_role: 'Manager' },
+            { name: 'DIRECTOR_APPROVAL', label: 'Director Approval', min_amount: 25000, max_amount: 100000, approver_role: 'Director' },
+            { name: 'VP_APPROVAL', label: 'VP Approval', min_amount: 100000, max_amount: 500000, approver_role: 'Vice President' },
+            { name: 'EXECUTIVE_APPROVAL', label: 'Executive Approval', min_amount: 500000, max_amount: Infinity, approver_role: 'Executive/Board' }
+        ];
+
+        function determineRequiredApprover(amount) {
+            for (let tier of APPROVAL_TIERS) {
+                if (amount >= tier.min_amount && amount < tier.max_amount) {
+                    return tier;
+                }
+            }
+            return APPROVAL_TIERS[APPROVAL_TIERS.length - 1];
+        }
+
+        function loadApprovalTier() {
+            const claimAmount = {{ case.total_claim_amount or 0 }};
+            if (claimAmount > 0) {
+                const tier = determineRequiredApprover(claimAmount);
+                const approverElem = document.getElementById('requiredApprover');
+                if (approverElem) {
+                    approverElem.textContent = tier.approver_role;
+                    if (tier.name === 'AUTO_APPROVED') {
+                        approverElem.innerHTML = '<span style="color: #059669;">✓ Auto-Approved</span>';
+                    }
+                }
+            }
+        }
+
+        async function loadApprovals() {
+            try {
+                const response = await fetch(`/api/case/${caseId}/approvals`);
+                const result = await response.json();
+
+                if (result.success && result.approvals.length > 0) {
+                    displayApprovals(result.approvals);
+                }
+            } catch (error) {
+                console.error('Error loading approvals:', error);
+            }
+        }
+
+        function displayApprovals(approvals) {
+            let html = '<div style="margin-top: 1.5rem;">';
+            html += '<h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: #111827;">Approval History</h3>';
+            html += '<div style="display: flex; flex-direction: column; gap: 1rem;">';
+
+            approvals.forEach(approval => {
+                const statusColor = approval.status === 'approved' ? '#059669' :
+                                   approval.status === 'denied' ? '#dc2626' : '#f59e0b';
+                const statusLabel = approval.status.charAt(0).toUpperCase() + approval.status.slice(1);
+
+                html += `
+                    <div style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1rem; background: #ffffff;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.75rem;">
+                            <div>
+                                <div style="font-weight: 600; font-size: 0.875rem; color: #111827;">
+                                    ${approval.approval_type.replace(/_/g, ' ')}
+                                </div>
+                                <div style="font-size: 0.75rem; color: #6b7280; margin-top: 0.25rem;">
+                                    Requested: ${approval.requested_date.substring(0, 16).replace('T', ' ')}
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                <span style="padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; background: ${statusColor}20; color: ${statusColor};">
+                                    ${statusLabel}
+                                </span>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; font-size: 0.75rem;">
+                            <div>
+                                <div style="color: #6b7280;">Amount</div>
+                                <div style="font-weight: 600; color: #111827;">$${approval.amount.toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+                            </div>
+                            <div>
+                                <div style="color: #6b7280;">Required Approver</div>
+                                <div style="font-weight: 600; color: #111827;">${approval.approver_required}</div>
+                            </div>
+                            <div>
+                                <div style="color: #6b7280;">${approval.status === 'pending' ? 'Status' : 'Approved By'}</div>
+                                <div style="font-weight: 600; color: #111827;">${approval.approved_by || 'Pending'}</div>
+                            </div>
+                        </div>
+                `;
+
+                if (approval.status === 'pending') {
+                    html += `
+                        <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e5e7eb;">
+                            <button class="btn btn-primary btn-sm" onclick="approvePayment(${approval.approval_id}, 'approved')" style="margin-right: 0.5rem;">
+                                Approve
+                            </button>
+                            <button class="btn btn-sm" onclick="approvePayment(${approval.approval_id}, 'denied')" style="background: #ef4444; color: white;">
+                                Deny
+                            </button>
+                        </div>
+                    `;
+                }
+
+                html += '</div>';
+            });
+
+            html += '</div></div>';
+            document.getElementById('approvalsList').innerHTML = html;
+        }
+
+        async function requestApproval() {
+            const btn = document.getElementById('requestApprovalBtn');
+            btn.disabled = true;
+            btn.textContent = 'Requesting...';
+
+            try {
+                const response = await fetch(`/api/case/${caseId}/request_approval`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        requested_by: 'Current User',
+                        notes: ''
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert(result.message);
+                    if (result.auto_approved) {
+                        location.reload();
+                    } else {
+                        loadApprovals();
+                        btn.style.display = 'none';
+                    }
+                } else {
+                    alert('Error: ' + result.error);
+                    btn.disabled = false;
+                    btn.textContent = 'Request Approval';
+                }
+            } catch (error) {
+                alert('Error requesting approval: ' + error.message);
+                btn.disabled = false;
+                btn.textContent = 'Request Approval';
+            }
+        }
+
+        async function approvePayment(approvalId, decision) {
+            if (!confirm(`Are you sure you want to ${decision} this payment?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/case/${caseId}/approve_payment`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        approval_id: approvalId,
+                        approved_by: 'Current User',
+                        decision: decision,
+                        notes: ''
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert(result.message);
+                    location.reload();
+                } else {
+                    alert('Error: ' + result.error);
+                }
+            } catch (error) {
+                alert('Error processing approval: ' + error.message);
+            }
+        }
+
+        // Load approval tier and history on page load
+        if ({{ case.total_claim_amount or 0 }} > 0) {
+            loadApprovalTier();
+            loadApprovals();
+        }
+
+        // =====================================================================
+        // MANUAL OVERRIDE FUNCTIONS
+        // =====================================================================
+
+        function openOverrideModal() {
+            document.getElementById('overrideModal').style.display = 'flex';
+        }
+
+        function closeOverrideModal() {
+            document.getElementById('overrideModal').style.display = 'none';
+            document.getElementById('overrideForm').reset();
+        }
+
+        async function loadOverrides() {
+            try {
+                const response = await fetch(`/api/case/${caseId}/overrides`);
+                const result = await response.json();
+
+                if (result.success && result.overrides.length > 0) {
+                    displayOverrides(result.overrides);
+                }
+            } catch (error) {
+                console.error('Error loading overrides:', error);
+            }
+        }
+
+        function displayOverrides(overrides) {
+            let html = '<div style="display: flex; flex-direction: column; gap: 1rem;">';
+
+            overrides.forEach(override => {
+                const typeLabel = override.override_type.replace(/_/g, ' ').toUpperCase();
+
+                html += `
+                    <div style="border: 1px solid #fecaca; border-left: 4px solid #dc2626; border-radius: 0.5rem; padding: 1.25rem; background: #fef2f2;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                            <div>
+                                <div style="font-weight: 600; font-size: 1rem; color: #991b1b; margin-bottom: 0.25rem;">
+                                    ${typeLabel}
+                                </div>
+                                <div style="font-size: 0.75rem; color: #7f1d1d;">
+                                    ${override.override_date.substring(0, 16).replace('T', ' ')} by ${override.overridden_by}
+                                </div>
+                            </div>
+                            ${override.requires_approval ? '<span style="padding: 0.25rem 0.5rem; background: #fed7aa; color: #9a3412; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600;">REQUIRES APPROVAL</span>' : ''}
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; padding: 0.75rem; background: white; border-radius: 0.375rem;">
+                            <div>
+                                <div style="font-size: 0.75rem; color: #6b7280;">Original Value</div>
+                                <div style="font-weight: 600; color: #111827;">${override.original_value || 'N/A'}</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.75rem; color: #6b7280;">New Value</div>
+                                <div style="font-weight: 600; color: #111827;">${override.new_value}</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.75rem; color: #6b7280; margin-bottom: 0.25rem;">Justification</div>
+                            <div style="font-size: 0.875rem; color: #374151;">${override.justification}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            document.getElementById('overridesContent').innerHTML = html;
+        }
+
+        async function createOverride(event) {
+            event.preventDefault();
+
+            if (!confirm('Are you sure you want to create this manual override? This action will be logged in the audit trail.')) {
+                return;
+            }
+
+            const formData = new FormData(event.target);
+            const data = {
+                override_type: formData.get('override_type'),
+                original_value: formData.get('original_value'),
+                new_value: formData.get('new_value'),
+                justification: formData.get('justification'),
+                overridden_by: 'Current User (Supervisor)',
+                requires_approval: formData.get('requires_approval') ? 1 : 0
+            };
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Creating Override...';
+
+            try {
+                const response = await fetch(`/api/case/${caseId}/manual_override`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert('Manual override created successfully');
+                    closeOverrideModal();
+                    loadOverrides();
+                    location.reload();
+                } else {
+                    alert('Error: ' + result.error);
+                }
+            } catch (error) {
+                alert('Error creating override: ' + error.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Create Override';
+            }
+        }
+
+        // Load overrides on page load
+        loadOverrides();
+
+        // Distribution Override functions
+        function openDistributionOverrideModal() {
+            document.getElementById('distributionOverrideModal').style.display = 'flex';
+        }
+
+        function closeDistributionOverrideModal() {
+            document.getElementById('distributionOverrideModal').style.display = 'none';
+            document.getElementById('distributionOverrideForm').reset();
+        }
+
+        async function submitDistributionOverride(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const data = {
+                override_type: 'distribution_manual_entry',
+                original_value: 'N/A - DocuSign bypassed',
+                new_value: `Claim Amount: $${formData.get('claim_amount')}, Distribution: ${formData.get('distribution_type')}, Beneficiary: ${formData.get('beneficiary_name')} (${formData.get('beneficiary_percentage')}%)`,
+                justification: formData.get('justification'),
+                overridden_by: 'Current User (Supervisor)',
+                requires_approval: formData.get('supervisor_approval') ? 1 : 0,
+                distribution_details: {
+                    claim_amount: parseFloat(formData.get('claim_amount')),
+                    distribution_type: formData.get('distribution_type'),
+                    beneficiary_name: formData.get('beneficiary_name'),
+                    beneficiary_percentage: parseFloat(formData.get('beneficiary_percentage'))
+                }
+            };
+
+            try {
+                const response = await fetch(`/api/case/${caseId}/manual_override`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert('Distribution override created successfully!');
+                    closeDistributionOverrideModal();
+                    loadOverrides();
+                    location.reload(); // Reload to show updated distribution
+                } else {
+                    alert('Error creating distribution override: ' + result.error);
+                }
+            } catch (error) {
+                alert('Error creating distribution override: ' + error.message);
+            }
+        }
+
+        // Close modal on background click
+        document.getElementById('distributionOverrideModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeDistributionOverrideModal();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -44,10 +44,13 @@ env/
 .env
 .env.local
 
-# Database files (will be regenerated)
+# Database files (exclude all except required dissertation databases)
 *.db
 *.sqlite
 *.sqlite3
+# BUT include required databases for dissertation submission
+!crm_platform/crm_database.db
+!JackHenry_Int_Platform/jackhenry_customers.db
 
 # Logs
 *.log
@@ -114,3 +117,6 @@ test_template_case/
 *.bbl
 *.blg
 *.synctex.gz
+
+# Note: verification_platform is required for dissertation
+# Only exclude non-dissertation platforms

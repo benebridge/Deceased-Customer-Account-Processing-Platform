@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Configuration - Jack Henry Integration</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8f9fa; }
+        .header { background: #0066cc; color: white; padding: 1rem 2rem; }
+        .header h1 { font-size: 1.5rem; }
+        nav { background: white; border-bottom: 1px solid #e5e7eb; padding: 0 2rem; }
+        nav ul { max-width: 1400px; margin: 0 auto; display: flex; list-style: none; gap: 2rem; }
+        nav a { display: block; padding: 1rem 0; color: #374151; text-decoration: none; font-weight: 500; border-bottom: 2px solid transparent; }
+        nav a:hover, nav a.active { color: #0066cc; border-bottom-color: #0066cc; }
+        .main-content { max-width: 1400px; margin: 2rem auto; padding: 0 2rem; }
+        .section { background: white; padding: 2rem; border-radius: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-label { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: #374151; }
+        .form-help { font-size: 0.75rem; color: #6b7280; margin-top: 0.25rem; }
+        .form-input { width: 100%; padding: 0.625rem 0.875rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.875rem; }
+        .form-input:focus { outline: none; border-color: #0066cc; box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1); }
+        .btn { padding: 0.75rem 1.5rem; border: none; border-radius: 0.375rem; font-weight: 500; cursor: pointer; }
+        .btn-primary { background: #0066cc; color: white; }
+        .btn-primary:hover { background: #0052a3; }
+        .alert { padding: 1rem; border-radius: 0.375rem; margin-bottom: 1.5rem; background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
+    </style>
+</head>
+<body>
+    <div class="header"><h1>Jack Henry Integration Platform</h1></div>
+    <nav>
+        <ul>
+            <li><a href="/">Dashboard</a></li>
+            <li><a href="/customers">Customers</a></li>
+            <li><a href="/accounts">Accounts</a></li>
+            <li><a href="/beneficiaries">Beneficiaries</a></li>
+            <li><a href="/config" class="active">Configuration</a></li>
+        </ul>
+    </nav>
+    <div class="main-content">
+        <h2 style="margin-bottom: 1.5rem;">API Configuration</h2>
+
+        <div class="alert">
+            <strong>Setup Instructions:</strong> You need to obtain API credentials from Jack Henry's developer portal (jackhenry.dev). Create a developer account, generate test credentials, and enter them below.
+        </div>
+
+        <div class="section">
+            <form action="/config/update" method="POST">
+                {% for config in configs %}
+                <div class="form-group">
+                    <label class="form-label">{{ config.config_key.replace('_', ' ').title() }}</label>
+                    <input type="text" name="config_{{ config.config_key }}" class="form-input" value="{{ config.config_value }}" {% if 'secret' in config.config_key %}type="password"{% endif %}>
+                    {% if config.description %}
+                    <div class="form-help">{{ config.description }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <button type="submit" class="btn btn-primary">Save Configuration</button>
+            </form>
+        </div>
+
+        <div class="section" style="margin-top: 1.5rem;">
+            <h3 style="margin-bottom: 1rem;">How to Get API Credentials</h3>
+            <ol style="margin-left: 1.5rem; color: #4b5563; line-height: 1.8;">
+                <li>Go to <a href="https://jackhenry.dev" target="_blank" style="color: #0066cc;">jackhenry.dev</a></li>
+                <li>Create a developer account or sign in</li>
+                <li>Navigate to your developer dashboard</li>
+                <li>Create a new application or use an existing one</li>
+                <li>Copy your Client ID and Client Secret</li>
+                <li>Set up the redirect URI: <code>http://localhost:5011/callback</code></li>
+                <li>Save the scopes: <code>openid profile email phone address offline_access banno</code></li>
+                <li>Paste your credentials above and click Save Configuration</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>

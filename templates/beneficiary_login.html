@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beneficiary Login - BeneBridge</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 440px;
+            width: 100%;
+            padding: 48px 40px;
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .logo-section h1 {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .logo-section p {
+            color: #6b7280;
+            font-size: 0.9375rem;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+            font-size: 0.9375rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.2s;
+            font-family: monospace;
+            letter-spacing: 1px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .helper-text {
+            font-size: 0.8125rem;
+            color: #6b7280;
+            margin-top: 6px;
+        }
+
+        .error-message {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            font-size: 0.875rem;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 24px;
+        }
+
+        .info-box-title {
+            font-weight: 600;
+            color: #1e40af;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-box-text {
+            font-size: 0.875rem;
+            color: #1e40af;
+            line-height: 1.6;
+        }
+
+        .demo-credentials {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 24px;
+        }
+
+        .demo-credentials-title {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 12px;
+            font-size: 0.875rem;
+        }
+
+        .demo-credential {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 0.875rem;
+        }
+
+        .demo-credential:last-child {
+            border-bottom: none;
+        }
+
+        .demo-credential span:first-child {
+            color: #6b7280;
+        }
+
+        .demo-credential span:last-child {
+            font-family: monospace;
+            color: #374151;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo-section">
+            <h1>BeneBridge</h1>
+            <p>Secure Beneficiary Portal</p>
+        </div>
+
+        {% if error %}
+        <div class="error-message">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="case_number">Case Number</label>
+                <input type="text" id="case_number" name="case_number" placeholder="SDC-2026-001" required autofocus>
+                <div class="helper-text">Your unique case number (provided by the institution)</div>
+            </div>
+
+            <div class="form-group">
+                <label for="access_code">Access Code</label>
+                <input type="text" id="access_code" name="access_code" placeholder="ACCESS-XXXXXX" required>
+                <div class="helper-text">Your secure access code (sent via mail or email)</div>
+            </div>
+
+            <button type="submit" class="login-button">
+                Access My Claim →
+            </button>
+        </form>
+
+        <div class="info-box">
+            <div class="info-box-title">
+                🔒 Secure Access
+            </div>
+            <div class="info-box-text">
+                Your case information is protected with bank-level security. Only you can access your claim using your unique case number and access code.
+            </div>
+        </div>
+
+        <div class="demo-credentials">
+            <div class="demo-credentials-title">📋 Demo Access (For Testing)</div>
+            <div class="demo-credential">
+                <span>Case Number:</span>
+                <span id="demoCase">Loading...</span>
+            </div>
+            <div class="demo-credential">
+                <span>Access Code:</span>
+                <span id="demoCode">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load demo credentials for testing
+        fetch('/api/demo-credentials')
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('demoCase').textContent = data.case_number;
+                document.getElementById('demoCode').textContent = data.access_code;
+            })
+            .catch(() => {
+                document.getElementById('demoCase').textContent = 'SDC-2026-002';
+                document.getElementById('demoCode').textContent = 'See database';
+            });
+    </script>
+</body>
+</html>

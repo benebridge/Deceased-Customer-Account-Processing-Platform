@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jack Henry Integration Platform - Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f8f9fa;
+            color: #212529;
+        }
+
+        .header {
+            background: #0066cc;
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .header-subtitle {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 0 2rem;
+        }
+
+        nav ul {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            display: block;
+            padding: 1rem 0;
+            color: #374151;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+        }
+
+        nav a:hover, nav a.active {
+            color: #0066cc;
+            border-bottom-color: #0066cc;
+        }
+
+        .main-content {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #0066cc;
+        }
+
+        .section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .section h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border: none;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #0066cc;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0052a3;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 0.375rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .alert-warning {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fcd34d;
+        }
+
+        .alert-info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #93c5fd;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #6b7280;
+            background: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 0.875rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.625rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div>
+                <h1>Jack Henry Integration Platform</h1>
+                <div class="header-subtitle">Garden Test Environment Data Sync</div>
+            </div>
+        </div>
+    </div>
+
+    <nav>
+        <ul>
+            <li><a href="/" class="active">Dashboard</a></li>
+            <li><a href="/customers">Customers</a></li>
+            <li><a href="/accounts">Accounts</a></li>
+            <li><a href="/beneficiaries">Beneficiaries</a></li>
+            <li><a href="/config">Configuration</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        {% if not api_configured %}
+        <div class="alert alert-warning">
+            <strong>API Not Configured:</strong> Please update your Jack Henry API credentials in the <a href="/config">Configuration</a> page before attempting to sync data.
+        </div>
+        {% endif %}
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total Customers</div>
+                <div class="stat-value">{{ customers_count }}</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Accounts</div>
+                <div class="stat-value">{{ accounts_count }}</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Beneficiaries</div>
+                <div class="stat-value">{{ beneficiaries_count }}</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Actions</h2>
+            <div class="actions">
+                {% if api_configured %}
+                <a href="/auth/login" class="btn btn-primary">Authenticate & Sync New Customer</a>
+                {% endif %}
+                <a href="/export/all" class="btn btn-secondary" download="jackhenry_data.json">Export All Data (JSON)</a>
+                <a href="/customers" class="btn btn-secondary">View Customers</a>
+                <a href="/accounts" class="btn btn-secondary">View Accounts</a>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Recent Sync Activity</h2>
+            {% if recent_syncs %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date/Time</th>
+                        <th>Type</th>
+                        <th>Customer</th>
+                        <th>Records Fetched</th>
+                        <th>Created</th>
+                        <th>Updated</th>
+                        <th>Status</th>
+                        <th>Execution Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sync in recent_syncs %}
+                    <tr>
+                        <td>{{ sync.sync_date[:19].replace('T', ' ') }}</td>
+                        <td>{{ sync.sync_type }}</td>
+                        <td>{{ sync.customer_sub or 'N/A' }}</td>
+                        <td>{{ sync.records_fetched }}</td>
+                        <td>{{ sync.records_created }}</td>
+                        <td>{{ sync.records_updated }}</td>
+                        <td>
+                            <span class="badge {% if sync.status == 'success' %}badge-success{% else %}badge-error{% endif %}">
+                                {{ sync.status }}
+                            </span>
+                        </td>
+                        <td>{{ sync.execution_time_ms }}ms</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p style="color: #6b7280; padding: 2rem; text-align: center;">No sync activity yet. Authenticate a customer to begin syncing data.</p>
+            {% endif %}
+        </div>
+
+        <div class="section">
+            <h2>About This Platform</h2>
+            <p style="margin-bottom: 1rem;">
+                This platform integrates with Jack Henry's Garden test environment to sync customer, account, and beneficiary data using their Consumer API and jXchange services.
+            </p>
+            <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">Features:</h3>
+            <ul style="margin-left: 1.5rem; color: #4b5563;">
+                <li>OAuth 2.0 + OpenID Connect authentication</li>
+                <li>Consumer API integration for accounts and transactions</li>
+                <li>Database storage of customer profiles, accounts, and beneficiaries</li>
+                <li>JSON export functionality for all data</li>
+                <li>Sync activity logging and monitoring</li>
+            </ul>
+            <h3 style="font-size: 1rem; font-weight: 600; margin: 1rem 0 0.5rem;">Next Steps:</h3>
+            <ul style="margin-left: 1.5rem; color: #4b5563;">
+                <li>Configure your Jack Henry API credentials in the Configuration page</li>
+                <li>Click "Authenticate & Sync New Customer" to connect a test user from Garden</li>
+                <li>View synced data in the Customers, Accounts, and Beneficiaries pages</li>
+                <li>Export data as JSON to use in other platforms (e.g., creating matching death certificates and claim forms)</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
